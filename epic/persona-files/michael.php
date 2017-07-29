@@ -26,5 +26,8 @@
 		reading, even listening to podcasts on the way to school in the morning. After spending many hours trying to learn
 		on his own he decides to look into getting one on one tutoring in hopes that a more hands on approach will help him
 		more.</p>
+		<p><Strong>Goals:</Strong> Michael want's to alleviate some of the dead hours he has spent trying to teach
+		himself by hiring a tutor. He is looking for a tutor that can meet 2 or 3 times a week for 2 hours. Michael
+		is hoping to get more sleep and time with his family as well as a firm grasp on all he is learning.</p>
 	</body>
 </html>
