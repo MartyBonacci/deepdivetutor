@@ -38,7 +38,12 @@
 			when Justin again turns to Youtube and faces the same problems he had during the prework phase. Justin
 			acknowledges the fact that he needs extra help. He wishes he could sit down with someone more experienced
 			that is willing to take the time necessary to help him learn the material.</p>
-		<p><strong>Goals: </strong></p>
+		<p><strong>Goals: </strong>Justin's main goal is that he wants to become a developer. He knows that he is
+			going to need outside help in the form of a tutor in order to maximize his learning potential. He is very
+			focused on this goal and is actively seeking a tutor for assistance. Justin wants a tutor he can see
+			regularly, that is familiar with the bootcamp curriculum. Ideally he wants someone that has gone through the
+			bootcamp and has been successful in it. He thinks this is best because they would be familiar with the
+			curriculum and have gone though the same thing that Justin is going through now.</p>
 		<!-- maybe put this in user-stories? -->
 		<p><strong>Use Case: </strong></p>
 	</body>
