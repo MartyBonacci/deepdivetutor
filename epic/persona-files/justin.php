@@ -31,12 +31,14 @@
 			throughout school. When he is faced with new, complex material, he feels frustrated that he doesn't
 			understand it as well as his classmates do. When this happens, Justin will ask the instructor after
 			class to go over a concept again. This does help him, but he still wishes he had more time to spend with
-			the instructor to go over it. This feeling sometimes makes it hard for him to continue and he has at times,
-			thought about quitting. Although after his initial frustrations fade, he knows that he doesn't want to quit
-			and that he just needs extra help learning the material. Justin has used tutors in the past, and thinks that a
-			tutor would be just what he needs to help him grasp the material. However, he is concerned that he will
-			not be able to find one that is qualified to take on the material he is learning from the bootcamp. This is
-			when Justin again turns to Youtube and faces the same problems he had during the prework phase. Justin
+			the instructor to go over it. Justin is having a particular hard time with MySQL. The syntax just doesn't
+			make sense to him, and every time he has tried to run his code it has failed. This has become increasingly
+			frustrating for him and sometimes makes it hard	for him to continue. At times, Justin has even thought about
+			quitting. Although after his initial frustrations fade, he knows that he doesn't want to quit and that he
+			just needs extra help learning the material. Justin has used tutors in the past, and thinks that a tutor
+			would be just what he needs to help him grasp the material. However, he is concerned that he will not be
+			able to find one that is qualified to take on the material he is learning from the bootcamp. This is when
+			Justin again turns to Youtube and faces the same problems he had during the prework phase. Justin
 			acknowledges the fact that he needs extra help. He wishes he could sit down with someone more experienced
 			that is willing to take the time necessary to help him learn the material.</p>
 		<p><strong>Goals: </strong>Justin's main goal is that he wants to become a developer. He knows that he is
