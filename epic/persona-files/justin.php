@@ -48,12 +48,16 @@
 			bootcamp and has been successful in it. He thinks this is best because they would be familiar with the
 			curriculum and have gone though the same thing that Justin is going through now.</p>
 		<!-- maybe put this in user-stories? -->
-		<p><strong>Use Case: Signing up</strong>
+		<p><strong>Use Case:</strong>
 		<ol>
 			<li>Student clicks sign up checks a box if they are a student or a tutor.</li>
-			<li>Student checks student box and is prompted for name and email</li>
-			<li>More checkboxes pull up and the student checks what they need assistance with</li>
-			<li>As the final step of creating a profile, the student will have the option to add a photo</li>
+			<li>Student checks student box and is prompted for name and email.</li>
+			<li>More checkboxes pull up and the student checks what they need assistance with.</li>
+			<li>As the final step of creating a profile, the student will have the option to add a photo.</li>
+			<li>After they create a profile they are brought to a screen to view all the tutors.</li>
+			<li>The student sees a thumbnail with name of the tutor, a photo, and what they specialize in.</li>
+			<li>The student clicks on a profile and sees the tutors availability and price.</li>
+			<li>The student sees a form to fill out in order to have the tutor contact them.</li>
 		</ol>
 		</p>
 
