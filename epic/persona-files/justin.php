@@ -33,7 +33,7 @@
 			class to go over a concept again. This does help him, but he still wishes he had more time to spend with
 			the instructor to go over it. Justin is having a particular hard time with MySQL. The syntax just doesn't
 			make sense to him, and every time he has tried to run his code it has failed. This has become increasingly
-			frustrating for him and sometimes makes it hard	for him to continue. At times, Justin has even thought about
+			frustrating for him and sometimes makes it hard for him to continue. At times, Justin has even thought about
 			quitting. Although after his initial frustrations fade, he knows that he doesn't want to quit and that he
 			just needs extra help learning the material. Justin has used tutors in the past, and thinks that a tutor
 			would be just what he needs to help him grasp the material. However, he is concerned that he will not be
@@ -48,11 +48,17 @@
 			bootcamp and has been successful in it. He thinks this is best because they would be familiar with the
 			curriculum and have gone though the same thing that Justin is going through now.</p>
 		<!-- maybe put this in user-stories? -->
-		<p><strong>Use Case: </strong>It's Friday night and Justin is home studying the new material he got in class
-			today. The class is really starting to increase in intensity and he decides to get online and look for a
-			tutor that can help him with his studies. He finds our Deep Dive Tutor website and looks at all the class
-			alumni, their rates, and their strengths. He finds one that he likes and clicks on their profile. Here,
-			Justin sees their availability and a form to fill out to contact the tutor. Excited that he has found this
-			site, he eagerly fills out the form and awaits the response from the tutor.</p>
+		<p><strong>Use Case: Signing up</strong>
+		<ol>
+			<li>Student clicks sign up checks a box if they are a student or a tutor.</li>
+			<li>Student checks student box and is prompted for name and email</li>
+			<li>More checkboxes pull up and the student checks what they need assistance with</li>
+			<li>As the final step of creating a profile, the student will have the option to add a photo</li>
+		</ol>
+		</p>
+
+		<p><strong>User Story:</strong> As a user I need to be able to find a tutor that went through the bootcamp, that
+			is qualified to assist me in
+			MySQL, because I know I need extra help outside of the classroom on that topic.</p>
 	</body>
 </html>
