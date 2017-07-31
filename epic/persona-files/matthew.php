@@ -27,7 +27,7 @@
 		<p>Matthew sees clear info about how the site works and how it can help him right on the main page.</p>
 		<p>He can see that the site connects students with tutors.</p>
 		<p>Matthew then clicks the link to sign up as a tutor.</p>
-		<p>He then enters the needed profile info, name, username, email, areas of specialty, education/deep dive program, availability, requested rateof pay, and uploaded a profile photo.</p>
+		<p>He then enters the needed profile info, name, username, email, areas of specialty, education/deep dive program, availability, requested rate of pay, and uploaded a profile photo.</p>
 		<br/>
 		<p>Matthew created an account profile explaining his experience, what he wanted to teach, his rates and also uploaded a picture. Matthew knew that it may be harder to get his first client because he didn’t have a rating on the site yet. Fortunately Matthew was able to upload a recommendation from the DDCB staff to improve prospective student confidence in him.</p>
 		<p>Within 48 hours Matthew was contacted by a student that needed help with object oriented PHP and set his first tutoring appointment...</p>
