@@ -21,7 +21,8 @@
 		<h2>Goals:</h2>
 		<p>Matthew wants to find a tutoring gig that matches his education and experience.</p>
 		<h2>Use Case:</h2>
-		<p>Matthew stopped by the DDCB to say hello to Dylan and the crew and learned of the greatest website in existence, deepdivetutor.com. Later that day Matthew went to deepdivetutor.com on his android phone. He’s curious to see what tutoring demand there may be and how many tutors are offering their services. Luckily for Matthew the site was designed with the mobile first methodology and was easy for him to navigate on his phone. Not only was it easy for him to search for students that needed help with PHP and MySQL (what he worked with everyday), but it was also easy to see how he measured against the other tutors.</p>
+		<p>Matthew stopped by the DDCB to say hello to Dylan and the crew and learned of the greatest website in existence, deepdivetutor.com. Later that day Matthew went to deepdivetutor.com on his android phone. He’s curious to see what tutoring demand there may be and how many tutors are offering their services.</p>
+		<p>Luckily for Matthew the site was designed with the mobile first methodology and was easy for him to navigate on his phone. Not only was it easy for him to search for students that needed help with PHP and MySQL (what he worked with everyday), but it was also easy to see how he measured against the other tutors.</p>
 		<p>Matthew created an account profile explaining his experience, what he wanted to teach, his rates and also uploaded a picture. Matthew knew that it may be harder to get his first client because he didn’t have a rating on the site yet. Fortunately Matthew was able to upload a recommendation from the DDCB staff to improve prospective student confidence in him.</p>
 		<p>Within 48 hours Matthew was contacted by a student that needed help with object oriented PHP and set his first tutoring appointment...</p>
 	</body>
