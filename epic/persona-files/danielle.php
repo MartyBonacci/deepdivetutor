@@ -1,7 +1,7 @@
 ​<!DOCTYPE html>
 <html>
 	<head>
-	 <title>Persona Danielle</html>
+		<title>Persona Danielle</title>
 	</head>
 <body>
 	<h1>Persona</h1>
@@ -25,11 +25,11 @@
 		<li><strong>Frustrations:</strong> Setting definite and routine appointments doesn't really work well as it is. Also finding a central location to study with
 		wifi that is open late can also prove difficult.</li>
 		<li><strong>User Story:</strong>As a user, I need a way to set appointments within my avialble schedule, reach out to more  students and have a formal way to ask for pyments or rates.</li>
-
+	</ul>
 		<h2>UseCase</h2>
 		Daniel just getting out of this coding bootcamp less than a month ago, has started tutoring and deep dive bootcamp. She has all the technology needed to communicate with the student,
 		and can use her computer as a work station. The thing that is lacking is an official approach to reaching the students. Whether that be through physical locations  with wifi and are open late. to meet or follow through after
 		the initial tutoring session. She doesnt have an asking price and would like an official way to do this. She doesnt have the desire to tutor fulltime, but on the days she is limited to
 		she would like to schedule as many as possible.
-	</ul>
-</body>
+	</body>
+</html>
