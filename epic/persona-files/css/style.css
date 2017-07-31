@@ -1,0 +1,10 @@
+/*****************************************************
+* Custom CSS Stylesheet
+* @author Marty Bonacci
+******************************************************/
+
+html, body{
+	width: 32em;
+	margin-left: 3em;
+	margin-top: 1em;
+}
