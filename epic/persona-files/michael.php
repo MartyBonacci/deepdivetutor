@@ -29,16 +29,5 @@
 		<p><Strong>Goals:</Strong> Michael want's to alleviate some of the dead hours he has spent trying to teach
 		himself by hiring a tutor. He is looking for a tutor that can meet 2 or 3 times a week for 2 hours. Michael
 		is hoping to get more sleep and time with his family as well as a firm grasp on all he is learning.</p>
-		<p><strong>Use Case:</strong></p>At the end of Thursday's OOP Lecture it was open work time. Michael remembered
-		back to orientation day when the instructors were explaining all the resources available to the students one of the
-		things that stuck out was one of the previous capstones "Deep Dive Tutor". Michael decided to ask the instructor
-		how the process works. It was explained to Michael that the website was very easy to navigate and there would be step
-		by step instructions on how to sign and up and be assigned to a tutor that would work best for him. Now its lunch time
-		and Michael decides to give it a try. When the site first opens he is met with a welcome page and some words of
-		encouragement, he is assured the sign up process would be one simple step that confirms he is a deep dive student.
-		After signing up he is asked to explain the problems he is having and what languages he needs the most help with. He
-		is then asked to fill out a questionnaire with his availability, location he wants to meet, contact information and
-		the amount he is looking to spend on a tutor. He then clicks submit and he is assigned a tutor. Michael is told he
-		will be contacted by his tutor no later than the end of the following day.
 	</body>
 </html>
