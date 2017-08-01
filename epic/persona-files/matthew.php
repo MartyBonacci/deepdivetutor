@@ -49,7 +49,7 @@
 			<li>They click the edit profile link and are taken to the "edit profile" page.</li>
 			<li>The edit profile page is the same as the registration page except the fields are populated with the existing profile info from the database.</li>
 			<li>The tutor edits the info and submits the changes.</li>
-			<li>All is right in the world.</li>
+			<li>All is right in the world</li>
 		</ol>
 	</body>
 </html>
