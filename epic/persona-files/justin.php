@@ -70,7 +70,7 @@
 			<li>he chooses student</li>
 			<li>A form drops down and he fills out name and Email, clicks submit</li>
 			<li>another form comes up and he checks exactly what he needs help with</li>
-			<li<>After he makes his selections he clicks next</li>
+			<li>After he makes his selections he clicks next</li>
 			<li>he now has the option to add a photo he selects yes or no</li>
 			<li>he now confirms his profile</li>
 			<li>he is now matched with tutors that match his criteria</li>
