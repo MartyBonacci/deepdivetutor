@@ -8,7 +8,7 @@
 		<h1>persona: Michael Smith</h1>
 		<p><strong>Name:</strong> Michael Smith</p>
 		<p><strong>Age:</strong>28</p>
-		<p><strong>Proffesion:</strong> Michael Smith is a security officer at Rust Medical Center in Rio Rancho NM. He has
+		<p><strong>Profession:</strong> Michael Smith is a security officer at Rust Medical Center in Rio Rancho NM. He has
 		been in the security field for 6 years and is tired of working nights weekends and holidays. After talking with his
 		wife he has decided to change careers. After months of research and thought he decides web developement is a great
 		field that can offer him and his family just what he is looking for. He began looking into to schools and stumbled
