@@ -11,7 +11,7 @@
 			<li>profileName</li>
 			<li>profileEmail</li>
 			<li>profilePhoto</li>
-			<li>profileStudent</li>
+			<li>profileStudent (boolean true = student : false = tutor)</li>
 			<li>profileTopicsOfExperties</li>
 			<li>profileEducationAndExperience</li>
 			<li>profileHourlyRate</li>
