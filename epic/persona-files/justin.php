@@ -68,8 +68,8 @@
 			<li>Justin goes to sign up page and clicks sign up.</li>
 			<li>He is brought to a page and has option for student or teacher.</li>
 			<li>He chooses student.</li>
-			<li>A form drops down and he fills out name and Email, clicks submit.</li>
-			<li>Another form comes up and he checks exactly what he needs help with.</li>
+			<li>A form drops down and he is asked to fill out: first and last name and Email, clicks next.</li>
+			<li>Another form comes up and he checks exactly what topics he needs help with.</li>
 			<li>After he makes his selections he clicks next.</li>
 			<li>He now has the option to add a photo he selects yes or no.</li>
 			<li>He now confirms his profile.</li>
