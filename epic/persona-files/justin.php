@@ -65,24 +65,27 @@
 			MySQL, because I know I need extra help outside of the classroom on that topic.</p>
 		<p><strong>Interaction Flow:</strong></p>
 		<ul>
-			<li>Justin goes to sign up page and clicks sign up.</li>
-			<li>He is brought to a page and has option for student or teacher.</li>
-			<li>He chooses student.</li>
-			<li>A form drops down and he is asked to fill out: first and last name and Email, clicks next.</li>
-			<li>Another form comes up and he checks exactly what topics he needs help with.</li>
+			<li>Justin goes to deepdivetutor.com and is brought to the homepage and presented with two options: sign up
+				and login.</li>
+			<li>Justin clicks sign up and a radio button pops up asking him if he is a student or a teacher.</li>
+			<li>Justin chooses student and at that point a form drops down and he is asked to fill out his first and last
+				name, and Email. After that he clicks next.</li>
+			<li>A form with checkboxes comes up and he checks exactly what topics he needs help with.</li>
 			<li>After he makes his selections he clicks next.</li>
-			<li>He now has the option to add a photo he selects yes or no.</li>
-			<li>He now confirms his profile.</li>
-			<li>He is now matched with tutors that match his criteria.</li>
+			<li>Justin now has the option to add a photo and he selects yes or no.</li>
+			<li>Justin selects &quot;Browse&quot; and chooses a picture to upload.</li>
+			<li>Justin now confirms all his information is correct and his profile is now created.</li>
+			<li>He is then redirected to a page that shows thumbnails of tutors specializing in his checked fields, and
+				their rates.</li>
 			<li>Justin clicks on a tutor of his choice. This action brings up the tutors profile.</li>
 			<li>He sees their rate and availability.</li>
 			<li>Justin fills out a request form with his private contact information to be sent to the tutor.</li>
 		</ul>
 		<p><strong>Interaction Flow 2:</strong></p>
 		<ul>
-			<li>Justin wants to update his profile</li>
-			<li>He goes to deepdivetutor.com and logs in to their profile.</li>
-			<li>He clicks the edit profile link and is taken to the "edit profile" page.</li>
+			<li>Justin wants to update his profile.</li>
+			<li>He goes to deepdivetutor.com and logs in to his profile.</li>
+			<li>He clicks the &quot;edit profile&quot; link and is taken to the &quot;edit profile&quot; page.</li>
 			<li>The edit profile page is the same as the registration page except the fields are populated with the existing
 			profile info from the database.</li>
 			<li>He edits the info and submits the changes.</li>
