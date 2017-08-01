@@ -65,18 +65,18 @@
 			MySQL, because I know I need extra help outside of the classroom on that topic.</p>
 		<p><strong>Interaction Flow:</strong>
 		<ul>
-			<li>Justing goes to sign up page and clicks sign up</li>
-			<li>He is brought to a page and has option for student or teachr</li>
-			<li>he chooses student</li>
-			<li>A form drops down and he fills out name and Email, clicks submit</li>
-			<li>another form comes up and he checks exactly what he needs help with</li>
-			<li>After he makes his selections he clicks next</li>
-			<li>he now has the option to add a photo he selects yes or no</li>
-			<li>he now confirms his profile</li>
-			<li>he is now matched with tutors that match his criteria</li>
-			<li>Justin clicks on a tutor of his choice. This action brings up the tutors profile</li>
-			<li>He sees their rate and availability</li>
-			<li>Justin fills out a request form to be sent to the tutor</li>
+			<li>Justin goes to sign up page and clicks sign up.</li>
+			<li>He is brought to a page and has option for student or teacher.</li>
+			<li>He chooses student.</li>
+			<li>A form drops down and he fills out name and Email, clicks submit.</li>
+			<li>Another form comes up and he checks exactly what he needs help with.</li>
+			<li>After he makes his selections he clicks next.</li>
+			<li>He now has the option to add a photo he selects yes or no.</li>
+			<li>He now confirms his profile.</li>
+			<li>He is now matched with tutors that match his criteria.</li>
+			<li>Justin clicks on a tutor of his choice. This action brings up the tutors profile.</li>
+			<li>He sees their rate and availability.</li>
+			<li>Justin fills out a request form to be sent to the tutor.</li>
 		</ul>
 		</p>
 	</body>
