@@ -29,6 +29,6 @@
 		<br/>
 		<p>Matthew knew that it may be harder to get his first client because he didn’t have a rating on the site yet. Fortunately Matthew was able to upload a recommendation from the DDCB staff to improve prospective student confidence in him.</p>
 		<p>Within 48 hours Matthew received an email from a student, via deepdivetutor.com, that needed help with object oriented PHP and set his first tutoring appointment. The email included contact info for the student. Matthew emailed (or maybe called on the phone) the student directly and setup the first appointment to tutor them.</p>
-		<p>The first turoting session went well so Matthew asked the student to leave positive feedback for him on the website.</p>
+		<p>The first tutoring session went well so Matthew asked the student to leave positive feedback for him on the website.</p>
 	</body>
 </html>
