@@ -14,7 +14,7 @@
 			<li>profileStudent</li>
 			<li>profileTopicsOfExperties</li>
 			<li>profileEducationAndExperience</li>
-			<li>profileHoutlyRate</li>
+			<li>profileHourlyRate</li>
 			<li>profileImage</li>
 			<li>profileActivationToken</li>
 			<li>profileHash</li>
