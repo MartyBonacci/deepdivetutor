@@ -63,7 +63,7 @@
 		<p><strong>User Story:</strong> As a user I need to be able to find a tutor that went through the bootcamp, that
 			is qualified to assist me in
 			MySQL, because I know I need extra help outside of the classroom on that topic.</p>
-		<p><strong>Interaction Flow:</strong>
+		<p><strong>Interaction Flow:</strong></p>
 		<ul>
 			<li>Justin goes to sign up page and clicks sign up.</li>
 			<li>He is brought to a page and has option for student or teacher.</li>
@@ -78,6 +78,15 @@
 			<li>He sees their rate and availability.</li>
 			<li>Justin fills out a request form with his private contact information to be sent to the tutor.</li>
 		</ul>
-		</p>
+		<p><strong>Interaction Flow 2:</strong></p>
+		<ul>
+			<li>Justin wants to update his profile</li>
+			<li>He goes to deepdivetutor.com and logs in to their profile.</li>
+			<li>He clicks the edit profile link and is taken to the "edit profile" page.</li>
+			<li>The edit profile page is the same as the registration page except the fields are populated with the existing
+			profile info from the database.</li>
+			<li>He edits the info and submits the changes.</li>
+			<li>All is right in the world.</li>
+		</ul>
 	</body>
 </html>
