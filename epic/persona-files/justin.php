@@ -81,7 +81,7 @@
 			<li>He sees their rate and availability.</li>
 			<li>Justin fills out a request form with his private contact information to be sent to the tutor.</li>
 		</ul>
-		<p><strong>Interaction Flow 2:</strong></p>
+		<p><strong>Interaction Flow Two:</strong></p>
 		<ul>
 			<li>Justin wants to update his profile.</li>
 			<li>He goes to deepdivetutor.com and logs in to his profile.</li>
