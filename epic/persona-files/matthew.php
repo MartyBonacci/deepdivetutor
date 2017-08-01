@@ -30,14 +30,17 @@
 		<p>Matthew knew that it may be harder to get his first client because he didn’t have a rating on the site yet. Fortunately Matthew was able to upload a recommendation from the DDCB staff to improve prospective student confidence in him.</p>
 		<p>Within 48 hours Matthew received an email from a student, via deepdivetutor.com, that needed help with object oriented PHP and set his first tutoring appointment. The email included contact info for the student. Matthew emailed (or maybe called on the phone) the student directly and setup the first appointment to tutor them.</p>
 		<p>The first tutoring session went well so Matthew asked the student to leave positive feedback for him on the website.</p>
+		<br/>
 		<h2>Interation Flow</h2>
 		<ol>
-			<li>1. The perspective tutor (User) navigates to deepdivetutor.com</li>
-			<li>2. The User sees images and reads copy on the site that motivates him/her to register and offer their services as a tutor.</li>
-			<li>3. The User clicks the link to register as a tutor.</li>
-			<li>4. The User enters the needed profile info, name, username, email, topics of specialty, education/deep dive program, availability, requested rate of pay, and uploads a profile photo.</li>
-			<li>5. The site will scan the profile info for inappropriate content and give the User the opportunity to edit their entries.</li>
-			<li>6. The User's tutor profile will then be displayed </li>
+			<li>The perspective tutor (User) navigates to deepdivetutor.com</li>
+			<li>The User sees images and reads copy on the site that motivates him/her to register and offer their services as a tutor.</li>
+			<li>The User clicks the link to register as a tutor.</li>
+			<li>The User enters the needed profile info, name, username, email, topics of specialty, education/deep dive program, availability, requested rate of pay, and uploads a profile photo.</li>
+			<li>The site will scan the profile info for inappropriate content and give the User the opportunity to edit their entries.</li>
+			<li>The User's tutor profile will then be displayed for students to see.</li>
+			<li>When a student sends a message to the tutor/User, the site sends the user an email that includes the message, the topic(s) that the student needs help with, availability times and the student's contact info.</li>
+			<li>The User will then contact the student and arrange a tutoring appointment.</li>
 		</ol>
 	</body>
 </html>
