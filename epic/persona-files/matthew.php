@@ -27,28 +27,28 @@
 		<p>Matthew sees clear info about how the site works and how it can help him right on the main page. He can see that the site connects students with tutors.</p>
 		<p>Matthew then clicks the link to sign up as a tutor. He then enters the needed profile info, name, username, email, areas of specialty, education/deep dive program, availability, requested rate of pay, and uploaded a profile photo.</p>
 		<br/>
-		<p>Matthew knew that it may be harder to get his first client because he didn’t have a rating on the site yet. Fortunately Matthew was able to upload a recommendation from the DDCB staff to improve prospective student confidence in him.</p>
+		<p>Matthew knew that it may be harder to get his first client because he didn’t have a rating on the site yet.</p>
 		<p>Within 48 hours Matthew received an email from a student, via deepdivetutor.com, that needed help with object oriented PHP and set his first tutoring appointment. The email included contact info for the student. Matthew emailed (or maybe called on the phone) the student directly and setup the first appointment to tutor them.</p>
 		<p>The first tutoring session went well so Matthew asked the student to leave positive feedback for him on the website.</p>
 		<br/>
 		<h2>Interaction Flow 1</h2>
 		<ol>
-			<li>The perspective tutor (User) navigates to deepdivetutor.com</li>
-			<li>The User sees images and reads copy on the site that motivates him/her to register and offer their services as a tutor.</li>
-			<li>The User clicks the link to register as a tutor.</li>
-			<li>The User enters the needed profile info, name, username, email, topics of specialty, education/deep dive program, availability, requested rate of pay, and uploads a profile photo.</li>
-			<li>The site will scan the profile info for inappropriate content and give the User the opportunity to edit their entries.</li>
-			<li>The User's tutor profile will then be displayed for students to see.</li>
-			<li>When a student sends a message to the tutor/User, the site sends the user an email that includes the message, the topic(s) that the student needs help with, availability times and the student's contact info.</li>
-			<li>The User will then contact the student and arrange a tutoring appointment.</li>
+			<li>The perspective Matthew navigates to deepdiveMatthew.com</li>
+			<li>The Matthew sees images and reads copy on the site that motivates him/her to register and offer their services as a tutor.</li>
+			<li>The Matthew clicks the link to register as a tutor.</li>
+			<li>The Matthew enters the needed profile info, name, username, email, topics of specialty, education/deep dive program, availability, requested rate of pay, and uploads a profile photo.</li>
+			<li>The site will scan the profile info for inappropriate content and give the Matthew the opportunity to edit their entries.</li>
+			<li>The Matthew's tutor profile will then be displayed for students to see.</li>
+			<li>When a student sends a message to the Matthew, the site sends Matthew an email that includes the message, the topic(s) that the student needs help with, availability times and the student's contact info.</li>
+			<li>Matthew will then contact the student and arrange a tutoringing appointment.</li>
 		</ol>
 		<h2>Interaction Flow 2</h2>
 		<ol>
-			<li>The tutor has learned a new skill and needs to add it to his/her profile.</li>
-			<li>The tutor goes to deepdivetutor.com and logs in to their profile.</li>
-			<li>They click the edit profile link and are taken to the "edit profile" page.</li>
-			<li>The edit profile page is the same as the registration page except the fields are populated with the existing profile info from the database.</li>
-			<li>The tutor edits the info and submits the changes.</li>
+			<li>The Matthew has learned a new skill and needs to add it to his/her profile.</li>
+			<li>The Matthew goes to deepdiveMatthew.com and logs in to his profile.</li>
+			<li>Matthew clicks the "edit profile" link and is taken to the "edit profile" page.</li>
+			<li>The "edit profile" page is the same as the registration page except the fields are populated with Matthew's existing profile info from the database.</li>
+			<li>Matthew edits the info and submits the changes.</li>
 			<li>All is right in the world</li>
 		</ol>
 	</body>
