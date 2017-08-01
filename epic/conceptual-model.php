@@ -12,7 +12,6 @@
 			<li>profileEmail</li>
 			<li>profilePhoto</li>
 			<li>profileStudent</li>
-			<li>profileTutor</li>
 			<li>profileActivationToken</li>
 			<li>profileHash</li>
 			<li>profileSalt</li>
