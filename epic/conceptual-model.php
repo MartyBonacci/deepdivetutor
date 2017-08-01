@@ -24,8 +24,9 @@
 		<br/>
 		<h2>review</h2>
 		<ul>
-			<li>reviewStudentProfileId</li>
-			<li>reviewTutorProfileId</li>
+			<li>reviewId (primary key)</li>
+			<li>reviewStudentProfileId (foreign key)</li>
+			<li>reviewTutorProfileId (foreign key)</li>
 			<li>reviewRating</li>
 			<li>reviewText</li>
 			<li>reviewDate</li>
