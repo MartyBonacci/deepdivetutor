@@ -76,7 +76,7 @@
 			<li>He is now matched with tutors that match his criteria.</li>
 			<li>Justin clicks on a tutor of his choice. This action brings up the tutors profile.</li>
 			<li>He sees their rate and availability.</li>
-			<li>Justin fills out a request form to be sent to the tutor.</li>
+			<li>Justin fills out a request form with his private contact information to be sent to the tutor.</li>
 		</ul>
 		</p>
 	</body>
