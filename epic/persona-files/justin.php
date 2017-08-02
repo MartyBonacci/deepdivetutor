@@ -50,33 +50,34 @@
 		<!-- maybe put this in user-stories? -->
 		<p><strong>Use Case:</strong>
 		<ol>
-			<li>Student clicks sign up checks a box if they are a student or a tutor.</li>
-			<li>Student checks student box and is prompted for name and email.</li>
-			<li>More checkboxes pull up and the student checks what they need assistance with.</li>
-			<li>As the final step of creating a profile, the student will have the option to add a photo.</li>
-			<li>After they create a profile they are brought to a screen to view all the tutors.</li>
-			<li>The student sees a thumbnail with name of the tutor, a photo, and what they specialize in.</li>
-			<li>The student clicks on a profile and sees the tutors availability and price.</li>
-			<li>The student sees a form to fill out in order to have the tutor contact them.</li>
+			<li>Justin clicks sign up checks a box if they are a student or a tutor.</li>
+			<li>Justin checks student box and is prompted for name and email.</li>
+			<li>More checkboxes pull up and Justin checks what he needs assistance with.</li>
+			<li>As the final step of creating a profile, Justin will have the option to add a photo.</li>
+			<li>After he creates a profile Justin is brought to a screen to view all the tutors.</li>
+			<li>Justin sees a thumbnail with name of the tutor, a photo, and what they specialize in.</li>
+			<li>He clicks on a profile and sees the tutors availability and price.</li>
+			<li>Justin sees a form to fill out in order to have the tutor contact him.</li>
 		</ol>
 		</p>
-		<p><strong>User Story:</strong> As a user I need to be able to find a tutor that went through the bootcamp, that
-			is qualified to assist me in
-			MySQL, because I know I need extra help outside of the classroom on that topic.</p>
+		<p><strong>User Story: </strong>I need to be able to find a tutor that went through the bootcamp, that is qualified to assist me in MySQL.</p>
 		<p><strong>Interaction Flow:</strong></p>
 		<ul>
 			<li>Justin goes to deepdivetutor.com and is brought to the homepage and presented with two options: sign up
-				and login.</li>
+				and login.
+			</li>
 			<li>Justin clicks sign up and a radio button pops up asking him if he is a student or a teacher.</li>
 			<li>Justin chooses student and at that point a form drops down and he is asked to fill out his first and last
-				name, and Email. After that he clicks next.</li>
+				name, and Email. After that he clicks next.
+			</li>
 			<li>A form with checkboxes comes up and he checks exactly what topics he needs help with.</li>
 			<li>After he makes his selections he clicks next.</li>
 			<li>Justin now has the option to add a photo and he selects yes or no.</li>
 			<li>Justin selects &quot;Browse&quot; and chooses a picture to upload.</li>
 			<li>Justin now confirms all his information is correct and his profile is now created.</li>
 			<li>He is then redirected to a page that shows thumbnails of tutors specializing in his checked fields, and
-				their rates.</li>
+				their rates.
+			</li>
 			<li>Justin clicks on a tutor of his choice. This action brings up the tutors profile.</li>
 			<li>He sees their rate and availability.</li>
 			<li>Justin fills out a request form with his private contact information to be sent to the tutor.</li>
@@ -86,8 +87,8 @@
 			<li>Justin wants to update his profile.</li>
 			<li>He goes to deepdivetutor.com and logs in to his profile.</li>
 			<li>He clicks the &quot;edit profile&quot; link and is taken to the &quot;edit profile&quot; page.</li>
-			<li>The edit profile page is the same as the registration page except the fields are populated with the existing
-			profile info from the database.</li>
+			<li>The edit profile page is the same as the registration page except the fields are populated with the existing profile info from the database.
+			</li>
 			<li>He edits the info and submits the changes.</li>
 			<li>All is right in the world.</li>
 		</ul>
