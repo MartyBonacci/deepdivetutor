@@ -42,7 +42,7 @@
 			<li>profileSkillProfileId (foreign key)</li>
 			<li>profileSkillSkillId (foreign key)</li>
 		</ul>
-
-
+		<br/>
+		<img src="images/deepdiveturor-erd.svg" alt="erd">
 	</body>
 </html>
