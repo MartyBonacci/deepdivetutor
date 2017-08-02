@@ -10,9 +10,8 @@
 			<li>profileId (primary key)</li>
 			<li>profileName</li>
 			<li>profileEmail</li>
-			<li>profilePhoto</li>
 			<li>profileStudent (boolean true = student  :  false = tutor)</li>
-			<li>profileTopicsOfExperties</li>
+			<li>profileSkills</li>
 			<li>profileEducationAndExperience</li>
 			<li>profileHourlyRate</li>
 			<li>profileImage</li>
@@ -30,6 +29,20 @@
 			<li>reviewRating</li>
 			<li>reviewText</li>
 			<li>reviewDate</li>
+		</ul>
+		<br/>
+		<h2>skills</h2>
+		<ul>
+			<li>HTML5</li>
+			<li>CSS</li>
+			<li>PHP</li>
+			<li>Bootstrap</li>
+			<li>MySQL</li>
+			<li>Object Oriented</li>
+			<li>JavaScript</li>
+			<li>Jquery</li>
+			<li>Angular</li>
+
 		</ul>
 	</body>
 </html>
