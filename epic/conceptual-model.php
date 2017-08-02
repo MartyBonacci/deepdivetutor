@@ -11,7 +11,6 @@
 			<li>profileName</li>
 			<li>profileEmail</li>
 			<li>profileStudent (boolean true = student  :  false = tutor)</li>
-			<li>profileSkills</li>
 			<li>profileEduExperience</li>
 			<li>profileRate</li>
 			<li>profileImage</li>
@@ -31,18 +30,17 @@
 			<li>reviewDate</li>
 		</ul>
 		<br/>
-		<h2>skills</h2>
+		<h2>skill</h2>
 		<ul>
-			<li>HTML5</li>
-			<li>CSS</li>
-			<li>PHP</li>
-			<li>Bootstrap</li>
-			<li>MySQL</li>
-			<li>Object Oriented</li>
-			<li>JavaScript</li>
-			<li>Jquery</li>
-			<li>Angular</li>
-
+			<li>skillId</li>
+			<li>skillName</li>
 		</ul>
+		<br/>
+		<h2>profileSkill</h2>
+		<ul>
+			<li>profileSkillProfileId (foreign key)</li>
+			<li>profileSkillSkillId (foreign key)</li>
+		</ul>
+
 	</body>
 </html>
