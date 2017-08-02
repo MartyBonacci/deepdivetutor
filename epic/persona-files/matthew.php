@@ -32,18 +32,18 @@
 		<h2>Interaction Flow 1</h2>
 		<ol>
 			<li>The perspective Matthew navigates to deepdiveMatthew.com</li>
-			<li>The Matthew sees images and reads copy on the site that motivates him/her to register and offer their services as a tutor.</li>
-			<li>The Matthew clicks the link to register as a tutor.</li>
-			<li>The Matthew enters the needed profile info, name, username, email, topics of specialty, education/deep dive program, availability, requested rate of pay, and uploads a profile photo.</li>
+			<li>Matthew sees images and reads copy on the site that motivates him/her to register and offer their services as a tutor.</li>
+			<li>Matthew clicks the link to register as a tutor.</li>
+			<li>Matthew enters the needed profile info, name, username, email, topics of specialty, education/deep dive program, availability, requested rate of pay, and uploads a profile photo.</li>
 			<li>The site will scan the profile info for inappropriate content and give the Matthew the opportunity to edit their entries.</li>
-			<li>The Matthew's tutor profile will then be displayed for students to see.</li>
+			<li>Matthew's tutor profile will then be displayed for students to see.</li>
 			<li>When a student sends a message to the Matthew, the site sends Matthew an email that includes the message, the topic(s) that the student needs help with, availability times and the student's contact info.</li>
 			<li>Matthew will then contact the student and arrange a tutoringing appointment.</li>
 		</ol>
 		<h2>Interaction Flow 2</h2>
 		<ol>
-			<li>The Matthew has learned a new skill and needs to add it to his/her profile.</li>
-			<li>The Matthew goes to deepdiveMatthew.com and logs in to his profile.</li>
+			<li>Matthew has learned a new skill and needs to add it to his/her profile.</li>
+			<li>Matthew goes to deepdiveMatthew.com and logs in to his profile.</li>
 			<li>Matthew clicks the "edit profile" link and is taken to the "edit profile" page.</li>
 			<li>The "edit profile" page is the same as the registration page except the fields are populated with Matthew's existing profile info from the database.</li>
 			<li>Matthew edits the info and submits the changes.</li>
