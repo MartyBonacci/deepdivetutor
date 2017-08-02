@@ -12,8 +12,8 @@
 			<li>profileEmail</li>
 			<li>profileStudent (boolean true = student  :  false = tutor)</li>
 			<li>profileSkills</li>
-			<li>profileEducationAndExperience</li>
-			<li>profileHourlyRate</li>
+			<li>profileEduExperience</li>
+			<li>profileRate</li>
 			<li>profileImage</li>
 			<li>profileLastEditDate</li>
 			<li>profileActivationToken</li>
