@@ -10,6 +10,7 @@
 			<li>profileId (primary key)</li>
 			<li>profileName</li>
 			<li>profileEmail</li>
+			<li>profileGithubToken</li>
 			<li>profileStudent (boolean true = student  :  false = tutor)</li>
 			<li>profileEduExperience</li>
 			<li>profileRate</li>
