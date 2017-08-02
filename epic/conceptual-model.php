@@ -10,9 +10,9 @@
 			<li>profileId (primary key)</li>
 			<li>profileName</li>
 			<li>profileEmail</li>
+			<li>profileType</li>
 			<li>profileGithubToken</li>
-			<li>profileStudent (boolean true = student  :  false = tutor)</li>
-			<li>profileEduExperience</li>
+			<li>profileBio</li>
 			<li>profileRate</li>
 			<li>profileImage</li>
 			<li>profileLastEditDate</li>
