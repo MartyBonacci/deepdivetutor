@@ -16,7 +16,8 @@ CREATE TABLE profile (
 	-- profileGithubToken
 	profileBio VARCHAR(500) NOT NULL,
 	profileRate INT UNSIGNED NOT NULL,
-	profileImage
+	-- not sure if image is right
+	profileImage BLOB NULL,
 	profileLastEditDate DATETIME(6) NOT NULL,
 	profileActivationToken CHAR(32) NOT NULL,
 	profileHash CHAR(128) NOT NULL,
