@@ -47,7 +47,7 @@ class Skill implements  \JsonSerializable{
 	public function getSkillName(): string {
 		return $this->skillName ;
 	}
-}
+
 	public function setSkillName(string $newSkillName): void{
 	$newSkillName = trim($newSkillName);
 	$newSkillName = filter_var($newSkillName,FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
