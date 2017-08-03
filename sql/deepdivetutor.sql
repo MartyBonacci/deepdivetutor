@@ -8,18 +8,18 @@ DROP TABLE IF EXISTS profile;
 -- create tables
 CREATE TABLE profile (
 	-- NOT NULL means they are required
-	profileId              INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	profileName            VARCHAR(50)                 NOT NULL,
-	profileEmail           VARCHAR(128)                NOT NULL,
-	profileType            TINYINT UNSIGNED            NOT NULL,
-	profileGithubToken     VARCHAR(64),
-	profileBio             VARCHAR(500)                NOT NULL,
-	profileRate            DECIMAL(5, 2),
-	profileImage           VARCHAR(32),
-	profileLastEditDate    TIMESTAMP(6)                NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-	profileActivationToken CHAR(32),
-	profileHash            CHAR(128),
-	profileSalt            CHAR(64),
+	profileId               INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	profileName             VARCHAR(50)                 NOT NULL,
+	profileEmail            VARCHAR(128)                NOT NULL,
+	profileType             TINYINT UNSIGNED            NOT NULL,
+	profileGithubToken      VARCHAR(64),
+	profileBio              VARCHAR(500)                NOT NULL,
+	profileRate             DECIMAL(5, 2),
+	profileImage            VARCHAR(32),
+	profileLastEditDateTime TIMESTAMP(6)                NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+	profileActivationToken  CHAR(32),
+	profileHash             CHAR(128),
+	profileSalt             CHAR(64),
 	UNIQUE (profileEmail),
 	PRIMARY KEY (profileId)
 );
@@ -29,11 +29,11 @@ CREATE TABLE review (
 	reviewId               INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	reviewStudentProfileId INT UNSIGNED                NOT NULL,
 	reviewTutorProfileId   INT UNSIGNED                NOT NULL,
-	-- not sure about reviewRating
 	reviewRating           TINYINT UNSIGNED            NOT NULL,
 	reviewText             VARCHAR(500)                NOT NULL,
-	-- should reviewDate be reviewDateTime?
-	reviewDate             TIMESTAMP(6)                NOT NULL,
+	reviewDateTime         TIMESTAMP(6)                NOT NULL,
+	INDEX (reviewStudentProfileId),
+	INDEX (reviewTutorProfileId),
 	FOREIGN KEY (reviewStudentProfileId) REFERENCES profile (profileId),
 	FOREIGN KEY (reviewTutorProfileId) REFERENCES profile (profileId),
 	PRIMARY KEY (reviewId)
