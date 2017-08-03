@@ -49,6 +49,7 @@ class review {
 	 * @param int $newReviewRating int containing rating number
 	 * @param string $newReviewText string containing actual review text
 	 * @param timestamp $newReviewDateTime timestamp of when review was made
+	 *
 	 **/
 
 }
