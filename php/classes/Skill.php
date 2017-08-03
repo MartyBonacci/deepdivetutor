@@ -10,10 +10,19 @@ class Skill implements  \JsonSerializable{
 	 */
 	private $skillId;
 	/**
-	 * @var
+	 * @var skillName is a string it will actually house the names of the skills specified by admin;
 	 */
 	private $skillName;
 
+	/**
+	 * Skill constructor.
+	 * @param int|null $newSkillId test if this skill id is null or an int
+	 * @param string $newSkillName test if this skill id is a string, if it holds under the 32 character limit, and if its an empty value
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data value is out of bounds
+	 * @throws \Exception if some other exception occurs
+	 * @throw \TypeError if data types violate type hints
+	 */
 	public function __construct(?int $newSkillId, string $newSkillName){
 		try {
 			$this->setSkillId($newSkillId);
@@ -26,14 +35,15 @@ class Skill implements  \JsonSerializable{
 	}
 
 	/**
-	 * @return mixed
+	 * accessor method for skillId
+	 * @return int|null value of skillId
 	 */
 	public function getSkillId(): int {
 		return $this->skillId;
 	}
 
 	/**
-	 * @param mixed $skillId
+	 * @param mixed int
 	 */
 	public function setSkillId(int $newSkillId): void {
 		if ($newSkillId<= 0){
