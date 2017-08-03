@@ -15,7 +15,7 @@
 			<li>profileBio</li>
 			<li>profileRate</li>
 			<li>profileImage</li>
-			<li>profileLastEditDate</li>
+			<li>profileLastEditDateTime</li>
 			<li>profileActivationToken</li>
 			<li>profileHash</li>
 			<li>profileSalt</li>
@@ -28,7 +28,7 @@
 			<li>reviewTutorProfileId (foreign key)</li>
 			<li>reviewRating</li>
 			<li>reviewText</li>
-			<li>reviewDate</li>
+			<li>reviewDateTime</li>
 		</ul>
 		<br/>
 		<h2>skill</h2>
