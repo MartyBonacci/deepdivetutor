@@ -28,6 +28,17 @@ CREATE TABLE profile (
 
 -- create review entity
 CREATE TABLE review (
-	reviewId						INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	reviewId               INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	reviewStudentProfileId INT UNSIGNED                NOT NULL,
+	reviewTutorProfileId   INT UNSIGNED                NOT NULL,
+	-- not sure about reviewRating
+	reviewRating           INT(5)                      NOT NULL,
+	reviewText             VARCHAR(500)                NOT NULL,
+	-- should reviewDate be reviewDateTime?
+	reviewDate             TIMESTAMP(6)                NOT NULL,
+	PRIMARY KEY (reviewId),
+	FOREIGN KEY (reviewStudentProfileId),
+	FOREIGN KEY (reviewTutorProfileId)
+);
 
-)
+-- getting error not sure why
