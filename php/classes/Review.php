@@ -1,7 +1,7 @@
 <?php
 
 namespace Edu\Cnm\DeepDiveTutor;
-require_once ("autoload.php");
+require_once("autoload.php");
 
 /**
  * <h1>deep dive tutor</h1>
@@ -39,5 +39,16 @@ class review {
 	 * @var \timestamp $reviewDateTime
 	 **/
 	private $reviewDateTime;
+
+	/**
+	 * constructor
+	 *
+	 * @param int|null $newReviewId of this review or null if a new review
+	 * @param int $newReviewStudentProfileId id of the student that saved this review
+	 * @param int $newReviewTutorProfileId id of the tutor that saved this review
+	 * @param int $newReviewRating int containing rating number
+	 * @param string $newReviewText string containing actual review text
+	 * @param timestamp $newReviewDateTime timestamp of when review was made
+	 **/
 
 }
