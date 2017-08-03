@@ -16,18 +16,28 @@ class review {
 	private $reviewId;
 	/**
 	 * id of the student that saved this review; this is a foreign key
-	 * var int $reviewStudentProfileId
+	 * @var int $reviewStudentProfileId
 	 **/
 	private $reviewStudentProfileId;
 	/**
 	 * id of the tutor that saved this review; this is a foreign key
-	 * var int $reviewTutorProfileId
+	 * @var int $reviewTutorProfileId
 	 **/
 	private $reviewTutorProfileId;
 	/**
 	 * actual rating of tutor
-	 * var int $reviewRating
+	 * @var int $reviewRating
 	 **/
 	private $reviewRating;
+	/**
+	 * actuall text of review
+	 * @var string $reviewText
+	 **/
+	private $reviewText;
+	/**
+	 * date and time review was submitted, in a PHP DateTime object
+	 * @var \timestamp $reviewDateTime
+	 **/
+	private $reviewDateTime;
 
 }
