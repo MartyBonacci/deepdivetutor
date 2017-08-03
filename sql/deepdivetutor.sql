@@ -25,3 +25,9 @@ CREATE TABLE profile (
 	UNIQUE (profileEmail),
 	PRIMARY KEY (profileId)
 );
+
+-- create review entity
+CREATE TABLE review (
+	reviewId						INT UNSIGNED AUTO_INCREMENT NOT NULL,
+
+)
