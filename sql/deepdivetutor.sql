@@ -22,23 +22,35 @@ CREATE TABLE profile (
 	profileActivationToken CHAR(32)                    NOT NULL,
 	profileHash            CHAR(128)                   NOT NULL,
 	profileSalt            CHAR(64)                    NOT NULL,
-	UNIQUE (profileEmail),
+	UNIQUE(profileEmail),
 	PRIMARY KEY (profileId)
-);
+) ;
 
 -- create review entity
 CREATE TABLE reviews (
 	reviewId               INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	reviewtudentProfileId INT UNSIGNED                NOT NULL,
+	reviewStudentProfileId INT UNSIGNED                NOT NULL,
 	reviewTutorProfileId   INT UNSIGNED                NOT NULL,
 	-- not sure about reviewRating
 	reviewRating           INT(5)                      NOT NULL,
 	reviewText             VARCHAR(500)                NOT NULL,
 	-- should reviewDate be reviewDateTime?
 	reviewDate             TIMESTAMP(6)                NOT NULL,
-	PRIMARY KEY (reviewId),
-	FOREIGN KEY (reviewStudentProfileId),
-	FOREIGN KEY (reviewTutorProfileId)
+	FOREIGN KEY(reviewStudentProfileId) REFERENCES profile(profileId),
+	FOREIGN KEY(reviewTutorProfileId) REFERENCES profile(profileId),
+	PRIMARY KEY(reviewId)
 );
 
--- getting error not sure why
+CREATE TABLE skill (
+	skillId	INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	skillName VARCHAR(32) NOT NULL,
+	UNIQUE (skillName),
+	PRIMARY KEY (skillId)
+);
+
+CREATE TABLE profileSkill(
+profileSkillprofileId INT UNSIGNED NOT NULL,
+profileSkillSkillId INT	UNSIGNED NOT NULL,
+FOREIGN KEY (profileSkillProfileId) REFERENCES profile(profileId),
+FOREIGN KEY(profileSkillSkillId) REFERENCES	skill(skillId)
+);
