@@ -27,9 +27,9 @@ CREATE TABLE profile (
 );
 
 -- create review entity
-CREATE TABLE review (
+CREATE TABLE reviews (
 	reviewId               INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	reviewStudentProfileId INT UNSIGNED                NOT NULL,
+	reviewtudentProfileId INT UNSIGNED                NOT NULL,
 	reviewTutorProfileId   INT UNSIGNED                NOT NULL,
 	-- not sure about reviewRating
 	reviewRating           INT(5)                      NOT NULL,
