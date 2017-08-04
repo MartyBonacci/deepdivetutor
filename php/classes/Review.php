@@ -49,7 +49,11 @@ class review {
 	 * @param int $newReviewRating int containing rating number
 	 * @param string $newReviewText string containing actual review text
 	 * @param timestamp $newReviewDateTime timestamp of when review was made
-	 *
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \Range Exception if data values are out of bounds (e.g., strings too long, negative integers, negative floats)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @documentation https://php.net/manual/en.language.oop5.decon.php
 	 **/
 
 }
