@@ -56,15 +56,18 @@ class review {
 	 * @documentation https://php.net/manual/en.language.oop5.decon.php
 	 **/
 	public function __construct(?int $newReviewId, int $newReviewStudentProfileId, int $newReviewTutorProfileId,
-		int $newReviewRating, string $newReviewText, timestamp $newReviewDateTime){
-		try{
+										 int $newReviewRating, string $newReviewText, timestamp $newReviewDateTime) {
+		try {
 			$this->setReviewId($newReviewId);
 			$this->setReviewStudentProfileId($newReviewStudentProfileId);
 			$this->setReviewTutorProfileId($newReviewTutorProfileId);
 			$this->setReviewRating($newReviewRating);
 			$this->setReviewText($newReviewText);
 			$this->setReviewDateTime($newReviewDateTime);
-;}
-}
+
+		} // determine what exception was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);}
+	}
 
 }
