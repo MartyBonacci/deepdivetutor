@@ -71,4 +71,27 @@ class Profile {
 	 * @var string $profileSalt
 	 */
 	private $profileSalt;
+
+	/**
+	 * constructor for this profile
+	 *
+	 * @param int|null $newProfileId id of this profile or null if new profile
+	 * @param string $newProfileName name of this profile owner
+	 * @param string $newProfileEmail email address for this profile
+	 * @param int $newProfileType type of profile
+	 * @param string $newProfileGithubToken GitHub token for this profile
+	 * @param string $newProfileBio bio for this profile
+	 * @param float $newProfileRate rate for this profile
+	 * @param string $newProfileImage image for this profile
+	 * @param \DateTime $newProfileLastEditDateTime last edit date for this profile
+	 * @param string $newProfileActivationToken activation token for this profile
+	 * @param string $newProfileHash hash for this profile
+	 * @param string $newProfileSalt salt for this profile
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @documentation https://php.net/manual/en/language.oop5.decon.php
+	 */
+
 }
