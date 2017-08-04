@@ -55,5 +55,16 @@ class review {
 	 * @throws \Exception if some other exception occurs
 	 * @documentation https://php.net/manual/en.language.oop5.decon.php
 	 **/
+	public function __construct(?int $newReviewId, int $newReviewStudentProfileId, int $newReviewTutorProfileId,
+		int $newReviewRating, string $newReviewText, timestamp $newReviewDateTime){
+		try{
+			$this->setReviewId($newReviewId);
+			$this->setReviewStudentProfileId($newReviewStudentProfileId);
+			$this->setReviewTutorProfileId($newReviewTutorProfileId);
+			$this->setReviewRating($newReviewRating);
+			$this->setReviewText($newReviewText);
+			$this->setReviewDateTime($newReviewDateTime);
+;}
+}
 
 }
