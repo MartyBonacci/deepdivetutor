@@ -93,5 +93,30 @@ class Profile {
 	 * @throws \Exception if some other exception occurs
 	 * @documentation https://php.net/manual/en/language.oop5.decon.php
 	 */
+	public function construct__(?int $newProfileId, string $newProfileName, string $newProfileEmail, int
+	$newProfileType, string $newProfileGithubToken, string $newProfileBio, float $newProfileRate, string
+	$newProfileImage, $newProfileLastEditDateTime = null, string $newProfileActivationToken, string
+	$newProfileHash, string $newProfileSalt) {
+		try {
+			$this->setProfileId($newProfileId);
+			$this->setProfileName($newProfileName);
+			$this->setProfileEmail($newProfileEmail);
+			$this->setProfileType($newProfileType);
+			$this->setProfileGithubToken($newProfileGithubToken);
+			$this->setProfileBio($newProfileBio);
+			$this->setProfileRate($newProfileRate);
+			$this->setProfileImage($newProfileImage);
+			$this->setProfileLastEditDateTime($newProfileLastEditDateTime);
+			$this->setProfileActivationToken($newProfileActivationToken);
+			$this->setProfileHash($newProfileHash);
+			$this->setProfileSalt($newProfileSalt);
+		}
+		 // determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+
 
 }
