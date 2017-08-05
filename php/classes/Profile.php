@@ -147,6 +147,68 @@ class Profile {
 		// convert and store the profile id
 		$this->profileId = $newProfileId;
 	}
+	/**
+	 * accessor method for profile name
+	 *
+	 * @return string value of profile name
+	 */
+	public function getProfileName(): string {
+		return($this->profileName);
+	}
+	/**
+	 * mutator method for profile name
+	 * @param string $newProfileName new value of profile name
+	 * @throws \InvalidArgumentException if $newProfileName is not a string or is insecure
+	 * @throws \RangeException if $newProfileName > 50 characters
+	 * @throws \TypeError if $newProfileName is not a string
+	 */
+	public function setProfileName(string $newProfileName): void {
+		// verify the name is secure
+		$newProfileName = trim($newProfileName);
+		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING);
+		// make sure name is not empty
+		if(empty($newProfileName) === true) {
+			throw(new \InvalidArgumentException("name is empty or insecure"));
+		}
+		// verify name will fit into database
+		if(strlen($newProfileName) > 50) {
+			throw(new \RangeException("name is too long"));
+		}
+		// store profile name
+		$this->profileName = $newProfileName;
+	}
+	/**
+	 * accessor method for profile email
+	 *
+	 * @return string value of profile email
+	 */
+	public function getProfileEmail(): string {
+		return($this->profileEmail);
+	}
+	/**
+	 * mutator method for profile email
+	 *
+	 * @param string $newProfileEmail new value of profile email
+	 * @throws \InvalidArgumentException if $newProfileEmail is not a string or is insecure
+	 * @throws \RangeException if $newProfileEmail is > 128 characters
+	 * @throws \TypeError if $newProfile email is not a string
+	 */
+	public function setProfileEmail(string $newProfileEmail): void {
+		// verify email is secure
+		$newProfileEmail = trim($newProfileEmail);
+		$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_EMAIL);
+
+		// verify email is not empty
+		if(empty($newProfileEmail) === true) {
+			throw(new \InvalidArgumentException("email is empty or insecure"));
+		}
+		// verify email will fit into database
+		if(strlen($newProfileEmail) > 128) {
+			throw(new \RangeException("email is too long"));
+		}
+		// store the profile email
+		$this->profileEmail = $newProfileEmail;
+	}
 
 
 }
