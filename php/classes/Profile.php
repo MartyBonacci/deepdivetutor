@@ -246,7 +246,7 @@ class Profile {
 	 * @return string value of github token
 	 */
 	public function getProfileActivationToken(): string {
-		return ($this->profileGithubToken);
+		return($this->profileGithubToken);
 	}
 
 	/**
@@ -274,6 +274,38 @@ class Profile {
 
 		// store github token
 		$this->profileGithubToken = $newProfileGithubToken;
+	}
+	/**
+	 * accessor method for profile bio
+	 *
+	 * @return string value of profile bio
+	 */
+	public function getProfileBio(): string {
+		return($this->profileBio);
+	}
+	/**
+	 * mutator method for profile bio
+	 *
+	 * @param string $newProfileBio bio for this profile
+	 * @throws \InvalidArgumentException if $newProfileBio is not a string or is insecure
+	 * @throws \RangeException if $newProfileBio is > 500 characters
+	 * @throws \TypeError if $newProfileBio is not a string
+	 */
+	public function setProfileBio(string $newProfileBio): void {
+		// verify profile bio is secure
+		$newProfileBio = trim($newProfileBio);
+		$newProfileBio = filter_var($newProfileBio, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		// verify bio is not empty
+		if(empty($newProfileBio) === true) {
+			throw(new \InvalidArgumentException("profile bio is either empty or insecure"));
+		}
+		// verify profile bio will fit in the database
+		if(strlen($newProfileBio) > 500) {
+			throw(new \RangeException("profile bio is too long"));
+		}
+		// store profile bio
+		$this->profileBio = $newProfileBio;
 	}
 
 
