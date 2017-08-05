@@ -1,7 +1,9 @@
 <?php
+
 namespace Edu\Cnm\DeepDiveTutor;
 
 require_once("autoload.php");
+
 /**
  * class for profile entity
  *
@@ -38,7 +40,7 @@ class Profile {
 	private $profileGithubToken;
 	/**
 	 * Bio for this profile
-	 * @var string $profileBio;
+	 * @var string $profileBio ;
 	 */
 	private $profileBio;
 	/**
@@ -93,10 +95,7 @@ class Profile {
 	 * @throws \Exception if some other exception occurs
 	 * @documentation https://php.net/manual/en/language.oop5.decon.php
 	 */
-	public function construct__(?int $newProfileId, string $newProfileName, string $newProfileEmail, int
-	$newProfileType, string $newProfileGithubToken, string $newProfileBio, float $newProfileRate, string
-	$newProfileImage, $newProfileLastEditDateTime = null, string $newProfileActivationToken, string
-	$newProfileHash, string $newProfileSalt) {
+	public function construct__(?int $newProfileId, string $newProfileName, string $newProfileEmail, int $newProfileType, string $newProfileGithubToken, string $newProfileBio, float $newProfileRate, string $newProfileImage, $newProfileLastEditDateTime = null, string $newProfileActivationToken, string $newProfileHash, string $newProfileSalt) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileName($newProfileName);
@@ -110,12 +109,43 @@ class Profile {
 			$this->setProfileActivationToken($newProfileActivationToken);
 			$this->setProfileHash($newProfileHash);
 			$this->setProfileSalt($newProfileSalt);
-		}
-		 // determine what exception type was thrown
+		} // determine what exception type was thrown
 		catch(\InvalidArgumentException | \RangeException | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
+	}
+
+	/**
+	 * accessor method for profile id
+	 *
+	 * @return int|null value of profile id
+	 */
+	public function getProfileId(): int {
+		return ($this->profileId);
+	}
+
+	/**
+	 * mutator method for profile id
+	 *
+	 * @param int|null $newProfileId new value of profile id
+	 * @throws \RangeException if newProfileId is not positive
+	 * @throws \TypeError if newProfileId is not an integer
+	 */
+	public function setProfileId(?int $newProfileId): void {
+		// if profile id is null immediately return it
+		if($newProfileId === null) {
+			$this->profileId = null;
+			return;
+		}
+
+		// make sure profile id is positive
+		if($newProfileId <= 0) {
+			throw(new \RangeException("profile id is not positive"));
+		}
+
+		// convert and store the profile id
+		$this->profileId = $newProfileId;
 	}
 
 
