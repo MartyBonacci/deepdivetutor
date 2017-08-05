@@ -307,6 +307,33 @@ class Profile {
 		// store profile bio
 		$this->profileBio = $newProfileBio;
 	}
+	/**
+	 * accessor method for profile rate
+	 *
+	 * @return float value of profile rate
+	 */
+	public function getProfileRate(): float {
+		return($this->profileRate);
+	}
+	/**
+	 * mutator method for profile rate
+	 *
+	 * @param float $newProfileRate new value of profile rate
+	 * @throws \RangeException if $newProfileRate is > 999.99
+	 * @throws \TypeError if $newProfileRate is not a float
+	 */
+	public function setNewProfileRate(float $newProfileRate): void {
+		// allow for float
+		$newProfileRate = filter_var($newProfileRate, FILTER_SANITIZE_NUMBER_FLOAT);
 
+		// verify profileRate is positive
+		if($newProfileRate <= 0) {
+			throw(new \RangeException("profile rate must be greater than 0"));
+		}
+
+		// convert and store profile rate
+		$this->profileRate = $newProfileRate;
+	}
+	
 
 }
