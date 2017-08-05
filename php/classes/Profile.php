@@ -147,14 +147,16 @@ class Profile {
 		// convert and store the profile id
 		$this->profileId = $newProfileId;
 	}
+
 	/**
 	 * accessor method for profile name
 	 *
 	 * @return string value of profile name
 	 */
 	public function getProfileName(): string {
-		return($this->profileName);
+		return ($this->profileName);
 	}
+
 	/**
 	 * mutator method for profile name
 	 * @param string $newProfileName new value of profile name
@@ -177,14 +179,16 @@ class Profile {
 		// store profile name
 		$this->profileName = $newProfileName;
 	}
+
 	/**
 	 * accessor method for profile email
 	 *
 	 * @return string value of profile email
 	 */
 	public function getProfileEmail(): string {
-		return($this->profileEmail);
+		return ($this->profileEmail);
 	}
+
 	/**
 	 * mutator method for profile email
 	 *
@@ -209,6 +213,33 @@ class Profile {
 		// store the profile email
 		$this->profileEmail = $newProfileEmail;
 	}
+
+	/**
+	 * accessor method for profile type
+	 *
+	 * @return int value of profile type
+	 */
+	public function getProfileType(): int {
+		return ($this->profileType);
+	}
+
+	/**
+	 * mutator method for profile type
+	 *
+	 * @param int $newProfileType new type of profile
+	 * @throws \RangeException if $newProfileType is not positive
+	 * @throws \TypeError if $newProfileType is not an integer
+	 */
+	public function setProfileType(int $newProfileType): void {
+		// verify the profile type is 0 or 1
+		if($newProfileType !== 0 | 1) {
+			throw(new \RangeException("profile type is out of bounds"));
+		}
+
+		// convert and store profile type
+		$this->profileType = $newProfileType;
+	}
+
 
 
 }
