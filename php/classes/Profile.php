@@ -129,8 +129,8 @@ class Profile {
 	 * mutator method for profile id
 	 *
 	 * @param int|null $newProfileId new value of profile id
-	 * @throws \RangeException if newProfileId is not positive
-	 * @throws \TypeError if newProfileId is not an integer
+	 * @throws \RangeException if $newProfileId is not positive
+	 * @throws \TypeError if $newProfileId is not an integer
 	 */
 	public function setProfileId(?int $newProfileId): void {
 		// if profile id is null immediately return it
@@ -240,6 +240,41 @@ class Profile {
 		$this->profileType = $newProfileType;
 	}
 
+	/**
+	 * accessor method for profile github token
+	 *
+	 * @return string value of github token
+	 */
+	public function getProfileActivationToken(): string {
+		return ($this->profileGithubToken);
+	}
+
+	/**
+	 * mutator method for profile github token
+	 *
+	 * @param string $newProfileGithubToken new github token for profile
+	 * @throws \InvalidArgumentException if $newProfileGithubToken is not a string or is insecure
+	 * @throws \RangeException if $newProfileGithubToken is > 64 characters
+	 * @throws \TypeError if $newProfileGithubToken is not a string
+	 */
+	public function setProfileGithubToken(string $newProfileGithubToken): void {
+		// verify github token is secure
+		$newProfileGithubToken = trim($newProfileGithubToken);
+		$newProfileGithubToken = filter_var($newProfileGithubToken, FILTER_SANITIZE_STRING);
+
+		// verify github token is not empty
+		if(empty($newProfileGithubToken) === true) {
+			throw(new \InvalidArgumentException("github token is empty or insecure"));
+		}
+
+		// verify github token will fit in the database
+		if(strlen($newProfileGithubToken) !== 64) {
+			throw(new \RangeException("github token must be 64 characters"));
+		}
+
+		// store github token
+		$this->profileGithubToken = $newProfileGithubToken;
+	}
 
 
 }
