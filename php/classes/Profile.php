@@ -484,5 +484,40 @@ class Profile {
 		$this->profileHash = $newProfileHash;
 	}
 
+	/**
+	 * accessor method for profile salt
+	 *
+	 * @returns string value for profile salt
+	 */
+	public function getProfileSalt(): string {
+		return ($this->profileSalt);
+	}
+
+	/**
+	 * mutator method for profile salt
+	 *
+	 * @param string $newProfileSalt
+	 * @throws \InvalidArgumentException if $newProfileSalt is not secure
+	 * @throws \RangeException if $newProfileSalt is not exactly 64 characters
+	 * @throws \TypeError if $newProfileSalt is not a string
+	 */
+	public function setProfileSalt(string $newProfileSalt): void {
+		// make sure profile salt is the right format
+		$newProfileSalt = trim($newProfileSalt);
+		$newProfileSalt = strtolower($newProfileSalt);
+
+		// make sure salt is a hexadecimal
+		if(!ctype_xdigit($newProfileSalt)) {
+			throw(new \InvalidArgumentException("profile salt is empty"));
+		}
+
+		// make sure salt is exactly 64 characters
+		if(strlen($newProfileSalt) !== 64) {
+			throw (new \RangeException("salt must be 64 characters"));
+		}
+
+		// store the salt
+		$this->profileSalt = $newProfileSalt;
+	}
 
 }
