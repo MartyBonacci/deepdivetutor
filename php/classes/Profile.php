@@ -326,7 +326,7 @@ class Profile {
 	 * @throws \RangeException if $newProfileRate is > 999.99
 	 * @throws \TypeError if $newProfileRate is not a float
 	 */
-	public function setNewProfileRate(float $newProfileRate): void {
+	public function setProfileRate(float $newProfileRate): void {
 		// allow for float
 		$newProfileRate = filter_var($newProfileRate, FILTER_SANITIZE_NUMBER_FLOAT);
 
@@ -338,14 +338,16 @@ class Profile {
 		// convert and store profile rate
 		$this->profileRate = $newProfileRate;
 	}
+
 	/**
 	 * accessor method for profile image
 	 *
 	 * @return string value for profile image
 	 */
 	public function getProfileImage(): string {
-		return($this->profileImage);
+		return ($this->profileImage);
 	}
+
 	/**
 	 * mutator method for profile image
 	 *
@@ -371,6 +373,7 @@ class Profile {
 		// store the profile image
 		$this->profileImage = $newProfileImage;
 	}
+
 	/**
 	 * accessor method for last profile edit date time
 	 *
@@ -379,6 +382,7 @@ class Profile {
 	public function getProfileLastEditDateTime(): \DateTime {
 		return ($this->profileLastEditDateTime);
 	}
+
 	/**
 	 * mutator method for last profile edit date time
 	 *
@@ -401,6 +405,7 @@ class Profile {
 		}
 		$this->profileLastEditDateTime = $newProfileLastEditDateTime;
 	}
+
 	/**
 	 * accessor method for profile activation token
 	 *
@@ -409,6 +414,7 @@ class Profile {
 	public function getProfileActivationToken(): string {
 		return ($this->profileActivationToken);
 	}
+
 	/**
 	 * mutator method for profile activation token
 	 *
@@ -438,5 +444,45 @@ class Profile {
 		// store activation token
 		$this->profileActivationToken = $newProfileActivationToken;
 	}
+
+	/**
+	 * accessor method for profile hash
+	 *
+	 * @return string value of profile hash
+	 */
+	public function getProfileHash(): string {
+		return ($this->profileHash);
+	}
+
+	/**
+	 * mutator method for profile hash
+	 *
+	 * @param string $newProfileHash
+	 * @throws \InvalidArgumentException if $newProfileHash is not a string
+	 * @throws \RangeException if $newProfileHash is not exactly 128 characters
+	 * @throws \TypeError if $newProfileHash is not a string
+	 */
+	public function setProfileHash(string $newProfileHash): void {
+		// make sure hash is properly formatted
+		$newProfileHash = trim($newProfileHash);
+		$newProfileHash = strtolower($newProfileHash);
+		if(empty($newProfileHash) === true) {
+			throw(new \InvalidArgumentException("profile hash is empty or insecure"));
+		}
+
+		// make sure hash is hexadecimal
+		if(!ctype_xdigit($newProfileHash)) {
+			throw(new \InvalidArgumentException("profile hash is not valid"));
+		}
+
+		// make sure hash is 128 characters
+		if(strlen($newProfileHash) !== 128) {
+			throw(new \RangeException("hash must be 128 characters"));
+		}
+
+		// store profile hash
+		$this->profileHash = $newProfileHash;
+	}
+
 
 }
