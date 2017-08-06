@@ -246,7 +246,7 @@ class Profile {
 	 * @return string value of github token
 	 */
 	public function getProfileActivationToken(): string {
-		return($this->profileGithubToken);
+		return ($this->profileGithubToken);
 	}
 
 	/**
@@ -275,14 +275,16 @@ class Profile {
 		// store github token
 		$this->profileGithubToken = $newProfileGithubToken;
 	}
+
 	/**
 	 * accessor method for profile bio
 	 *
 	 * @return string value of profile bio
 	 */
 	public function getProfileBio(): string {
-		return($this->profileBio);
+		return ($this->profileBio);
 	}
+
 	/**
 	 * mutator method for profile bio
 	 *
@@ -307,14 +309,16 @@ class Profile {
 		// store profile bio
 		$this->profileBio = $newProfileBio;
 	}
+
 	/**
 	 * accessor method for profile rate
 	 *
 	 * @return float value of profile rate
 	 */
 	public function getProfileRate(): float {
-		return($this->profileRate);
+		return ($this->profileRate);
 	}
+
 	/**
 	 * mutator method for profile rate
 	 *
@@ -334,6 +338,39 @@ class Profile {
 		// convert and store profile rate
 		$this->profileRate = $newProfileRate;
 	}
-	
+	/**
+	 * accessor method for profile image
+	 *
+	 * @return string value for profile image
+	 */
+	public function getProfileImage(): string {
+		return($this->profileImage);
+	}
+	/**
+	 * mutator method for profile image
+	 *
+	 * @param string $newProfileImage new value of profile image
+	 * @throws \InvalidArgumentException if $newProfileImage is not a string or insecure
+	 * @throws \RangeException if $newProfileImage is > 32 characters
+	 * @throws \TypeError if $newProfileImage is not a string
+	 */
+	public function setProfileImage(string $newProfileImage): void {
+		// verify image is secure
+		$newProfileImage = trim($newProfileImage);
+		$newProfileImage = filter_var($newProfileImage, FILTER_SANITIZE_STRING);
+
+		// make sure profile image is not empty
+		if(empty($newProfileImage === true)) {
+			throw(new \InvalidArgumentException("profile image is either empty or insecure"));
+		}
+		// make sure profile image will fit in the database
+		if(strlen($newProfileImage) !== 32) {
+			throw(new \RangeException("profile image must be 32 characters"));
+		}
+
+		// store the profile image
+		$this->profileImage = $newProfileImage;
+	}
+
 
 }
