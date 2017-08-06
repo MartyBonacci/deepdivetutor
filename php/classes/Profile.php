@@ -245,7 +245,7 @@ class Profile {
 	 *
 	 * @return string value of github token
 	 */
-	public function getProfileActivationToken(): string {
+	public function getProfileGithubToken(): string {
 		return ($this->profileGithubToken);
 	}
 
@@ -371,6 +371,72 @@ class Profile {
 		// store the profile image
 		$this->profileImage = $newProfileImage;
 	}
+	/**
+	 * accessor method for last profile edit date time
+	 *
+	 * @return \DateTime value of last profile edit date
+	 */
+	public function getProfileLastEditDateTime(): \DateTime {
+		return ($this->profileLastEditDateTime);
+	}
+	/**
+	 * mutator method for last profile edit date time
+	 *
+	 * @param \DateTime|string|null $newProfileLastEditDateTime as a DateTime object or string (or null to load current time
+	 * @throws \InvalidArgumentException if $newProfileLastEditDateTime is not a valid object or string
+	 * @throws \RangeException if $newProfileLastEditDateTime is a date that does not exist
+	 */
+	public function setProfileLastEditDateTime($newProfileLastEditDateTime = null): void {
+		// base case: if the date is null use the current date and time
+		if($newProfileLastEditDateTime === null) {
+			$this->profileLastEditDateTime = new \DateTime();
+			return;
+		}
+		// store the last profile edit date
+		try {
+			$newProfileLastEditDateTime = self::validateDateTime($newProfileLastEditDateTime);
+		} catch(\InvalidArgumentException | \RangeException $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->profileLastEditDateTime = $newProfileLastEditDateTime;
+	}
+	/**
+	 * accessor method for profile activation token
+	 *
+	 * @return string value of profile activation token
+	 */
+	public function getProfileActivationToken(): string {
+		return ($this->profileActivationToken);
+	}
+	/**
+	 * mutator method for profile activation token
+	 *
+	 * @param string $newProfileActivationToken
+	 * @throws \InvalidArgumentException if $newProfileActivationToken is not a string
+	 * @throws \RangeException if $newProfileActivationToken is not exactly 32 characters
+	 * @throws \TypeError if $newProfileActivationToken is not a string
+	 */
+	public function setProfileActivationToken(?string $newProfileActivationToken): void {
+		// if activation token is null immediately return it
+		if($newProfileActivationToken === null) {
+			$this->profileActivationToken = null;
+			return;
+		}
 
+		// make sure string token is hexadecimal
+		$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
+		if(ctype_xdigit($newProfileActivationToken) === false) {
+			throw(new \RangeException("profile activation is not valid"));
+		}
+
+		// make sure activation token is exactly 32 characters long
+		if(strlen($newProfileActivationToken) !== 32) {
+			throw(new \RangeException("token must be 32 characters"));
+		}
+
+		// store activation token
+		$this->profileActivationToken = $newProfileActivationToken;
+	}
 
 }
