@@ -67,7 +67,41 @@ class review {
 
 		} // determine what exception was thrown
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			$exceptionType = get_class($exception);}
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+
+	/**
+	 * accessor method for item id
+	 * @return int|null value of item id
+	 **/
+	public function getReviewId(): ?int {
+		return ($this->reviewId);
+	}
+
+	/**
+	 * mutator method for review id
+	 * @param int|null $newReviewId new value of review id
+	 * @throw \RangException if $newReviewId is not positive
+	 * @throws \TypeError if $newProfileId is not an integer
+	 **/
+	public function setReviewId(?int $newReviewId): void {
+		// review id is null immediately return it
+		if($newReviewId === null) {
+			$this->reviewId = null;
+			return;
+		}
+
+		// make sure review id is positive
+		if($newReviewId <= 0) {
+			trhow(new \RangeException("review id is not positive"));
+		}
+
+		// convert and store the review id
+		$this->reviewId = $newReviewId;
 	}
 
 }
+
+
