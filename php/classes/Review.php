@@ -1,6 +1,7 @@
 <?php
 
 namespace Edu\Cnm\DeepDiveTutor;
+
 require_once("autoload.php");
 
 /**
@@ -8,6 +9,7 @@ require_once("autoload.php");
  * @author Timothy Williams <tkotalik@cnm.edu>
  * @version 1.0
  **/
+
 class review {
 	/**
 	 * primary key for profileId
@@ -55,6 +57,7 @@ class review {
 	 * @throws \Exception if some other exception occurs
 	 * @documentation https://php.net/manual/en.language.oop5.decon.php
 	 **/
+
 	public function __construct(?int $newReviewId, int $newReviewStudentProfileId, int $newReviewTutorProfileId,
 										 int $newReviewRating, string $newReviewText, timestamp $newReviewDateTime) {
 		try {
@@ -117,6 +120,7 @@ class review {
 	 * @throws \RangeException if $newReviewStudentProfileId is not positive
 	 * @throws \TypeError if $newReviewStudentProfileId is not an integer
 	 **/
+
 	public function setReviewStudentProfileId(?int $newReviewSudentProfileId): void {
 		// if reviewStudentProfileId is null immediately return it
 		if($newReviewSudentProfileId === null) {
@@ -148,6 +152,7 @@ class review {
 	 * @throws \RangeException if $newReviewTutorProfileId is not positive
 	 * @throws \TypeError if $newReviewTutorProfileId is not an integer
 	 **/
+
 	public function setReviewTutorProfileId(?int $newReviewTutorProfileId): void {
 		// if reviewTutorProfileId is null immediately return it
 		if($newReviewTutorProfileId === null) {
@@ -179,6 +184,7 @@ class review {
 	 * @throws \RangeException if $newReviewRating is not positive
 	 * @throws \TypeError if $newReviewRating is not an integer
 	 **/
+
 	public function setReviewRating(?int $newReviewRating): void {
 		// if reviewRating is null immediately return it
 		if($newReviewRating === null) {
@@ -199,6 +205,7 @@ class review {
 	 * accessor method for review text
 	 * @return string value of review text
 	 **/
+
 	public function getReviewText(): string {
 		return ($this->reviewText);
 	}
@@ -210,6 +217,7 @@ class review {
 	 * @throws \RangeException if $newReviewText is > 500 characters
 	 * @throws \TypeError if $newReviewText is not a string
 	 **/
+
 	public function setReviewText(string $newReviewText): void {
 		// verify review text is secure
 		$newReviewText = trim($newReviewText);
@@ -230,15 +238,18 @@ class review {
 	 * accessor method for review date time
 	 * @return \DateTime value of  review date time
 	 **/
+
 	public function getReviewDateTime(): \DateTime {
 		return ($this->reviewDateTime);
 	}
+
 	/**
 	 * mutator method for review date time
 	 * @param \DateTime|string|null $newReviewDateTime as a DateTime object or string (or null to load current time
 	 * @throws \InvalidArgumentException if $newReviewDateTime is not a valid object or string
 	 * @throws \RangeException if $newReviewDateTime is a date that does not exist
-	 */
+	 **/
+
 	public function setReviewDateTime($newReviewDateTime = null): void {
 		// base case: if the date is null use the current date and time
 		if($newReviewDateTime === null) {
@@ -254,7 +265,6 @@ class review {
 		}
 		$this->ReviewDateTime = $newReviewDateTime;
 	}
-
 
 }
 
