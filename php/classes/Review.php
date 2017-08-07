@@ -9,7 +9,6 @@ require_once("autoload.php");
  * @author Timothy Williams <tkotalik@cnm.edu>
  * @version 1.0
  **/
-
 class review {
 	/**
 	 * primary key for profileId
@@ -98,7 +97,7 @@ class review {
 
 		// make sure review id is positive
 		if($newReviewId <= 0) {
-			trhow(new \RangeException("review id is not positive"));
+			trow(new \RangeException("review id is not positive"));
 		}
 
 		// convert and store the review id
@@ -121,15 +120,15 @@ class review {
 	 * @throws \TypeError if $newReviewStudentProfileId is not an integer
 	 **/
 
-	public function setReviewStudentProfileId(?int $newReviewSudentProfileId): void {
+	public function setReviewStudentProfileId(?int $newReviewStudentProfileId): void {
 		// if reviewStudentProfileId is null immediately return it
-		if($newReviewSudentProfileId === null) {
+		if($newReviewStudentProfileId === null) {
 			$this->reviewStudentprofileId = null;
 			return;
 		}
 
 		// make sure reviewStudentProfileId is positive
-		if($newReviewSudentProfileId <= 0) {
+		if($newReviewStudentProfileId <= 0) {
 			throw(new \RangeException("reviewStudentProfileId is not positive"));
 		}
 
@@ -148,7 +147,7 @@ class review {
 
 	/**
 	 * mutator method for reviewTutorProfileId
-	 * @parm int $newReviewTutorProfileId new value of reviewTutorProfileId
+	 * @param int $newReviewTutorProfileId new value of reviewTutorProfileId
 	 * @throws \RangeException if $newReviewTutorProfileId is not positive
 	 * @throws \TypeError if $newReviewTutorProfileId is not an integer
 	 **/
@@ -265,6 +264,41 @@ class review {
 		}
 		$this->ReviewDateTime = $newReviewDateTime;
 	}
+
+	/**
+	 * inserts this review into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+
+	public function insert(\PDO $pdo): void {
+		//enforce the reviewId is null (i.e., don't insert a review that already exists)
+		if($this->reviewId !== null) {
+			throw(new \PDOException("not a new review"));
+		}
+
+		// create query template
+		$query = "INSERT INTO review(reviewStudentProfileId, reviewTutorProfileId, reviewRating, 
+		reviewText, reviewDateTime) VALUES(:reviewStudentProfileId, :reviewTutorProfileId, :reviewTutorProfileId, 
+		:reviewRating, :reviewText, :reviewDateTime)";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$formattedDateTime = $this->reviewDateTime->format("y-m-d H:i:s");
+
+		$parameters = ["reviewStudentProfileId" => $this->reviewStudentProfileId, "reviewTutorProfileId" => $this->reviewTutorProfileId,
+			"reviewRating" => $this->reviewRating, "reviewText" => $this->reviewText, "reviewDateTime" => $this->reviewDateTime];
+		$statement - execute($parameters);
+
+		// update the null reviewId with what mySQL just gave us
+		$this->reviewId = intval($pdo->lastInsertId());
+	}
+
+	/**
+	 * deletes this review from mySQL
+	 **/
 
 }
 
