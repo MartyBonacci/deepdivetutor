@@ -543,7 +543,7 @@ class Profile {
 		// bind the member variables to the place holders in the template
 		$formattedDate = $this->profileLastEditDateTime->format("Y-m-d H:i:s.u");
 		$parameters = ["profileName" => $this->profileName, "profileEmail" => $this->profileEmail, "profileType" =>
-			$this->profileType, "profileGithubToken" => $this->profileGithubToken, "profileBio" => $this->profileBio, "profileRate" => $this->profileRate, "profileImage" => $this->profileImage, "profileLastEditDateTime" => $this->profileLastEditDateTime, "profileActivationToken" =>
+			$this->profileType, "profileGithubToken" => $this->profileGithubToken, "profileBio" => $this->profileBio, "profileRate" => $this->profileRate, "profileImage" => $this->profileImage, "profileLastEditDateTime" => $formattedDate, "profileActivationToken" =>
 			$this->profileActivationToken, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
 		$statement->execute($parameters);
 
@@ -565,14 +565,43 @@ class Profile {
 		}
 
 		// create a query template
-			$query = "DELETE FROM profile WHERE profileId = :profileId";
-			$statement = $pdo->prepare($query);
+		$query = "DELETE FROM profile WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
 
-			// bind the member variables to the place holder in the template
-			$parameters = ["profileId" => $this->profileId];
-			$statement->execute($parameters);
+		// bind the member variables to the place holder in the template
+		$parameters = ["profileId" => $this->profileId];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * updates this profile in MySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when MySQL related error occurs
+	 * @throws |\TypeError if $pdo is not a PDO connection object
+	 */
+	public function update(\PDO $pdo) {
+		// make sure profile id is not null so that it won't try to update a profile that doesn't exist
+		if($this->profileId === null) {
+			throw(new \PDOException("unable to update a profile that does not exist"));
 		}
 
+		// create query template
+		$query = "UPDATE profile SET profileName = :profileName, profileEmail = :profileEmail, profileType = :profileType, 
+profileGithubToken = :profileGithubToken, profileBio = :profileBio, profileRate = :profileRate, profileImage = 
+:profileImage, profileLastEditDateTime = :profileLastEditDateTime, profileActivationToken = :profileActivationToken, 
+profileHash = :profileHash, profileSalt = :profileSalt WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$formattedDate = $this->profileLastEditDateTime->format("Y-m-d H:i:s.u");
+		$parameters = ["profileName" => $this->profileName, "profileEmail" => $this->profileEmail, "profileType" =>
+			$this->profileType, "profileGithubToken" => $this->profileGithubToken, "profileBio" => $this->profileBio,
+			"profileRate" => $this->profileRate, "profileImage" => $this->profileImage, "profileLastEditDateTime" =>
+				$formattedDate, "profileActivationToken" => $this->profileActivationToken, "profileHash" =>
+				$this->profileHash, "profileSalt" => $this->profileSalt, "profileId" => $this->profileId];
+		$statement->execute($parameters);
+	}
 
 
 }
