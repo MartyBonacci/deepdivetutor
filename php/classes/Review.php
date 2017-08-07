@@ -297,8 +297,27 @@ class review {
 	}
 
 	/**
-	 * deletes this review from mySQL
+	 *deletes this review from mySQL
+	 *
+	 *@param \PDO $pdo PDO connection object
+	 *@throws |\PDOException whem mySQL related errors occur
+	 *@throws |\TypeError if $pdo is not a PDO connection object
 	 **/
+
+	public function delete(\PDO $pdo) : void {
+		// enforce the reviewId is not null (i.e., don't delete a review that hasn't been inserted)
+		if($this->reviewId === null) {
+			throw(new \PDOException("unable to delete a review that does not exist"));
+		}
+
+		// create query template
+		$query = "DELETE FROM review WHERE reviewId = : reviewId";
+		$statement = $pdo-prepare($query);
+
+		// bind the member variables to the place holder in the template
+		$parameters = ["reviewId" => $this->reviewId];
+		$statement->execute($parameters);
+	}
 
 }
 
