@@ -319,6 +319,33 @@ class review {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * updates this review in mySQL
+	 *
+	 *@param \PDO $pdo PDO connection object
+	 *@throws \PDOException when mySQL related errors occur
+	 *@throws \TypeError if $pdo is not a PDO connection object
+	 **/
+
+	public function update(\PDO $pdo) : void {
+		// enforce the reviewId is not null (i.e., don't update a review that hasn't been inserted)
+		if($this->reviewId === null) {
+			throw(new \PDOException("unable to update a review that does not exist"));
+		}
+
+		// create query template
+		$query = "UPDATE review SET reviewStudentProfileId = :reviewStudentProfileId, reviewTutorProfileId =:reviewTutorProfileId,
+		reviewRating = :reviewRating, reviewText = :reviewText, reviewDateTime = :reviewDateTime";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$formatedDateTime = $this->reviewDateTime->format("y-m-d H:i:s");
+		$parameters = ["reviewStudentProfileId" => $this->reviewStudentProfileId, "reviewTutorProfileId" =>
+		$this->reviewTutorProfileId, "reviewRating" => $this->reviewRating, "reviewText" => $this->reviewText,
+		"reviewDateTime" => $this->reviewDateTime];
+			$statement->execute($parameters);
+	}
+
 }
 
 
