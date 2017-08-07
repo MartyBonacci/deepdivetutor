@@ -93,8 +93,12 @@ class Skill implements \JsonSerializable {
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$skills = new Skill($row["skillId"], $row["skillName"]);
-				$skills[ $skills->key()]=$skills;
+				$skills[$skills->key()] = $skills;
 				$skills->next();
-				} catch (\Exception $)
+			} catch(\Exception $exception) {
+				throw (new \PDOException($exception->getMessage(), 0, $exception));
 			}
+		}
+		return($skills);
 	}
+}
