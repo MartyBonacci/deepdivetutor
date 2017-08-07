@@ -226,6 +226,36 @@ class review {
 		$this->reviewText = $newReviewText;
 	}
 
+	/**
+	 * accessor method for review date time
+	 * @return \DateTime value of  review date time
+	 **/
+	public function getReviewDateTime(): \DateTime {
+		return ($this->reviewDateTime);
+	}
+	/**
+	 * mutator method for review date time
+	 * @param \DateTime|string|null $newReviewDateTime as a DateTime object or string (or null to load current time
+	 * @throws \InvalidArgumentException if $newReviewDateTime is not a valid object or string
+	 * @throws \RangeException if $newReviewDateTime is a date that does not exist
+	 */
+	public function setReviewDateTime($newReviewDateTime = null): void {
+		// base case: if the date is null use the current date and time
+		if($newReviewDateTime === null) {
+			$this->ReviewDateTime = new \DateTime();
+			return;
+		}
+		// store the review date time
+		try {
+			$newReviewDateTime = self::validateDateTime($newReviewDateTime);
+		} catch(\InvalidArgumentException | \RangeException $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->ReviewDateTime = $newReviewDateTime;
+	}
+
+
 }
 
 
