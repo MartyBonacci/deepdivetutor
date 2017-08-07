@@ -102,6 +102,38 @@ class review {
 		$this->reviewId = $newReviewId;
 	}
 
+	/**
+	 * accessor method for reviewStudentProfileId
+	 * @return int value of reviewStudentProfileId
+	 **/
+
+	public function getReviewStudentProfileId(): int {
+		return ($this->reviewStudentProfileId);
+	}
+
+	/**
+	 * mutator method for reviewStudentProfileId
+	 * @parm int $newReviewStudentProfileId new value of reviewStudentProfileId
+	 * @throws \RangeException if $newReviewStudentProfileId is not positive
+	 * @throws \TypeError if $newReviewStudentProfileId is not an integer
+	 **/
+	public function setReviewStudentProfileId(?int $newReviewSudentProfileId): void {
+		// if profile id is null immediately return it
+		if($newReviewSudentProfileId === null) {
+			$this->reviewStudentprofileId = null;
+			return;
+		}
+
+		// make sure reviewStudentProfileId is positive
+		if($newReviewSudentProfileId <= 0) {
+			throw(new \RangeException("reviewStudentProfileId is not positive"));
+		}
+
+		// convet and store the reviewStudentProfileId
+		$this->reviewStudentProfileId = $newReviewSudentProfileId;
+	}
+
+
 }
 
 
