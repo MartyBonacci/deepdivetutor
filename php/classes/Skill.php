@@ -82,6 +82,9 @@ class Skill implements  \JsonSerializable {
 			}
 			$query="SELECT skillId, skillName from skill where skillId = :skillId";
 			$statement = $pdo->prepare($query);
+			$parameters =["tweetProfileId" => $tweetProfileId];
+			$statement->execute($parameters);
+
 		}
 	}
 }
