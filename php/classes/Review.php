@@ -9,7 +9,7 @@ require_once("autoload.php");
  * @author Timothy Williams <tkotalik@cnm.edu>
  * @version 1.0
  **/
-class review {
+class Review {
 	/**
 	 * primary key for profileId
 	 * @var int reviewId
@@ -299,12 +299,12 @@ class review {
 	/**
 	 *deletes this review from mySQL
 	 *
-	 *@param \PDO $pdo PDO connection object
-	 *@throws |\PDOException whem mySQL related errors occur
-	 *@throws |\TypeError if $pdo is not a PDO connection object
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |\PDOException whem mySQL related errors occur
+	 * @throws |\TypeError if $pdo is not a PDO connection object
 	 **/
 
-	public function delete(\PDO $pdo) : void {
+	public function delete(\PDO $pdo): void {
 		// enforce the reviewId is not null (i.e., don't delete a review that hasn't been inserted)
 		if($this->reviewId === null) {
 			throw(new \PDOException("unable to delete a review that does not exist"));
@@ -312,7 +312,7 @@ class review {
 
 		// create query template
 		$query = "DELETE FROM review WHERE reviewId = : reviewId";
-		$statement = $pdo-prepare($query);
+		$statement = $pdo - prepare($query);
 
 		// bind the member variables to the place holder in the template
 		$parameters = ["reviewId" => $this->reviewId];
@@ -322,12 +322,12 @@ class review {
 	/**
 	 * updates this review in mySQL
 	 *
-	 *@param \PDO $pdo PDO connection object
-	 *@throws \PDOException when mySQL related errors occur
-	 *@throws \TypeError if $pdo is not a PDO connection object
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 
-	public function update(\PDO $pdo) : void {
+	public function update(\PDO $pdo): void {
 		// enforce the reviewId is not null (i.e., don't update a review that hasn't been inserted)
 		if($this->reviewId === null) {
 			throw(new \PDOException("unable to update a review that does not exist"));
@@ -341,9 +341,50 @@ class review {
 		// bind the member variables to the place holders in the template
 		$formatedDateTime = $this->reviewDateTime->format("y-m-d H:i:s");
 		$parameters = ["reviewStudentProfileId" => $this->reviewStudentProfileId, "reviewTutorProfileId" =>
-		$this->reviewTutorProfileId, "reviewRating" => $this->reviewRating, "reviewText" => $this->reviewText,
-		"reviewDateTime" => $this->reviewDateTime];
-			$statement->execute($parameters);
+			$this->reviewTutorProfileId, "reviewRating" => $this->reviewRating, "reviewText" => $this->reviewText,
+			"reviewDateTime" => $this->reviewDateTime];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * gets the review by reviewId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $reviewId review id to search for
+	 * @return Review | null Review found or null if not found
+	 * @throws \PDOException when mySQl related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+
+	public static function getReviewByReviewId(\PDO $pdo, int $reviewId) : ?Review {
+		// sanitize the reviewId before searching
+		if($reviewId <= 0) {
+			throw(new \PDOException("review id is not positive"));
+		}
+
+		//create query template
+		$query = "SELECT reviewId, reviewStudentProfileId, reviewTutorProfileId, reviewRating, reviewText,
+		reviewDateTime FROM review WHERE reviewId = : reviewId";
+		$statement = $pdo->prepare($query);
+
+		// bind the review id to the place holder in the template
+		$parameter = ["reviewId" => $reviewId];
+		$statement->execute($parameters);
+
+		// grab review from mySQL
+		try{
+			$review = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$review = new Review($row["reviewId"], $row["reviewStudentProfileId"], $row["reviewTutorProfileId"],
+					$row["reviewRating"], $row["reviewText"], $row["reviewDateTime"]);
+			}
+		} catch(\Exception $exeption) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($review);
 	}
 
 }
