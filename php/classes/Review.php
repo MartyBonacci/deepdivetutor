@@ -194,6 +194,38 @@ class review {
 		// convert and store the reviewRating
 		$this->reviewRating = $newReviewRating;
 	}
+
+	/**
+	 * accessor method for review text
+	 * @return string value of review text
+	 **/
+	public function getReviewText(): string {
+		return ($this->reviewText);
+	}
+
+	/**
+	 * mutator method for review text
+	 * @param string $newReviewText text for this review
+	 * @throws \InvalidArgumentException if $newReviewText is not a string or is insecure
+	 * @throws \RangeException if $newReviewText is > 500 characters
+	 * @throws \TypeError if $newReviewText is not a string
+	 **/
+	public function setReviewText(string $newReviewText): void {
+		// verify review text is secure
+		$newReviewText = trim($newReviewText);
+		$newReviewText = filter_var($newReviewText, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		// verify text is not empty
+		if(empty($newReviewText) === true) {
+			throw(new \InvalidArgumentException("review text is either empty or insecure"));
+		}
+		// verify reviewText will fit in the database
+		if(strlen($newReviewText) > 500) {
+			throw(new \RangeException("review text is too long"));
+		}
+		// store review text
+		$this->reviewText = $newReviewText;
+	}
+
 }
 
 
