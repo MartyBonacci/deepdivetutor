@@ -118,7 +118,7 @@ class review {
 	 * @throws \TypeError if $newReviewStudentProfileId is not an integer
 	 **/
 	public function setReviewStudentProfileId(?int $newReviewSudentProfileId): void {
-		// if profile id is null immediately return it
+		// if reviewStudentProfileId is null immediately return it
 		if($newReviewSudentProfileId === null) {
 			$this->reviewStudentprofileId = null;
 			return;
@@ -129,11 +129,40 @@ class review {
 			throw(new \RangeException("reviewStudentProfileId is not positive"));
 		}
 
-		// convet and store the reviewStudentProfileId
+		// convert and store the reviewStudentProfileId
 		$this->reviewStudentProfileId = $newReviewSudentProfileId;
 	}
 
+	/**
+	 * accessor method for reviewTutorProfileId
+	 * @return int value of reviewTutorProfileId
+	 **/
 
+	public function getReviewTutorProfileId(): int {
+		return ($this->reviewTutorProfileId);
+	}
+
+	/**
+	 * mutator method for reviewTutorProfileId
+	 * @parm int $newReviewTutorProfileId new value of reviewTutorProfileId
+	 * @throws \RangeException if $newReviewTutorProfileId is not positive
+	 * @throws \TypeError if $newReviewTutorProfileId is not an integer
+	 **/
+	public function setReviewTutorProfileId(?int $newReviewTutorProfileId): void {
+		// if reviewTutorProfileId is null immediately return it
+		if($newReviewTutorProfileId === null) {
+			$this->reviewTutorprofileId = null;
+			return;
+		}
+
+		// make sure reviewTutorProfileId is positive
+		if($newReviewTutorProfileId <= 0) {
+			throw(new \RangeException("reviewTutorProfileId is not positive"));
+		}
+
+		// convert and store the reviewTutorProfileId
+		$this->reviewTutorProfileId = $newReviewTutorProfileId;
+	}
 }
 
 
