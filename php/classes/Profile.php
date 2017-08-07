@@ -520,4 +520,35 @@ class Profile {
 		$this->profileSalt = $newProfileSalt;
 	}
 
+	/**
+	 * inserts this profile into MySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+	public function insert(\PDO $pdo): void {
+		// make sure profile id is null (so that a profile that already exists doesn't get inserted)
+		if($this->profileId !== null) {
+			throw(new \PDOException("not a new profile"));
+		}
+
+		// create a query template
+		$query = "INSERT INTO profile(profileName, profileEmail, profileType, profileGithubToken, profileBio, 
+			profileRate, profileImage, profileLastEditDateTime, profileActivationToken, profileHash, profileSalt) VALUES
+		(:profileName, :profileEmail, :profileType, :profileGithubToken, :profileBio, :profileRate, :profileImage, 
+		:profileLastEditDateTime, :profileActivationToken, :profileHash, :profileSalt)";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$formattedDate = $this->profileLastEditDateTime->format("Y-m-d H:i:s.u");
+		$parameters = ["profileName" => $this->profileName, "profileEmail" => $this->profileEmail, "profileType" =>
+			$this->profileType, "profileGithubToken" => $this->profileGithubToken, "profileBio" => $this->profileBio, "profileRate" => $this->profileRate, "profileImage" => $this->profileImage, "profileLastEditDateTime" => $this->profileLastEditDateTime, "profileActivationToken" =>
+			$this->profileActivationToken, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
+		$statement->execute($parameters);
+
+		// update the null profile id with what MySQL gave
+		$this->profileId = intval($pdo->lastInsertId());
+	}
+
 }
