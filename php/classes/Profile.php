@@ -642,6 +642,31 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		return($profile);
 	}
 
+	/**
+	 * gets profile by content
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileName name to search for
+	 * @return \SplFixedArray SplFixedArray of Names found
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileName(\PDO $pdo, string $profileName): \SplFixedArray {
+		// sanitize the description before searching
+		$profileName = trim($profileName);
+		$profileName = filter_var($profileName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($profileName) === true) {
+			throw(new \PDOException("profile name is invalid"));
+		}
+
+		// escape any MySQL wildcards
+		$profileName = str_replace("_", "\\_", str_replace("%", "\\%", $profileName));
+
+
+
+
+	}
+
 
 
 
