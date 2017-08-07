@@ -163,6 +163,37 @@ class review {
 		// convert and store the reviewTutorProfileId
 		$this->reviewTutorProfileId = $newReviewTutorProfileId;
 	}
+
+	/**
+	 * accessor method for reviewRating
+	 * @return int value of reviewRating
+	 **/
+
+	public function getReviewRating(): int {
+		return ($this->reviewRating);
+	}
+
+	/**
+	 * mutator method for reviewRating
+	 * @parm int $newReviewRating new value of reviewRating
+	 * @throws \RangeException if $newReviewRating is not positive
+	 * @throws \TypeError if $newReviewRating is not an integer
+	 **/
+	public function setReviewRating(?int $newReviewRating): void {
+		// if reviewRating is null immediately return it
+		if($newReviewRating === null) {
+			$this->reviewRating = null;
+			return;
+		}
+
+		// make sure reviewRating is positive
+		if($newReviewRating <= 0) {
+			throw(new \RangeException("reviewRating is not positive"));
+		}
+
+		// convert and store the reviewRating
+		$this->reviewRating = $newReviewRating;
+	}
 }
 
 
