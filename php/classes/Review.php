@@ -356,7 +356,7 @@ class Review {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public static function getReviewByReviewId(\PDO $pdo, int $reviewId) : ?Review {
+	public static function getReviewByReviewId(\PDO $pdo, int $reviewId): ?Review {
 		// sanitize the reviewId before searching
 		if($reviewId <= 0) {
 			throw(new \PDOException("review id is not positive"));
@@ -372,7 +372,7 @@ class Review {
 		$statement->execute($parameters);
 
 		// grab review from mySQL
-		try{
+		try {
 			$review = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
@@ -384,8 +384,88 @@ class Review {
 			// if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($review);
+		return ($review);
 	}
+
+	/**
+	 * gets the review by reviewStudentProfileId
+	 *
+	 * @param \PDO $pdo Pdo connection object
+	 * @param int $reviewStudentProfileId profile id to search by
+	 * @return \SplFixedArray SplFixedArray of reviews found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+
+	public static function getReviewByReviewStudentProfileId(\PDO $pdo, int $reviewStudentProfileId): \SPLFixedArray {
+		// sanitize the review student profile id before searching
+		if($reviewStudentProfileId <= 0) {
+			throw(new \RangeException("review student profile id must be positive"));
+		}
+		// create query template
+		$query = "SELECT reviewId, reviewStudentProfileId, reviewTutorProfileId, reviewRating, reviewText, 
+		reviewDateTime FROM review WHERE reviewStudentProfileId = :reviewStudentProfileId";
+		$statement = $pdo->prepare($query);
+		// bind the review student profile id to the place holder in the template
+		$parameters = ["reviewStudentProfileId" => $reviewStudentProfileId];
+		$statement->execute($parameters);
+		// build an array of reviews
+		$reviews = new \SPLFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->Fetch()) !== false) {
+			try {
+				$review = new Review($row["reviewId"], $row["reviewStudentProfileId"], $row["reviewTutorProfileId"],
+					$row["reviewRating"], $row["reviewText"], $row["reviewDateTIme"]);
+				$reviews[$reviews->key()] = $review;
+				$reviews->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($reviews);
+	}
+
+
+	/**
+	 * gets the review by review tutor profile id
+	 *
+	 * @param \PDO $pdo Pdo connection object
+	 * @param int $reviewTutorProfileId profile id to search by
+	 * @return \SplFixedArray SplFixedArray of reviews found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+
+	public static function getReviewByReviewTutorProfileId(\PDO $pdo, int $reviewTutorProfileId): \SPLFixedArray {
+		// sanitize the review student profile id before searching
+		if($reviewTutorProfileId <= 0) {
+			throw(new \RangeException("review tutor profile id must be positive"));
+		}
+		// create query template
+		$query = "SELECT reviewId, reviewStudentProfileId, reviewTutorProfileId, reviewRating, reviewText, 
+		reviewDateTime FROM review WHERE reviewTutorProfileId = :reviewTutorProfileId";
+		$statement = $pdo->prepare($query);
+		// bind the review tutor profile id to the place holder in the template
+		$parameters = ["reviewTutorProfileId" => $reviewTutorProfileId];
+		$statement->execute($parameters);
+		// build an array of reviews
+		$reviews = new \SPLFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->Fetch()) !== false) {
+			try {
+				$review = new Review($row["reviewId"], $row["reviewStudentProfileId"], $row["reviewTutorProfileId"],
+					$row["reviewRating"], $row["reviewText"], $row["reviewDateTIme"]);
+				$reviews[$reviews->key()] = $review;
+				$reviews->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($reviews);
+	}
+
 
 }
 
