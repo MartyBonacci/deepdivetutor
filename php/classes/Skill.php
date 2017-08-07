@@ -1,11 +1,13 @@
 <?php
+
 namespace EDU\CNM\DeepDiveTutor;
-require_once ("autoload.php");
+require_once("autoload.php");
+
 /**
  * Class Skill
  * calling skill table, and defining restrictions on type to pushed through and validated is not validated will throw errors
  */
-class Skill implements  \JsonSerializable {
+class Skill implements \JsonSerializable {
 	/**
 	 * @var skillId is an int its the id of the skill ; a primary key
 	 */
@@ -76,15 +78,23 @@ class Skill implements  \JsonSerializable {
 			throw(new \RangeException("Skill Name is Too Looooong!"));
 		}
 		$this->skillName = $newSkillName;
-		public static function getSkillNameBySkillId(\PDO $pdo, int $SkillId):\SPLFixedArray{
-			if($SkillId<= 0){
-				throw(new \RangeException("SkillId Must be positive"));
-			}
-			$query="SELECT skillId, skillName from skill where skillId = :skillId";
-			$statement = $pdo->prepare($query);
-			$parameters =["tweetProfileId" => $tweetProfileId];
-			$statement->execute($parameters);
-
-		}
 	}
-}
+
+	public static function getSkillNameBySkillId(\PDO $pdo, int $SkillId): \SPLFixedArray {
+		if($SkillId <= 0) {
+			throw(new \RangeException("SkillId Must be positive"));
+		}
+		$query = "SELECT skillId, skillName from skill where skillId = :skillId";
+		$statement = $pdo->prepare($query);
+		$parameters = ["skillId" => $skillId];
+		$statement->execute($parameters);
+		$skills = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$skills = new Skill($row["skillId"], $row["skillName"]);
+				$skills[ $skills->key()]=$skills;
+				$skills->next();
+				} catch (\Exception $)
+			}
+	}
