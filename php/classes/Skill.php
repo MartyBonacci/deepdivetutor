@@ -78,8 +78,10 @@ class Skill implements  \JsonSerializable {
 		$this->skillName = $newSkillName;
 		public static function getSkillNameBySkillId(\PDO $pdo, int $SkillId):\SPLFixedArray{
 			if($SkillId<= 0){
-				throw(new \RangeException("SkillId Must be positive"))
+				throw(new \RangeException("SkillId Must be positive"));
 			}
+			$query="SELECT skillId, skillName from skill where skillId = :skillId";
+			$statement = $pdo->prepare($query);
 		}
 	}
 }
