@@ -1,10 +1,11 @@
 <?php
-
+namespace EDU\CNM\DeepDiveTutor;
+require_once ("autoload.php");
 /**
  * Class Skill
- * calling skill table, and defining restrictions on type to pushed through and validated if not validated will throw errors
+ * calling skill table, and defining restrictions on type to pushed through and validated is not validated will throw errors
  */
-class Skill implements  \JsonSerializable{
+class Skill implements  \JsonSerializable {
 	/**
 	 * @var skillId is an int its the id of the skill ; a primary key
 	 */
@@ -23,15 +24,14 @@ class Skill implements  \JsonSerializable{
 	 * @throws \Exception if some other exception occurs
 	 * @throw \TypeError if data types violate type hints
 	 */
-	public function __construct(?int $newSkillId, string $newSkillName){
+	public function __construct(?int $newSkillId, string $newSkillName) {
 		try {
 			$this->setSkillId($newSkillId);
 			$this->setSkillName($newSkillName);
-		}
-		catch (\InvalidArgumentException| \RangeException |\Exception | \TypeError $exception){
+		} catch(\InvalidArgumentException| \RangeException |\Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
-			throw(new exceptionType($exception->getMessage(),0,$exception));
-					}
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 	}
 
 	/**
@@ -43,29 +43,43 @@ class Skill implements  \JsonSerializable{
 	}
 
 	/**
-	 * @param mixed int
+	 * @param \RangeException
+	 * $skillId is being set through place holder $newSkillId and checked to see if interger is less than or equal to zero
+	 * if it is then an error is thrown because of invalid range.
 	 */
 	public function setSkillId(int $newSkillId): void {
-		if ($newSkillId<= 0){
+		if($newSkillId <= 0) {
 			throw(new \RangeException("This Skill Id is not positive"));
 		}
 		$this->skillId = $newSkillId;
 	}
+
 	/**
-	 * @return mixed
+	 * @return skillName String
+	 * we are grabing the  collumn skillName from the variable skillName
 	 */
 	public function getSkillName(): string {
-		return $this->skillName ;
+		return $this->skillName;
 	}
 
-	public function setSkillName(string $newSkillName): void{
-	$newSkillName = trim($newSkillName);
-	$newSkillName = filter_var($newSkillName,FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	if(empty($newSkillName)=== true){
-		throw(new \InvalidArgumentException("The Skill Name is Empty!"));
+	/**
+	 * @param string $newSkillName is being tested for \InvalidArgumentException and \RangeException
+	 * @param \RangeException will be thrown if skilll is too long
+	 */
+	public function setSkillName(string $newSkillName): void {
+		$newSkillName = trim($newSkillName);
+		$newSkillName = filter_var($newSkillName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newSkillName) === true) {
+			throw(new \InvalidArgumentException("The Skill Name is Empty!"));
+		}
+		if(strlen($newSkillName) > 32) {
+			throw(new \RangeException("Skill Name is Too Looooong!"));
+		}
+		$this->skillName = $newSkillName;
+		public static function getSkillNameBySkillId(\PDO $pdo, int $SkillId):\SPLFixedArray{
+			if($SkillId<= 0){
+				throw(new \RangeException("SkillId Must be positive"))
+			}
+		}
 	}
-	if(strlen($newSkillName)>32){
-		throw(new \RangeException("Skill Name is Too Looooong!"));
-	}
-	$this->skillName = $newSkillName;
 }
