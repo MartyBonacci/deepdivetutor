@@ -133,7 +133,7 @@ class Review {
 		}
 
 		// convert and store the reviewStudentProfileId
-		$this->reviewStudentProfileId = $newReviewSudentProfileId;
+		$this->reviewStudentProfileId = $newReviewStudentProfileId;
 	}
 
 	/**
@@ -356,7 +356,7 @@ class Review {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public static function getReviewByReviewId(\PDO $pdo, int $reviewId): ?Review {
+	public static function getReviewByReviewId(\PDO $pdo, int $reviewId, $parameters, $exception): ?Review {
 		// sanitize the reviewId before searching
 		if($reviewId <= 0) {
 			throw(new \PDOException("review id is not positive"));
@@ -476,7 +476,7 @@ class Review {
 		$fields = get_object_vars($this);
 		// format the date so that the front end can consume it
 		$fields["reviewDatetime"] = round(floatval($this->reviewDateTime->format("U.u")) * 1000);
-		return($fields);
+		return ($fields);
 	}
 }
 
