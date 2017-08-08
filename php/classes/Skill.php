@@ -81,6 +81,25 @@ class Skill implements \JsonSerializable {
 	}
 
 	/**
+	 * insert method to insert dynamic values into place holders
+	 * @throws \TypeError thrown if $pdo is not a connection object
+	 * @throws \PDOException if mySQl related errors occur
+	 * @param \PDO $pdo PDO connection object
+	 */
+	public function insert(\PDO $pdo): void {
+		if($this->skillId !== null) {
+			throw(new \PDOException("Not A New Skill"));
+		}
+		//create query template
+		$query = "INSERT INTO skill(skillName) VALUE (:skillName)";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the placeholder template
+		$parameters = ["skillName" => $this->skillName];
+		$statement->execute($parameters);
+		$this->skillId = intval($pdo->lastInsertId());
+	}
+
+	/**
 	 * @param \PDO $pdo pulling data from database and filling them into variables
 	 * @param int $skillId is being defined and constricted to an int value to be used to call an array of data
 	 * @return \SplFixedArray is returning the skill names
@@ -106,6 +125,7 @@ class Skill implements \JsonSerializable {
 				throw (new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($skills);
+		return ($skills);
 	}
+
 }
