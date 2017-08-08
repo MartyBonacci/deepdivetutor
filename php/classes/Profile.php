@@ -727,7 +727,7 @@ profileLAstEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 			// if row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($email);
+		return ($email);
 	}
 
 	/**
@@ -767,7 +767,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($types);
+		return ($types);
 	}
 
 	/**
@@ -786,13 +786,16 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		if(empty($profileGithubToken) === true) {
 			throw(new \PDOException("no GitHub account linked to profile"));
 		}
+
 		// create query template
 		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, 
 profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileGithubToken = :profileGithubToken";
 		$statement = $pdo->prepare($query);
+
 		// bind the profileGithubToken to the placeholder in the template
 		$parameters = ["profileGithubToken" => $profileGithubToken];
 		$statement->execute($parameters);
+
 		// grab the profileGithubToken from MySQL
 		try {
 			$githubToken = null;
@@ -805,8 +808,51 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 			// if row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($githubToken);
+		return ($githubToken);
 	}
+
+	/**
+	 * gets profile by profile rate
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $profileRate to search for
+	 * @return \SplFixedArray SplFixedArray of profile rates
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileRate(\PDO $pdo, int $profileRate): \SplFixedArray {
+		// sanitize the profile rate before searching
+		$profileRate = filter_var($profileRate, FILTER_SANITIZE_NUMBER_INT);
+		if($profileRate < 0) {
+			throw(new \PDOException("profile rate is not positive"));
+		}
+
+		// create query template
+		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, 
+profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileRate = :profileRate";
+		$statement = $pdo->prepare($query);
+
+		// bind the profile type to the placeholder in the template
+		$parameters = ["profileRate" => $profileRate];
+		$statement->execute($parameters);
+
+		// build an array of profile rates
+		$rates = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$rate = new Profile($row["profileId"], $row["profileName"], $row["profileType"], $row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+				$rates[$rates->key()] = $rate;
+				$rates->next();
+			} catch(\Exception $exception) {
+				// if row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($rates);
+	}
+
+
 
 
 }
