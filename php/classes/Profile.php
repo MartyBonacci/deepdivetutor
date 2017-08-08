@@ -746,7 +746,8 @@ profileLAstEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		}
 
 		// create query template
-		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, profileLastEditDateTime, profileActivationToken, profileHash, profileSalt WHERE profileType = :profileType";
+		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, 
+profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileType = :profileType";
 		$statement = $pdo->prepare($query);
 
 		// bind the profile type to the placeholder in the template
