@@ -188,7 +188,7 @@ class profileSkill implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $profileSkillProfileId profile id to search for
-	 * @return profileSkillProfileId|null profile id found or null if not found
+	 * @return profileSkillSkillId|null profile id found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
@@ -223,6 +223,48 @@ class profileSkill implements \JsonSerializable {
 			return ($profileSkills);
 		}
 	}
+
+	/**
+	 * gets the profileSkills by skillId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $profileSkillSkillId profile id to search for
+	 * @return profileSkillProfileId|null profile id found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getProfileSkillsByProfileSkillSkillId(\PDO $pdo, int $profileSkillSkillId) {
+		// sanitize the profileSkillSkillId before searching
+		if($profileSkillSkillId <= 0) {
+			throw(new \PDOException("profileSkillSkillId id is not positive"));
+		}
+
+		// create query template
+		$query = "SELECT profileSkillProfileId, profileSkillSkillId FROM profileSkill WHERE profileSkillSkillId = :profileSkillSkillId";
+		$statement = $pdo->prepare($query);
+
+		// bind the profileId to the place holder in the template
+		$parameters = ["profileSkillSkillId" => $profileSkillSkillId];
+		$statement->execute($parameters);
+
+		//build an array of profileSkills
+		$profileSkills = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			// grab the profileSkill from mySQL
+			try {
+				$profileSkill = new ProfileSkill($row["profileSkillProfileId"], $row["profileSkillSkillId"]);
+				$profileSkills[$profileSkills->key()] = $profileSkill;
+				$profileSkills->next();
+
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return ($profileSkills);
+		}
+	}
+
 
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
