@@ -31,13 +31,13 @@ class Review {
 	 **/
 	private $reviewRating;
 	/**
-	 * actuall text of review
+	 * actual text of review
 	 * @var string $reviewText
 	 **/
 	private $reviewText;
 	/**
-	 * date and time review was submitted, in a PHP DateTime object
-	 * @var \timestamp $reviewDateTime
+	 * date and time review was submitted in a PHP DateTime object
+	 * @var \DateTime $reviewDateTime
 	 **/
 	private $reviewDateTime;
 
@@ -49,16 +49,16 @@ class Review {
 	 * @param int $newReviewTutorProfileId id of the tutor that saved this review
 	 * @param int $newReviewRating int containing rating number
 	 * @param string $newReviewText string containing actual review text
-	 * @param timestamp $newReviewDateTime timestamp of when review was made
+	 * @param \DateTime $newReviewDateTime DateTime of when review was made
 	 * @throws \InvalidArgumentException if data types are not valid
-	 * @throws \Range Exception if data values are out of bounds (e.g., strings too long, negative integers, negative floats)
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers, negative floats)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 * @documentation https://php.net/manual/en.language.oop5.decon.php
 	 **/
 
 	public function __construct(?int $newReviewId, int $newReviewStudentProfileId, int $newReviewTutorProfileId,
-										 int $newReviewRating, string $newReviewText, timestamp $newReviewDateTime) {
+										 int $newReviewRating, string $newReviewText, \DateTime $newReviewDateTime) {
 		try {
 			$this->setReviewId($newReviewId);
 			$this->setReviewStudentProfileId($newReviewStudentProfileId);
@@ -97,7 +97,7 @@ class Review {
 
 		// make sure review id is positive
 		if($newReviewId <= 0) {
-			trow(new \RangeException("review id is not positive"));
+			throw(new \RangeException("review id is not positive"));
 		}
 
 		// convert and store the review id
@@ -115,17 +115,17 @@ class Review {
 
 	/**
 	 * mutator method for reviewStudentProfileId
-	 * @parm int $newReviewStudentProfileId new value of reviewStudentProfileId
+	 * @param int $newReviewStudentProfileId new value of reviewStudentProfileId
 	 * @throws \RangeException if $newReviewStudentProfileId is not positive
 	 * @throws \TypeError if $newReviewStudentProfileId is not an integer
 	 **/
 
-	public function setReviewStudentProfileId(?int $newReviewStudentProfileId): void {
+	public function setReviewStudentProfileId(int $newReviewStudentProfileId): void {
 		// if reviewStudentProfileId is null immediately return it
-		if($newReviewStudentProfileId === null) {
-			$this->reviewStudentprofileId = null;
-			return;
-		}
+		//if($newReviewStudentProfileId === null) {
+//			$this->reviewStudentprofileId = null;
+//			return;
+//		}
 
 		// make sure reviewStudentProfileId is positive
 		if($newReviewStudentProfileId <= 0) {
@@ -179,7 +179,7 @@ class Review {
 
 	/**
 	 * mutator method for reviewRating
-	 * @parm int $newReviewRating new value of reviewRating
+	 * @param int $newReviewRating new value of reviewRating
 	 * @throws \RangeException if $newReviewRating is not positive
 	 * @throws \TypeError if $newReviewRating is not an integer
 	 **/
@@ -281,16 +281,16 @@ class Review {
 
 		// create query template
 		$query = "INSERT INTO review(reviewStudentProfileId, reviewTutorProfileId, reviewRating, 
-		reviewText, reviewDateTime) VALUES(:reviewStudentProfileId, :reviewTutorProfileId, :reviewTutorProfileId, 
+		reviewText, reviewDateTime) VALUES(:reviewStudentProfileId,:reviewTutorProfileId, 
 		:reviewRating, :reviewText, :reviewDateTime)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$formattedDateTime = $this->reviewDateTime->format("y-m-d H:i:s");
+		$formattedDate = $this->reviewDateTime->format("y-m-d H:i:s");
 
 		$parameters = ["reviewStudentProfileId" => $this->reviewStudentProfileId, "reviewTutorProfileId" => $this->reviewTutorProfileId,
 			"reviewRating" => $this->reviewRating, "reviewText" => $this->reviewText, "reviewDateTime" => $this->reviewDateTime];
-		$statement - execute($parameters);
+		$statement -> execute($parameters);
 
 		// update the null reviewId with what mySQL just gave us
 		$this->reviewId = intval($pdo->lastInsertId());
@@ -300,7 +300,7 @@ class Review {
 	 *deletes this review from mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @throws |\PDOException whem mySQL related errors occur
+	 * @throws |\PDOException when mySQL related errors occur
 	 * @throws |\TypeError if $pdo is not a PDO connection object
 	 **/
 
@@ -339,7 +339,7 @@ class Review {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$formatedDateTime = $this->reviewDateTime->format("y-m-d H:i:s");
+		$formattedDate = $this->reviewDateTime->format("y-m-d H:i:s");
 		$parameters = ["reviewStudentProfileId" => $this->reviewStudentProfileId, "reviewTutorProfileId" =>
 			$this->reviewTutorProfileId, "reviewRating" => $this->reviewRating, "reviewText" => $this->reviewText,
 			"reviewDateTime" => $this->reviewDateTime];
@@ -368,7 +368,7 @@ class Review {
 		$statement = $pdo->prepare($query);
 
 		// bind the review id to the place holder in the template
-		$parameter = ["reviewId" => $reviewId];
+		$parameters = ["reviewId" => $reviewId];
 		$statement->execute($parameters);
 
 		// grab review from mySQL

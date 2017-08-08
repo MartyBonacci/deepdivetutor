@@ -16,7 +16,7 @@ CREATE TABLE profile (
 	profileBio              VARCHAR(500)                NOT NULL,
 	profileRate             DECIMAL(5, 2),
 	profileImage            VARCHAR(32),
-	profileLastEditDateTime TIMESTAMP(6)                NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+	profileLastEditDateTime TIMESTAMP(6)                NOT NULL,
 	profileActivationToken  CHAR(32),
 	profileHash             CHAR(128),
 	profileSalt             CHAR(64),
