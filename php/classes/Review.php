@@ -154,10 +154,10 @@ class Review {
 
 	public function setReviewTutorProfileId(?int $newReviewTutorProfileId): void {
 		// if reviewTutorProfileId is null immediately return it
-		if($newReviewTutorProfileId === null) {
-			$this->reviewTutorprofileId = null;
-			return;
-		}
+		//if($newReviewTutorProfileId === null) {
+	//		$this->reviewTutorprofileId = null;
+	//		return;
+	//	}
 
 		// make sure reviewTutorProfileId is positive
 		if($newReviewTutorProfileId <= 0) {
@@ -255,14 +255,15 @@ class Review {
 			$this->ReviewDateTime = new \DateTime();
 			return;
 		}
-		// store the review date time
+		// store the review date using the ValidateDate trait
 		try {
 			$newReviewDateTime = self::validateDateTime($newReviewDateTime);
 		} catch(\InvalidArgumentException | \RangeException $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		$this->ReviewDateTime = $newReviewDateTime;
+
+		$this->reviewDateTime = $newReviewDateTime;
 	}
 
 	/**
@@ -356,7 +357,7 @@ class Review {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public static function getReviewByReviewId(\PDO $pdo, int $reviewId, $parameters, $exception): ?Review {
+	public static function getReviewByReviewId(\PDO $pdo, int $reviewId, $parameters, $exception): Review {
 		// sanitize the reviewId before searching
 		if($reviewId <= 0) {
 			throw(new \PDOException("review id is not positive"));
@@ -373,18 +374,18 @@ class Review {
 
 		// grab review from mySQL
 		try {
-			$review = null;
+			$profile = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
 				$review = new Review($row["reviewId"], $row["reviewStudentProfileId"], $row["reviewTutorProfileId"],
-					$row["reviewRating"], $row["reviewText"], $row["reviewDateTime"]);
+					$row["reviewRating"], $row["reviewTet"], $row["reviewDateTime"]);
 			}
-		} catch(\Exception $exeption) {
+		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($review);
+		return ($profile);
 	}
 
 	/**
