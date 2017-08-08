@@ -160,30 +160,6 @@ class profileSkill implements \JsonSerializable {
 
 
 	/**
-	 * deletes this profileSkill from mySQL by profileSkillProfileId
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
-	public function delete(\PDO $pdo): void {
-		//throw an exception if either foreign key is null
-		if($this->profileSkillProfileId === null) {
-			throw(new \PDOException("unable to delete because profileSkillProfileId null"));
-		}
-
-
-		// create query template
-		$query = "DELETE FROM profileSkill WHERE profileSkillProfileId = :profileSkillProfileId";
-		$statement = $pdo->prepare($query);
-
-		// bind the member variables to the place holder in the template
-		$parameters = ["profileSkillProfileId" => $this->profileSkillProfileId];
-		$statement->execute($parameters);
-	}
-
-
-	/**
 	 * gets the profileSkills by profileId
 	 *
 	 * @param \PDO $pdo PDO connection object

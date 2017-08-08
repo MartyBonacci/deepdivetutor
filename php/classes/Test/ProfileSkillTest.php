@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\DeepDiveTutor\Test;
 
-use Edu\Cnm\DeepDiveTutor\{ProfileSkill};
+use Edu\Cnm\DeepDiveTutor\{Profile, Skill, ProfileSkill};
 
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
