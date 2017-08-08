@@ -116,10 +116,12 @@ class profileSkill implements \JsonSerializable {
 	public function insert(\PDO $pdo): void {
 
 		//throw an exception if either foreign key is null
-		if($this->profileSkillprofileId === null || $this->profileSkillSkillId === null) {
-			throw(new \PDOException("not a new profileSkillprofileId or profileSkillSkillId"));
+		if($this->profileSkillprofileId === null) {
+			throw(new \PDOException("unable to insert because profileSkillprofileId null"));
 		}
-
+		if($this->profileSkillSkillId === null) {
+			throw(new \PDOException("unable to insert because profileSkillSkillId null"));
+		}
 
 
 		// create query template
@@ -131,132 +133,95 @@ class profileSkill implements \JsonSerializable {
 	}
 
 
-
-
-
-
-
-
-
-
-
 	/**
-	 * deletes this Tweet from mySQL
+	 * deletes this profileSkill from mySQL by both foreign keys
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function delete(\PDO $pdo): void {
-		// enforce the tweetId is not null (i.e., don't delete a tweet that hasn't been inserted)
-		if($this->tweetId === null) {
-			throw(new \PDOException("unable to delete a tweet that does not exist"));
+		//throw an exception if either foreign key is null
+		if($this->profileSkillprofileId === null) {
+			throw(new \PDOException("unable to delete because profileSkillprofileId null"));
+		}
+		if($this->profileSkillSkillId === null) {
+			throw(new \PDOException("unable to delete because profileSkillSkillId null"));
 		}
 
 		// create query template
-		$query = "DELETE FROM tweet WHERE tweetId = :tweetId";
+		$query = "DELETE FROM profileSkill WHERE profileSkillprofileId = :profileSkillprofileId && profileSkillSkillId =:profileSkillSkillId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holder in the template
-		$parameters = ["tweetId" => $this->tweetId];
+		$parameters = ["profileSkillprofileId" => $this->profileSkillprofileId, "profileSkillSkillId" => $this->profileSkillSkillId];
 		$statement->execute($parameters);
 	}
 
+
 	/**
-	 * updates this Tweet in mySQL
+	 * deletes this profileSkill from mySQL by profileSkillprofileId
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function update(\PDO $pdo): void {
-		// enforce the tweetId is not null (i.e., don't update a tweet that hasn't been inserted)
-		if($this->tweetId === null) {
-			throw(new \PDOException("unable to update a tweet that does not exist"));
+	public function delete(\PDO $pdo): void {
+		//throw an exception if either foreign key is null
+		if($this->profileSkillprofileId === null) {
+			throw(new \PDOException("unable to delete because profileSkillprofileId null"));
 		}
 
+
 		// create query template
-		$query = "UPDATE tweet SET tweetProfileId = :tweetProfileId, tweetContent = :tweetContent, tweetDate = :tweetDate WHERE tweetId = :tweetId";
+		$query = "DELETE FROM profileSkill WHERE profileSkillprofileId = :profileSkillprofileId";
 		$statement = $pdo->prepare($query);
 
-		// bind the member variables to the place holders in the template
-		$formattedDate = $this->tweetDate->format("Y-m-d H:i:s.u");
-		$parameters = ["tweetProfileId" => $this->tweetProfileId, "tweetContent" => $this->tweetContent, "tweetDate" => $formattedDate, "tweetId" => $this->tweetId];
+		// bind the member variables to the place holder in the template
+		$parameters = ["profileSkillprofileId" => $this->profileSkillprofileId];
 		$statement->execute($parameters);
 	}
 
+
 	/**
-	 * gets the Tweet by tweetId
+	 * gets the profileSkills by profileId
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param int $tweetId tweet id to search for
-	 * @return Tweet|null Tweet found or null if not found
+	 * @param int $profileSkillprofileId profile id to search for
+	 * @return profileSkillprofileId|null profile id found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getTweetByTweetId(\PDO $pdo, int $tweetId): ?Tweet {
-		// sanitize the tweetId before searching
-		if($tweetId <= 0) {
-			throw(new \PDOException("tweet id is not positive"));
+	public static function getProfileSkillsByProfileSkillprofileId(\PDO $pdo, int $profileSkillprofileId) {
+		// sanitize the profileSkillprofileId before searching
+		if($profileSkillprofileId <= 0) {
+			throw(new \PDOException("profileSkillprofileId id is not positive"));
 		}
 
 		// create query template
-		$query = "SELECT tweetId, tweetProfileId, tweetContent, tweetDate FROM tweet WHERE tweetId = :tweetId";
+		$query = "SELECT profileSkillprofileId, profileSkillSkillId FROM profileSkill WHERE profileSkillprofileId = :profileSkillprofileId";
 		$statement = $pdo->prepare($query);
 
-		// bind the tweet id to the place holder in the template
-		$parameters = ["tweetId" => $tweetId];
+		// bind the profileId to the place holder in the template
+		$parameters = ["profileSkillprofileId" => $profileSkillprofileId];
 		$statement->execute($parameters);
 
-		// grab the tweet from mySQL
-		try {
-			$tweet = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
-				$tweet = new Tweet($row["tweetId"], $row["tweetProfileId"], $row["tweetContent"], $row["tweetDate"]);
-			}
-		} catch(\Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return ($tweet);
-	}
-
-	/**
-	 * gets the Tweet by profile id
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param int $tweetProfileId profile id to search by
-	 * @return \SplFixedArray SplFixedArray of Tweets found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 **/
-	public static function getTweetByTweetProfileId(\PDO $pdo, int $tweetProfileId): \SPLFixedArray {
-		// sanitize the profile id before searching
-		if($tweetProfileId <= 0) {
-			throw(new \RangeException("tweet profile id must be positive"));
-		}
-		// create query template
-		$query = "SELECT tweetId, tweetProfileId, tweetContent, tweetDate FROM tweet WHERE tweetProfileId = :tweetProfileId";
-		$statement = $pdo->prepare($query);
-		// bind the tweet profile id to the place holder in the template
-		$parameters = ["tweetProfileId" => $tweetProfileId];
-		$statement->execute($parameters);
-		// build an array of tweets
-		$tweets = new \SplFixedArray($statement->rowCount());
+		//build an array of profileSkills
+		$profileSkills = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
+			// grab the profileSkill from mySQL
 			try {
-				$tweet = new Tweet($row["tweetId"], $row["tweetProfileId"], $row["tweetContent"], $row["tweetDate"]);
-				$tweets[$tweets->key()] = $tweet;
-				$tweets->next();
+				$profileSkill = newprofileSkill($row["profileSkillProfileId"], $row["profileSkillSkillId"]);
+				$profileSkills[$profileSkills->key()] = $profileSkill;
+				$profileSkills->next();
+
 			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
+			return ($profileSkills);
 		}
-		return ($tweets);
 	}
 
 	public function jsonSerialize() {
