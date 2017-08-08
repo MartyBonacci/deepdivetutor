@@ -1,6 +1,6 @@
 <?php
 namespace Edu\Cnm\DeepDiveTutor\Skill\Test;
-use Edu\Cnm\DeepDiveTutor\Skill{
+use Edu\Cnm\DeepDiveTutor\{
 	Skill
 };
 
