@@ -77,5 +77,26 @@ class ReviewTest extends DeepDiveTutor {
 		$this->VALID_PROFILE_SALT = bin2hex(random_bytes(32));
 		$this->VALID_PROFILE_HASH = hash_pbkdf2("sha512", $password, $this->VALID_PROFILE_SALT, 262144);
 
+
+		// create and insert a Profile to own the test Review
+		$this->profile = new Profile(null, 222222222222222222,"@handle", "test@phpunit.de", $this->VALID_PROFILE-HASH,
+			"+12125551212", $this->VALID_PROFILE_SALT);
+
+		// calculate the date (just use the time the unit test was setup...)
+		$this->VALID_REVIEWDATE = new \DateTime();
+
+		// format the sunrise date to use for testing
+		$this->VALID_SUNRISEDATE = new \DateTime();
+		$this->VALID_SUNRISEDATE->sub(new \DateInterval("P10D"));
+
+		//format the sunset date to use for testing
+		$this->VALID_SUNSETDATE = new \DateTime();
+		$this->VALID_SUNSETDATE->add(new \DateInterval("P10D"));
+
+
+
+
 	}
+
+	
 }
