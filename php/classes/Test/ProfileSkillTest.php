@@ -15,7 +15,7 @@ require_once(dirname(__DIR__) . "/autoload.php");
  * @see ProfileSkill
  * @author Marty Bonacci <marty@customdept.com>
  **/
-class ProfileSkill extends DataDesignTest {
+class ProfileSkillTest extends DeepDiveTutorTest {
 	/**
 	 * Profile that has the Skill; this is for foreign key relations
 	 * @var ProfileSkillProfileId profile id
