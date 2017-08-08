@@ -117,16 +117,21 @@ class ReviewTest extends DeepDiveTutor {
 		$this->assertEquals($pdoReview->getReviewDate()->getTimestamp(), $this->VALID_REVIEWDATE->getTimestamp());
 	}
 
-		/**
-		 * test inserting a Review that already exist
-		 *
-		 * @expectedException \PDOException
-		 **/
+	/**
+	 * test inserting a Review that already exist
+	 *
+	 * @expectedException \PDOException
+	 **/
 
-		public function testInsertInvalidReview() : void {
-			// create a Review with a non null review id and watch it fail
-			$review = new Review(DeepDiveTutorTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_REVIEWCONTENT, $this->VALID_REVIEWDATE);
-			$review->insert($this->getPDO());
-		}
+	public function testInsertInvalidReview(): void {
+		// create a Review with a non null review id and watch it fail
+		$review = new Review(DeepDiveTutorTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_REVIEWCONTENT,
+			$this->VALID_REVIEWDATE);
+		$review->insert($this->getPDO());
+	}
+
+	/**
+	 *
+	 **/
 
 }
