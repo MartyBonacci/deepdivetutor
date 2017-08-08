@@ -849,10 +849,48 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($rates);
+		return ($rates);
 	}
 
+	/**
+	 * get profile by profile activation token
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileActivationToken activation token to search for
+	 * @return Profile|null if activation token is found or not found
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileActivationToken(\PDO $pdo, ?string $profileActivationToken): ?Profile {
+		// sanitize activation token before searching
+		$profileActivationToken = trim($profileActivationToken);
+		$profileActivationToken = filter_var($profileActivationToken, FILTER_SANITIZE_STRING);
+		if(empty($profileActivationToken) === true) {
+			throw(new \PDOException("activation token is not valid"));
+		}
 
+		// create query template
+		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, 
+profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileActivationToken =
+ :profileActivationToken";
+		$statement = $pdo->prepare($query);
 
+		// bind the activation token to the placeholder in the template
+		$parameters = ["profileActivationToken" => $profileActivationToken];
+		$statement->execute($parameters);
 
+		// grab the activation token from MySQL
+		try {
+			$activationToken = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$activationToken = new Profile($row["profileId"], $row["profileName"], $row["profileType"], $row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+			}
+		} catch(\Exception $exception) {
+			// if row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($activationToken);
+	}
 }
