@@ -730,5 +730,44 @@ profileLAstEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		return($email);
 	}
 
+	/**
+	 * gets profile by profile type
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $profileType to search for
+	 * @return \SplFixedArray SplFixedArray of profile types
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileType(\PDO $pdo, int $profileType): \SplFixedArray {
+		// sanitize the description before searching
+		if($profileType !== 0 | 1) {
+			throw(new \PDOException("incorrect profile type"));
+		}
+
+		// create query template
+		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, profileLastEditDateTime, profileActivationToken, profileHash, profileSalt WHERE profileType = :profileType";
+		$statement = $pdo->prepare($query);
+
+		// bind the profile type to the placeholder in the template
+		$parameters = ["profileType" => $profileType];
+		$statement->execute($parameters);
+
+		// build an array of profile types
+		$types = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$type = new Profile($row["profileId"], $row["profileName"], $row["profileType"], $row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+				$types[$types->key()] = $type;
+				$types->next();
+			} catch(\Exception $exception) {
+				// if row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($types);
+	}
+
 
 }
