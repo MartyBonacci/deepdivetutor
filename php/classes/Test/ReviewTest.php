@@ -47,4 +47,35 @@ class ReviewTest extends DeepDiveTutor {
 
 	protected $VALID_REVIEWCONTENT = "PHPUnit test passing";
 
+	/**
+	 * timestamp of the review; this starts as null and is assigned later
+	 * @var \DateTime $VALID_REVIEWDATE
+	 **/
+
+	protected $VALID_REVIEWDATE = null;
+
+	/**
+	 * Valid timestamp to use as sunriseReviewDate
+	 **/
+
+	protected $VALID_SUNRISEDATE = null;
+
+	/**
+	 * Valid timestamp to use as sunsetReviewDate
+	 **/
+
+	protected $VALID_SUNSETDATE = null;
+
+	/**
+	 * create dependent objects before running each test
+	 **/
+
+	public final function setUp() : void {
+		// run the default setUp() method first
+		parent::setUp();
+		$password = "abc123";
+		$this->VALID_PROFILE_SALT = bin2hex(random_bytes(32));
+		$this->VALID_PROFILE_HASH = hash_pbkdf2("sha512", $password, $this->VALID_PROFILE_SALT, 262144);
+
+	}
 }
