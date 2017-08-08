@@ -17,9 +17,9 @@ class profileSkill implements \JsonSerializable {
 
 	/**
 	 * FOREIGN KEY for profile (profileId),
-	 * @var int $profileSkillprofileId
+	 * @var int $profileSkillProfileId
 	 **/
-	private $profileSkillprofileId;
+	private $profileSkillProfileId;
 	/**
 	 * FOREIGN KEY for skill (skillId)
 	 * @var int $profileSkillSkillId
@@ -29,7 +29,7 @@ class profileSkill implements \JsonSerializable {
 	/**
 	 * constructor for this profileSkill
 	 *
-	 * @param int and not null $newProfileSkillprofileId of the profile that has the skill
+	 * @param int and not null $newProfileSkillProfileId of the profile that has the skill
 	 * @param int and not null $newProfileSkillSkillId of the skill that the profile has
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -37,9 +37,9 @@ class profileSkill implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct(?int $newProfileSkillprofileId, int $newProfileSkillSkillId) {
+	public function __construct(?int $newProfileSkillProfileId, int $newProfileSkillSkillId) {
 		try {
-			$this->setProfileSkillprofileId($newProfileSkillprofileId);
+			$this->setProfileSkillProfileId($newProfileSkillProfileId);
 			$this->setProfileSkillSkillId($newProfileSkillSkillId);
 		} //determine what exception type was thrown
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -54,26 +54,26 @@ class profileSkill implements \JsonSerializable {
 	 *
 	 * @return int value of FOREIGN KEY for profile (profileId)
 	 **/
-	public function getProfileSkillprofileId(): int {
-		return ($this->profileSkillprofileId);
+	public function getProfileSkillProfileId(): int {
+		return ($this->profileSkillProfileId);
 	}
 
 	/**
 	 * mutator method for FOREIGN KEY for profile (profileId)
 	 *
-	 * @param int $newProfileSkillprofileId new value of FOREIGN KEY for profile (profileId)
-	 * @throws \RangeException if $newProfileSkillprofileId is not positive
-	 * @throws \TypeError if $newProfileSkillprofileId is not an integer
+	 * @param int $newProfileSkillProfileId new value of FOREIGN KEY for profile (profileId)
+	 * @throws \RangeException if $newProfileSkillProfileId is not positive
+	 * @throws \TypeError if $newProfileSkillProfileId is not an integer
 	 **/
-	public function setProfileSkillprofileId(int $newProfileSkillprofileId): void {
+	public function setProfileSkillProfileId(int $newProfileSkillProfileId): void {
 
 		// verify the profile id is positive
-		if($newProfileSkillprofileId <= 0) {
+		if($newProfileSkillProfileId <= 0) {
 			throw(new \RangeException("skill profile id is not positive"));
 		}
 
 		// convert and store the profile id
-		$this->profileSkillprofileId = $newProfileSkillprofileId;
+		$this->profileSkillProfileId = $newProfileSkillProfileId;
 	}
 
 
@@ -116,8 +116,8 @@ class profileSkill implements \JsonSerializable {
 	public function insert(\PDO $pdo): void {
 
 		//throw an exception if either foreign key is null
-		if($this->profileSkillprofileId === null) {
-			throw(new \PDOException("unable to insert because profileSkillprofileId null"));
+		if($this->profileSkillProfileId === null) {
+			throw(new \PDOException("unable to insert because profileSkillProfileId null"));
 		}
 		if($this->profileSkillSkillId === null) {
 			throw(new \PDOException("unable to insert because profileSkillSkillId null"));
@@ -125,10 +125,10 @@ class profileSkill implements \JsonSerializable {
 
 
 		// create query template
-		$query = "INSERT INTO profileSkill(profileSkillprofileId, profileSkillSkillId) VALUES(:profileSkillprofileId, :profileSkillSkillId)";
+		$query = "INSERT INTO profileSkill(profileSkillProfileId, profileSkillSkillId) VALUES(:profileSkillProfileId, :profileSkillSkillId)";
 		$statement = $pdo->prepare($query);
 
-		$parameters = ["profileSkillprofileId" => $this->profileSkillprofileId, "profileSkillSkillId" => $this->profileSkillSkillId];
+		$parameters = ["profileSkillProfileId" => $this->profileSkillProfileId, "profileSkillSkillId" => $this->profileSkillSkillId];
 		$statement->execute($parameters);
 	}
 
@@ -142,25 +142,25 @@ class profileSkill implements \JsonSerializable {
 	 **/
 	public function delete(\PDO $pdo): void {
 		//throw an exception if either foreign key is null
-		if($this->profileSkillprofileId === null) {
-			throw(new \PDOException("unable to delete because profileSkillprofileId null"));
+		if($this->profileSkillProfileId === null) {
+			throw(new \PDOException("unable to delete because profileSkillProfileId null"));
 		}
 		if($this->profileSkillSkillId === null) {
 			throw(new \PDOException("unable to delete because profileSkillSkillId null"));
 		}
 
 		// create query template
-		$query = "DELETE FROM profileSkill WHERE profileSkillprofileId = :profileSkillprofileId && profileSkillSkillId =:profileSkillSkillId";
+		$query = "DELETE FROM profileSkill WHERE profileSkillProfileId = :profileSkillProfileId && profileSkillSkillId =:profileSkillSkillId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holder in the template
-		$parameters = ["profileSkillprofileId" => $this->profileSkillprofileId, "profileSkillSkillId" => $this->profileSkillSkillId];
+		$parameters = ["profileSkillProfileId" => $this->profileSkillProfileId, "profileSkillSkillId" => $this->profileSkillSkillId];
 		$statement->execute($parameters);
 	}
 
 
 	/**
-	 * deletes this profileSkill from mySQL by profileSkillprofileId
+	 * deletes this profileSkill from mySQL by profileSkillProfileId
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
@@ -168,17 +168,17 @@ class profileSkill implements \JsonSerializable {
 	 **/
 	public function delete(\PDO $pdo): void {
 		//throw an exception if either foreign key is null
-		if($this->profileSkillprofileId === null) {
-			throw(new \PDOException("unable to delete because profileSkillprofileId null"));
+		if($this->profileSkillProfileId === null) {
+			throw(new \PDOException("unable to delete because profileSkillProfileId null"));
 		}
 
 
 		// create query template
-		$query = "DELETE FROM profileSkill WHERE profileSkillprofileId = :profileSkillprofileId";
+		$query = "DELETE FROM profileSkill WHERE profileSkillProfileId = :profileSkillProfileId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holder in the template
-		$parameters = ["profileSkillprofileId" => $this->profileSkillprofileId];
+		$parameters = ["profileSkillProfileId" => $this->profileSkillProfileId];
 		$statement->execute($parameters);
 	}
 
@@ -187,23 +187,23 @@ class profileSkill implements \JsonSerializable {
 	 * gets the profileSkills by profileId
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param int $profileSkillprofileId profile id to search for
-	 * @return profileSkillprofileId|null profile id found or null if not found
+	 * @param int $profileSkillProfileId profile id to search for
+	 * @return profileSkillProfileId|null profile id found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getProfileSkillsByProfileSkillprofileId(\PDO $pdo, int $profileSkillprofileId) {
-		// sanitize the profileSkillprofileId before searching
-		if($profileSkillprofileId <= 0) {
-			throw(new \PDOException("profileSkillprofileId id is not positive"));
+	public static function getProfileSkillsByProfileSkillProfileId(\PDO $pdo, int $profileSkillProfileId) {
+		// sanitize the profileSkillProfileId before searching
+		if($profileSkillProfileId <= 0) {
+			throw(new \PDOException("profileSkillProfileId id is not positive"));
 		}
 
 		// create query template
-		$query = "SELECT profileSkillprofileId, profileSkillSkillId FROM profileSkill WHERE profileSkillprofileId = :profileSkillprofileId";
+		$query = "SELECT profileSkillProfileId, profileSkillSkillId FROM profileSkill WHERE profileSkillProfileId = :profileSkillProfileId";
 		$statement = $pdo->prepare($query);
 
 		// bind the profileId to the place holder in the template
-		$parameters = ["profileSkillprofileId" => $profileSkillprofileId];
+		$parameters = ["profileSkillProfileId" => $profileSkillProfileId];
 		$statement->execute($parameters);
 
 		//build an array of profileSkills
@@ -212,7 +212,7 @@ class profileSkill implements \JsonSerializable {
 		while(($row = $statement->fetch()) !== false) {
 			// grab the profileSkill from mySQL
 			try {
-				$profileSkill = newprofileSkill($row["profileSkillProfileId"], $row["profileSkillSkillId"]);
+				$profileSkill = new ProfileSkill($row["profileSkillProfileId"], $row["profileSkillSkillId"]);
 				$profileSkills[$profileSkills->key()] = $profileSkill;
 				$profileSkills->next();
 
