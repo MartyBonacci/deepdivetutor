@@ -770,5 +770,43 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		return($types);
 	}
 
+	/**
+	 * gets profile by profile github token
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileGithubToken to search for
+	 * @return Profile|null if githubToken if found or not found
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError when variables are the wrong data type
+	 */
+	public static function getProfileByProfileGithubToken(\PDO $pdo, ?string $profileGithubToken): ?Profile {
+		// sanitize the profile github token before searching
+		$profileGithubToken = trim($profileGithubToken);
+		$profileGithubToken = filter_var($profileGithubToken, FILTER_SANITIZE_STRING);
+		if(empty($profileGithubToken) === true) {
+			throw(new \PDOException("no GitHub account linked to profile"));
+		}
+		// create query template
+		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, 
+profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileGithubToken = :profileGithubToken";
+		$statement = $pdo->prepare($query);
+		// bind the profileGithubToken to the placeholder in the template
+		$parameters = ["profileGithubToken" => $profileGithubToken];
+		$statement->execute($parameters);
+		// grab the profileGithubToken from MySQL
+		try {
+			$githubToken = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$githubToken = new Profile($row["profileId"], $row["profileName"], $row["profileType"], $row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+			}
+		} catch(\Exception $exception) {
+			// if row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($githubToken);
+	}
+
 
 }
