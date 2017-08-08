@@ -64,9 +64,9 @@ class Profile {
 	 */
 	private $profileActivationToken;
 	/**
- * Hash for this profile password
- * @var string $profileHash
- */
+	 * Hash for this profile password
+	 * @var string $profileHash
+	 */
 	private $profileHash;
 	/**
 	 * Salt for this profile
