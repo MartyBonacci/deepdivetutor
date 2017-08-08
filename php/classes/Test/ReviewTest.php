@@ -70,7 +70,7 @@ class ReviewTest extends DeepDiveTutor {
 	 * create dependent objects before running each test
 	 **/
 
-	public final function setUp() : void {
+	public final function setUp(): void {
 		// run the default setUp() method first
 		parent::setUp();
 		$password = "abc123";
@@ -79,7 +79,7 @@ class ReviewTest extends DeepDiveTutor {
 
 
 		// create and insert a Profile to own the test Review
-		$this->profile = new Profile(null, 222222222222222222,"@handle", "test@phpunit.de", $this->VALID_PROFILE-HASH,
+		$this->profile = new Profile(null, 222222222222222222, "@handle", "test@phpunit.de", $this->VALID_PROFILE - HASH,
 			"+12125551212", $this->VALID_PROFILE_SALT);
 
 		// calculate the date (just use the time the unit test was setup...)
@@ -94,20 +94,18 @@ class ReviewTest extends DeepDiveTutor {
 		$this->VALID_SUNSETDATE->add(new \DateInterval("P10D"));
 
 
-
-
 	}
 
 	/**
 	 * test inserting a valid review and verify that the actual mySQL data matches
 	 **/
 
-	public function testInsertValidReview() : void {
+	public function testInsertValidReview(): void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("review");
 
 		//creae a new review and insert into mySQL
-		$review = new Review(null, $this->profile-getProfileId(), $this->VALID_REVIEWDATE);
+		$review = new Review(null, $this->profile - getProfileId(), $this->VALID_REVIEWDATE);
 		$review->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -117,7 +115,7 @@ class ReviewTest extends DeepDiveTutor {
 		$this->assertEquals($pdoReview->getReviewContent(), $this->VALID_REVIEWCONTENT);
 		// format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReview->getReviewDate()->getTimestamp(), $this->VALID_REVIEWDATE->getTimestamp());
-
+	}
 
 		/**
 		 * test inserting a Review that already exist
@@ -125,12 +123,10 @@ class ReviewTest extends DeepDiveTutor {
 		 * @expectedException \PDOException
 		 **/
 
-		public function testInsertInvalidReview() : void [
+		public function testInsertInvalidReview() : void {
 			// create a Review with a non null review id and watch it fail
-			$review = new Review(DeepDiveTutorTest::INVALID_KEY, $this->profile->getProfileId(),
-				$this->VALID_REVIEWCONTENT, $this->VALID_REVIEWDATE);
-		$review->insert($this->getPDO());
-		]
-
+			$review = new Review(DeepDiveTutorTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_REVIEWCONTENT, $this->VALID_REVIEWDATE);
+			$review->insert($this->getPDO());
+		}
 
 }
