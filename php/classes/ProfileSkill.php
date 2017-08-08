@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\Cnm\DataDesign;
+namespace Edu\Cnm\DeepDiveTutor;
 
 require_once("autoload.php");
 /*item class*/
