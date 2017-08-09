@@ -1,7 +1,10 @@
 <?php
+
 namespace Edu\Cnm\DeepDiveTutor\Test;
 
-use Edu\Cnm\DeepDiveTutor\{Profile};
+use Edu\Cnm\DeepDiveTutor\{
+	Profile
+};
 
 // grab the class
 require_once(dirname(__DIR__) . "/autoload.php");
@@ -95,7 +98,6 @@ class ProfileTest extends DeepDiveTutorTest {
 	protected $VALID_SALT;
 
 
-
 	/**
 	 * run the default operation to create the salt and hash
 	 */
@@ -118,9 +120,9 @@ class ProfileTest extends DeepDiveTutorTest {
 		$numRows = $this->getConnection()->getRowCount("profile");
 
 		// create a new Profile and insert it into MySQL
-	$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
-		$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
-		$this->VALID_HASH, $this->VALID_SALT);
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
+			$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+			$this->VALID_HASH, $this->VALID_SALT);
 
 		// var_dump($profile);
 
@@ -316,178 +318,213 @@ class ProfileTest extends DeepDiveTutorTest {
 	/**
 	 * test grabbing a profile by name that does not exist
 	 */
-public function testGetInvalidProfileByName(): void {
-	// grab a name that does not exist
-	$profile = Profile::getProfileByProfileName($this->getPDO(), "No Name");
-	$this->assertCount(0, $profile);
-}
+	public function testGetInvalidProfileByName(): void {
+		// grab a name that does not exist
+		$profile = Profile::getProfileByProfileName($this->getPDO(), "No Name");
+		$this->assertCount(0, $profile);
+	}
 
-/**
- * test grabbing a profile by email
- */
-public function testGetProfileByValidEmail(): void {
-	// count number of rows and save it for later
-	$numRows = $this->getConnection()->getRowCount("profile");
+	/**
+	 * test grabbing a profile by email
+	 */
+	public function testGetProfileByValidEmail(): void {
+		// count number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
 
-	// create a new Profile and insert into MySQL
-	$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
-		$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
-		$this->VALID_HASH, $this->VALID_SALT);
-	$profile->insert($this->getPDO());
+		// create a new Profile and insert into MySQL
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
+			$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+			$this->VALID_HASH, $this->VALID_SALT);
+		$profile->insert($this->getPDO());
 
-	// grab the data from MySQL and enforce the fields match our expectations
-	$pdoProfile = Profile::getProfileByProfileEmail($this->getPDO(), $profile->getProfileEmail());
-	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-	$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
-	$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
-	$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
-	$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
-	$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
-	$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
-	$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
-	$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
-	$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
-	$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
-	$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
-}
+		// grab the data from MySQL and enforce the fields match our expectations
+		$pdoProfile = Profile::getProfileByProfileEmail($this->getPDO(), $profile->getProfileEmail());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
+		$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
+		$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
+		$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
+	}
 
-/**
- * test grabbing a Profile by email that does not exist
- */
-public function testGetInvalidProfileByEmail(): void {
-	// grab an email that does not exist
-	$profile = Profile::getProfileByProfileEmail($this->getPDO(), "doesnotexist@phpunit.de");
-	$this->assertNull($profile);
-}
+	/**
+	 * test grabbing a Profile by email that does not exist
+	 */
+	public function testGetInvalidProfileByEmail(): void {
+		// grab an email that does not exist
+		$profile = Profile::getProfileByProfileEmail($this->getPDO(), "doesnotexist@phpunit.de");
+		$this->assertNull($profile);
+	}
 
-/**
- * test grabbing a profile by profile type
- */
-public function testGetValidProfileByType() {
-	// count number of rows and save for later
-	$numRows = $this->getConnection()->getRowCount("profile");
+	/**
+	 * test grabbing a profile by profile type
+	 */
+	public function testGetValidProfileByType() {
+		// count number of rows and save for later
+		$numRows = $this->getConnection()->getRowCount("profile");
 
-	// create a new Profile and insert into MySQL
-	$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
-		$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
-		$this->VALID_HASH, $this->VALID_SALT);
-	$profile->insert($this->getPDO());
+		// create a new Profile and insert into MySQL
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
+			$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+			$this->VALID_HASH, $this->VALID_SALT);
+		$profile->insert($this->getPDO());
 
-	// grab the data from MySQL
-	$results = Profile::getProfileByProfileType($this->getPDO(), $this->VALID_TYPE_S);
-	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		// grab the data from MySQL
+		$results = Profile::getProfileByProfileType($this->getPDO(), $this->VALID_TYPE_S);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 
-	// enforce no other objects are bleeding into Profile
-	$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\Profile", $results);
+		// enforce no other objects are bleeding into Profile
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\Profile", $results);
 
-	// enforce the results meet expectations
-	$pdoProfile = $results[0];
-	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-	$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
-	$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
-	$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
-	$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
-	$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
-	$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
-	$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
-	$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
-	$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
-	$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
-	$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
-}
+		// enforce the results meet expectations
+		$pdoProfile = $results[0];
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
+		$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
+		$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
+		$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
+	}
 
-/**
- * test grabbing a Profile by profile type that does not exist
- */
-public function testGetInvalidProfileByType(): void {
-	// grab an profile type that does not exist
-	$profile = Profile::getProfileByProfileType($this->getPDO(), 4);
-	$this->assertCount(0, $profile);
-}
+	/**
+	 * test grabbing a Profile by profile type that does not exist
+	 */
+	public function testGetInvalidProfileByType(): void {
+		// grab an profile type that does not exist
+		$profile = Profile::getProfileByProfileType($this->getPDO(), 4);
+		$this->assertCount(0, $profile);
+	}
 
-/**
- * test grabbing a profile by its github token
- */
-public function testGetValidProfileByGithubToken(): void {
-	// count number of rows and save for later
-	$numRows = $this->getConnection()->getRowCount("profile");
+	/**
+	 * test grabbing a profile by its github token
+	 */
+	public function testGetValidProfileByGithubToken(): void {
+		// count number of rows and save for later
+		$numRows = $this->getConnection()->getRowCount("profile");
 
-	// create a new Profile and insert it into MySQL
-	$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
-		$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
-		$this->VALID_HASH, $this->VALID_SALT);
-	$profile->insert($this->getPDO());
+		// create a new Profile and insert it into MySQL
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
+			$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+			$this->VALID_HASH, $this->VALID_SALT);
+		$profile->insert($this->getPDO());
 
-	// grab the data and enforce the fields match our expectations
-	$pdoProfile = Profile::getProfileByProfileGithubToken($this->getPDO(), $profile->getProfileGithubToken());
-	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-	$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
-	$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
-	$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
-	$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
-	$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
-	$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
-	$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
-	$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
-	$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
-	$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
-	$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
-}
+		// grab the data and enforce the fields match our expectations
+		$pdoProfile = Profile::getProfileByProfileGithubToken($this->getPDO(), $profile->getProfileGithubToken());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
+		$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
+		$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
+		$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
+	}
 
-/**
- * test grabbing a Profile by github token that does not exist
- */
-public function testGetInvalidProfileByGithubToken(): void {
-	// grab a github token that does not exist
-	$profile = Profile::getProfileByProfileGithubToken($this->getPDO(), "fhdhghsjdb452ndvfnn556ndj57dn");
-	$this->assertNull($profile);
-}
+	/**
+	 * test grabbing a Profile by github token that does not exist
+	 */
+	public function testGetInvalidProfileByGithubToken(): void {
+		// grab a github token that does not exist
+		$profile = Profile::getProfileByProfileGithubToken($this->getPDO(), "fhdhghsjdb452ndvfnn556ndj57dn");
+		$this->assertNull($profile);
+	}
 
-/**
- * test grabbing Profile by profile rate
- */
-public function testGetValidProfileByRate() {
-	// count number of rows and save for later
-	$numRows = $this->getConnection()->getRowCount("profile");
+	/**
+	 * test grabbing Profile by profile rate
+	 */
+	public function testGetValidProfileByRate() {
+		// count number of rows and save for later
+		$numRows = $this->getConnection()->getRowCount("profile");
 
-	// create a new Profile and insert it into MySQL
-	$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
-		$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
-		$this->VALID_HASH, $this->VALID_SALT);
-	$profile->insert($this->getPDO());
+		// create a new Profile and insert it into MySQL
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
+			$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+			$this->VALID_HASH, $this->VALID_SALT);
+		$profile->insert($this->getPDO());
 
-	// grab the data from MySQL
-	$results = Profile::getProfileByProfileRate($this->getPDO(), $this->VALID_RATE);
-	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		// grab the data from MySQL
+		$results = Profile::getProfileByProfileRate($this->getPDO(), $this->VALID_RATE);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 
-	// enforce no other objects are bleeding into profile
-	$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\Profile", $results);
+		// enforce no other objects are bleeding into profile
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\Profile", $results);
 
-	// enforce the results meet expectations
-	$pdoProfile = $results[0];
-	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-	$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
-	$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
-	$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
-	$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
-	$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
-	$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
-	$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
-	$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
-	$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
-	$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
-	$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
-}
+		// enforce the results meet expectations
+		$pdoProfile = $results[0];
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
+		$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
+		$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
+		$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
+	}
 
-/**
- * test grabbing profile by rate that does not exist
- */
-public function testGetInvalidProfileByRate(): void {
-	// grab a rate that does not exist
-	$profile = Profile::getProfileByProfileRate($this->getPDO(), 1923.99);
-	$this->assertCount(0, $profile);
-}
+	/**
+	 * test grabbing profile by rate that does not exist
+	 */
+	public function testGetInvalidProfileByRate(): void {
+		// grab a rate that does not exist
+		$profile = Profile::getProfileByProfileRate($this->getPDO(), 1923.99);
+		$this->assertCount(0, $profile);
+	}
 
+	/**
+	 * test grabbing a profile by its activation token
+	 */
+	public function testGetValidProfileByActivationToken(): void {
+		// count number of rows and save for later
+		$numRows = $this->getConnection()->getRowCount("profile");
 
+		// create a new Profile and insert it into MySQL
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
+			$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+			$this->VALID_HASH, $this->VALID_SALT);
+		$profile->insert($this->getPDO());
 
+		// grab the data from MySQL and enforce the fields match our expectations
+		$pdoProfile = Profile::getProfileByProfileActivationToken($this->getPDO(), $profile->getProfileActivationToken());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
+		$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
+		$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
+		$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
+	}
+
+	/**
+	 * test grabbing a Profile by activation token that does not exist
+	 */
+	public function testGetInvalidProfileByActivationToken(): void {
+		// grab activation token that does not exist
+		$profile = Profile::getProfileByProfileActivationToken($this->getPDO(), "ghdh45465f543n56hdbh32nfj6");
+		$this->assertNull($profile);
+	}
 }
