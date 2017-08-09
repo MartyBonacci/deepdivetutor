@@ -405,5 +405,44 @@ public function testGetInvalidProfileByType(): void {
 	$this->assertCount(0, $profile);
 }
 
+/**
+ * test grabbing a profile by its github token
+ */
+public function testGetValidProfileByGithubToken(): void {
+	// count number of rows and save for later
+	$numRows = $this->getConnection()->getRowCount("profile");
+
+	// create a new Profile and insert it into MySQL
+	$profile = new Profile((null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
+		$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+		$this->VALID_HASH, $this->VALID_SALT);
+	$profile->insert($this->getPDO());
+
+	// grab the data and enforce the fields match our expectations
+	$pdoProfile = Profile::getProfileByProfileGithubToken($this->getPDO(), $profile->getProfileGithubToken());
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+	$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+	$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+	$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
+	$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
+	$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
+	$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
+	$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+	$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
+	$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+	$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+	$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
+}
+
+/**
+ * test grabbing a Profile by github token that does not exist
+ */
+public function testGetInvalidProfileByGithubToken(): void {
+	// grab a github token that does not exist
+	$profile = Profile::getProfileByProfileGithubToken($this->getPDO(), "fhdhghsjdb452ndvfnn556ndj57dn");
+	$this->assertNull($profile);
+}
+
+
 
 }
