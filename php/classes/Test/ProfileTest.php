@@ -224,6 +224,19 @@ class ProfileTest extends DeepDiveTutorTest {
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
 	}
 
+	/**
+	 * test deleting a Profile that doesn't exist
+	 *
+	 * @expectedException \PDOException
+	 */
+	public function testDeleteInvalidProfile(): void {
+		// create a profile and try to delete it without actually inserting it
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_T, $this->VALID_GITHUBTOKEN,
+			$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+			$this->VALID_HASH, $this->VALID_SALT);
+		$profile->delete($this->getPDO());
+	}
+
 
 
 }
