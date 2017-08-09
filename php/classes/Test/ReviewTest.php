@@ -233,6 +233,31 @@ class ReviewTest extends DeepDiveTutor {
 		$this->assertNull($review);
 	}
 
+	/**
+	 * test inserting a Review and regrabbing it from mySQL
+	 **/
+	public function testGetValidReviewByReviewProfileId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("review");
+
+		// create a new Review and insert to into mySQL
+		$review = new Review(null, $this->profile->getProfileId(), $this->VALID_REVIEWCONTENT, $this->VALID_REVIEWDATE);
+		$review->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Review::getReviewByReviewId($this->getPDO(), $review->getReviewProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("review"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\Review", $results);
+
+		// grab the result from the array and validate it
+		$pdoReview = $results[0];
+		$this->assertEquals($pdoReview->getReviewProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoReview->getReviewContent(), $this->VALID_REVIEWCONTENT);
+		//format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoReview->getReviewDate()->getTimestamp(), $this->VALID_REVIEWDATE->getTimestamp());
+	}
+
 
 
 
