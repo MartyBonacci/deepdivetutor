@@ -53,6 +53,10 @@ class Skill implements \JsonSerializable {
 	 * if it is then an error is thrown because of invalid range.
 	 */
 	public function setSkillId(int $newSkillId): void {
+		if($newSkillId===null){
+			$this->skillId = null;
+			return;
+		}
 		if($newSkillId <= 0) {
 			throw(new \RangeException("This Skill Id is not positive"));
 		}
