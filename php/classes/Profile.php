@@ -652,7 +652,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 	 * @throws \TypeError when variables are not the correct data type
 	 */
 	public static function getProfileByProfileName(\PDO $pdo, string $profileName): \SplFixedArray {
-		// sanitize the description before searching
+		// sanitize the name before searching
 		$profileName = trim($profileName);
 		$profileName = filter_var($profileName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($profileName) === true) {
@@ -660,33 +660,34 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		}
 
 		// escape any MySQL wildcards
-		$profileName = str_replace("_", "\\_", str_replace("%", "\\%", $profileName));
+		// $profileName = str_replace("_", "\\_", str_replace("%", "\\%", $profileName));
 
 		// create query template
 		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, 
-profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileName LIKE :profileName";
+profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileName = :profileName";
 		$statement = $pdo->prepare($query);
 
-		// bind the tweet content to the placeholder in the template
-		$profileName = "%profileName%";
+		// bind the profile name to the placeholder in the template
+		// $profileName = "%profileName%";
 		$parameters = ["profileName" => $profileName];
-
 		$statement->execute($parameters);
 
 		// build an array of profile names
-		$names = new \SplFixedArray($statement->rowCount());
+		$profiles = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$name = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"], $row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
-				$names = [$names->key()] = $name;
-				$names->next();
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"],
+					$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+				$profiles[$profiles->key()] = $profile;
+				$profiles->next();
 			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return ($names);
+		return ($profiles);
 	}
 
 	/**
