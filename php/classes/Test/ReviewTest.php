@@ -192,5 +192,39 @@ class ReviewTest extends DeepDiveTutor {
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("review"));
 	}
 
+	/**
+	 * test deleting a Review that does not exist
+	 *
+	 * @expectedException \PDOException
+	 **/
+
+	public function testDeleteInvalidReview() : void {
+		// create a Review and try to delete it without actually inserting it
+		$review = new Review(null, $this->profile->getProfileId(), $this->VALID_REVIEWCONTENT, $this->VALID_REVIEWDATE);
+		$review->delete($this->getPDO());
+	}
+
+	/**
+	 * test inserting a Review and regrabbing it from mySQL
+	 **/
+	public function testGetValidReviewByReviewId() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("review");
+
+		// create a new Review and insert to into mySQL
+		$review = new Review(null, $this->profile->getProfileId(), $this->VALID_REVIEWCONTENT, $this->VALID_REVIEWDATE);
+		$review->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoReview = Review::getReviewByReviewId($this->getPDO(), $review->getReviewId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("review"));
+		$this->assertEquals($pdoReview->getReviewProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoReview->getReviewContent(), $this->VALID_REVIEWCONTENT);
+		//format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoReview->getReviewDate()->getTimestamp(), $this->VALID_REVIEWDATE->getTimestamp());
+	}
+
+
+
 
 }
