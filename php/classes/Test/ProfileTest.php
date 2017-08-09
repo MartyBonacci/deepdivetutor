@@ -188,6 +188,42 @@ class ProfileTest extends DeepDiveTutorTest {
 		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
 	}
 
+	/**
+	 * test updating a profile that does not exist
+	 *
+	 * @expectedException \PDOException
+	 */
+	public function testUpdateInvalidProfile() {
+		// create a profile and try to update it without actually inserting it
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
+			$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+			$this->VALID_HASH, $this->VALID_SALT);
+		$profile->update($this->getPDO());
+	}
+
+	/**
+	 * test creating a Profile and then deleting it
+	 */
+	public function testDeleteValidProfile(): void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		// create a new profile and insert it into MySQL
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_T, $this->VALID_GITHUBTOKEN,
+			$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+			$this->VALID_HASH, $this->VALID_SALT);
+		$profile->insert($this->getPDO());
+
+		// delete the Profile from MySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$profile->delete($this->getPDO());
+
+		// grab the data from MySQL and enforce the Profile does not exist
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		$this->assertNull($pdoProfile);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
+	}
+
 
 
 }
