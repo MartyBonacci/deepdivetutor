@@ -387,7 +387,8 @@ class Profile {
 	/**
 	 * mutator method for last profile edit date time
 	 *
-	 * @param \DateTime|string|null $newProfileLastEditDateTime as a DateTime object or string (or null to load current time
+	 * @param \DateTime|string|null $newProfileLastEditDateTime as a DateTime object or string (or null to load
+	 * current time)
 	 * @throws \InvalidArgumentException if $newProfileLastEditDateTime is not a valid object or string
 	 * @throws \RangeException if $newProfileLastEditDateTime is a date that does not exist
 	 */
