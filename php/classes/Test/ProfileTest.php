@@ -17,12 +17,6 @@ require_once(dirname(__DIR__) . "/autoload.php");
  */
 class ProfileTest extends DeepDiveTutorTest {
 	/**
-	 * placeholder until account activation is created
-	 * @var string $VALID_ACTIVATION
-	 */
-	protected $VALID_ACTIVATION;
-
-	/**
 	 * valid name to use
 	 * @var string $VALID_NAME
 	 */
@@ -33,18 +27,6 @@ class ProfileTest extends DeepDiveTutorTest {
 	 * @var string $VALID_EMAIL
 	 */
 	protected $VALID_EMAIL = "test@phpunit.de";
-
-	/**
-	 * valid hash to use
-	 * @var $VALID_HASH
-	 */
-	protected $VALID_HASH;
-
-	/**
-	 * valid salt to use
-	 * @var $VALID_SALT
-	 */
-	protected $VALID_SALT;
 
 	/**
 	 * valid profile type (student)
@@ -65,10 +47,15 @@ class ProfileTest extends DeepDiveTutorTest {
 	protected $VALID_GITHUBTOKEN = "Loremipsumdolorsitametconsecteturadipiscingelitposuerefhdrtuiseb";
 
 	/**
+	 * valid profile bio
+	 * @var string $VALID_BIO
+	 */
+	protected $VALID_BIO = "This is a bio";
+
+	/**
 	 * valid profile rate
 	 * @var float $VALID_RATE
 	 */
-
 	protected $VALID_RATE = 25.00;
 
 	/**
@@ -82,6 +69,26 @@ class ProfileTest extends DeepDiveTutorTest {
 	 * @var $VALID_DATETIME
 	 */
 	protected $VALID_DATETIME = null;
+
+	/**
+	 * placeholder until account activation is created
+	 * @var string $VALID_ACTIVATION
+	 */
+	protected $VALID_ACTIVATION;
+
+	/**
+	 * valid hash to use
+	 * @var $VALID_HASH
+	 */
+	protected $VALID_HASH;
+
+	/**
+	 * valid salt to use
+	 * @var $VALID_SALT
+	 */
+	protected $VALID_SALT;
+
+
 
 	/**
 	 * run the default operation to create the salt and hash
