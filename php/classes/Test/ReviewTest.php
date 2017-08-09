@@ -224,6 +224,16 @@ class ReviewTest extends DeepDiveTutor {
 		$this->assertEquals($pdoReview->getReviewDate()->getTimestamp(), $this->VALID_REVIEWDATE->getTimestamp());
 	}
 
+	/**
+	 * test grabbing a Review that does not exist
+	 **/
+	public function testGetInvalidReviewByReviewId() : void {
+		// grab a profile id that exceeds the maximum allowable profile id
+		$review = Review::getReviewByReviewId($this->getPDO(), DeepDiveTutorTest::INVALID_KEY);
+		$this->assertNull($review);
+	}
+
+
 
 
 
