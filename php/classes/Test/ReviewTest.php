@@ -136,12 +136,28 @@ class ReviewTest extends DeepDiveTutor {
 
 		public function testUpdateValidReview() : void {
 			// count the number of rows and save it for later
+			$numRows = $this->getConnection()->getRowCount("review");
+
+			// create a new Review and insert into mySQL
 			$review = new Review(null, $this->profile ->getProfileId(), $this->VALID_REVIEWCONTENT,
 				$this->VALID_REVIEWDATE);
 			$review->insert($this->getPDO());
 
+			// edit the Review and update it in mySQL
+			$review->setReviewContent($this->VALID_REVIEWCONTENT2);
+			$review->update($this->getPDO());
 
-
+			// grab the data from mySQL and enforce the fields match our expectations
+			$pdoReview = Review::gerReviewByReviewId($this->getPDO(), $review->getReviewId());
+			$this->asserEquals($numRows + 1, $this->getConnection()->getRowCount("review"));
+			$this->assertEquals($pdoReview->getReviewProfileId(), $this->profile->getProfileId());
+			$this->assertEquals($pdoReview->getReviewContent(), $this->VALID_REVIEWCONTENT2);
+			// format the date too seconds since the beginning of time to void round off error
+			$this->assertEquals($pdoReview->getReviewDate()->getTimestamp(), $this->VALID_REVIEWDATE->getTimestamp());
 		}
+
+		/**
+		 *
+		 **/
 
 }
