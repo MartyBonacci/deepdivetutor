@@ -105,7 +105,8 @@ class ReviewTest extends DeepDiveTutor {
 		$numRows = $this->getConnection()->getRowCount("review");
 
 		//creae a new review and insert into mySQL
-		$review = new Review(null, $this->profile - getProfileId(), $this->VALID_REVIEWDATE);
+		$review = new Review(null, $this->profile ->getProfileId(), $this->VALID_REVIEWCONTENT,
+			$this->VALID_REVIEWDATE);
 		$review->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -127,6 +128,20 @@ class ReviewTest extends DeepDiveTutor {
 			// create a Review with a non null review id and watch it fail
 			$review = new Review(DeepDiveTutorTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_REVIEWCONTENT, $this->VALID_REVIEWDATE);
 			$review->insert($this->getPDO());
+		}
+
+		/**
+		 * test inserting a review, editing it, and then updating it
+		 **/
+
+		public function testUpdateValidReview() : void {
+			// count the number of rows and save it for later
+			$review = new Review(null, $this->profile ->getProfileId(), $this->VALID_REVIEWCONTENT,
+				$this->VALID_REVIEWDATE);
+			$review->insert($this->getPDO());
+
+
+
 		}
 
 }
