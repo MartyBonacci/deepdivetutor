@@ -29,6 +29,12 @@ class ProfileTest extends DeepDiveTutorTest {
 	protected $VALID_EMAIL = "test@phpunit.de";
 
 	/**
+	 * valid email 2 to use
+	 * @var $VALID_EMAIL_2
+	 */
+	protected $VALID_EMAIL_2 = "updated.email@phpunit.de";
+
+	/**
 	 * valid profile type (student)
 	 * @var int $VALID_TYPE_S
 	 */
@@ -105,7 +111,7 @@ class ProfileTest extends DeepDiveTutorTest {
 	}
 
 	/**
-	 * test inserting a valid Profile and verify that the actual MySQL data matches
+	 * test inserting a valid student Profile and verify that the actual MySQL data matches
 	 */
 	public function testInsertValidProfile(): void {
 		// count the number of rows and save it for later
@@ -150,8 +156,37 @@ class ProfileTest extends DeepDiveTutorTest {
 	}
 
 	/**
-	 * test inserting a Profile, editing it, and then updating it
+	 * test inserting a tutor Profile, editing it, and then updating it
 	 */
+	public function testUpdateValidProfile() {
+		// count the number of rows and save for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		// create a new profile and insert it into MySQL
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_T, $this->VALID_GITHUBTOKEN,
+			$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+			$this->VALID_HASH, $this->VALID_SALT);
+		$profile->insert($this->getPDO());
+
+		// edit the profile and update it in MySQL
+		$profile->setProfileEmail($this->VALID_EMAIL_2);
+		$profile->update($this->getPDO());
+
+		// grab the data from MySQL and enforce the fields match expectations
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL_2);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_T);
+		$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
+		$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
+		$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
+	}
 
 
 
