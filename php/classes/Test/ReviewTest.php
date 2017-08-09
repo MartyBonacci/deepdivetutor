@@ -157,7 +157,40 @@ class ReviewTest extends DeepDiveTutor {
 		}
 
 		/**
+		 * test updating a Review that already exists
 		 *
+		 * @expectedException \PDOException
 		 **/
+
+		public function testUpdateInvalidReview() : void {
+			// create a Review with a non null review id and watch it fail
+			$review = new Review(null, $this->profile ->getProfileId(), $this->VALID_REVIEWCONTENT,
+				$this->VALID_REVIEWDATE);
+			$review->insert($this->getPDO());
+
+		}
+
+		/**
+		 * test creating a Review and then deleting it
+		 **/
+
+	public function testDeleteValidReview() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("review");
+
+		// create a new Review and insert to into mySQL
+		$review = new Review(null, $this->profile->getProfileId(), $this->VALID_REVIEWCONTENT, $this->VALID_REVIEWDATE);
+		$review->insert($this->getPDO());
+
+		// delete the Review from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("review"));
+		$review->delete($this->getPDO());
+
+		// grab the data from mySQL and enforce the Review does not exist
+		$pdoReview = Review::getReviewByReviewId($this->getPDO(), $review->getReviewId());
+		$this->assertNull($pdoReview);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("review"));
+	}
+
 
 }
