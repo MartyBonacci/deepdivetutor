@@ -1,20 +1,22 @@
 <?php
 namespace Edu\Cnm\DeepDiveTutor\Skill\Test;
 use Edu\Cnm\DeepDiveTutor\{
-	Skill
+	Skill, Test\DeepDiveTutorTest
 };
 
-require_once(dirname(__DIR__). "/autoload.php");
+require_once(dirname(__DIR__) . "/autoload.php");
 /**
  * Class SkillTest
  * @package Edu\Cnm\DeepDiveTutor\Skill\Test
  */
 
-class SkillTest extends DeepDiveTutorTest{
+class SkillTest extends DeepDiveTutorTest {
 	/**
 	 * Test to make sure the correct data doesn't throw errors
 	 * @var string $VALID_GREAT_SKILL
 	 */
+	protected $skill=null;
+
 	protected $VALID_GREAT_SKILL ="HTML";
 	/*
 	 *	Test to make sure \RangeException throws an error
