@@ -141,7 +141,17 @@ class ProfileTest extends DeepDiveTutorTest {
 	 *
 	 * @expectedException \PDOException
 	 */
-	
+	public function testInsertInvalidProfile(): void {
+		// create a profile with a non null profileId and watch it fail
+		$profile = new Profile(DeepDiveTutorTest::INVALID_KEY, $this->VALID_NAME, $this->VALID_EMAIL,
+			$this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN, $this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE,
+			$this->VALID_DATETIME, $this->VALID_ACTIVATION, $this->VALID_HASH, $this->VALID_SALT);
+		$profile->insert($this->getPDO());
+	}
+
+	/**
+	 * test inserting a Profile, editing it, and then updating it
+	 */
 
 
 
