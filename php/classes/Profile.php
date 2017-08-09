@@ -13,6 +13,7 @@ require_once("autoload.php");
  * @version 1.0.1
  */
 class Profile {
+	use ValidateDate;
 	/**
 	 * Id this profile; This is the primary key
 	 * @var int $profileId
