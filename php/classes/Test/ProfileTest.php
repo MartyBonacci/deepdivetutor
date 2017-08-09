@@ -237,6 +237,8 @@ class ProfileTest extends DeepDiveTutorTest {
 		$profile->delete($this->getPDO());
 	}
 
+	// Tests for Get By statements
+
 	/**
 	 * test inserting a Profile and regrabbing it from MySQL
 	 */
@@ -274,6 +276,52 @@ class ProfileTest extends DeepDiveTutorTest {
 		$profile = Profile::getProfileByProfileId($this->getPDO(), DeepDiveTutorTest::INVALID_KEY);
 		$this->assertNull($profile);
 	}
+
+	/**
+	 * test get valid profile by name
+	 */
+	public function testGetValidProfileByName() {
+		// count the number of rows and save for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		// create a new Profile and insert it into MySQL
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN,
+			$this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION,
+			$this->VALID_HASH, $this->VALID_SALT);
+		$profile->insert($this->getPDO());
+
+		// grab the data from MySQL
+		$results = Profile::getProfileByProfileName($this->getPDO(), $this->VALID_NAME);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+
+		// enforce no other objects are bleeding into profile
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\Profile", $results);
+
+		// enforce the results meet expectations
+		$pdoProfile = $results[0];
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
+		$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
+		$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
+		$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
+	}
+
+	/**
+	 * test grabbing a profile by name that does not exist
+	 */
+public function testGetInvalidProfileByName(): void {
+	// grab a name that does not exist
+	$profile = Profile::getProfileByProfileName($this->getPDO(), "No Name");
+	$this->assertCount(0, $profile);
+}
+
 
 
 
