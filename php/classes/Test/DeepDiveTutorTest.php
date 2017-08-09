@@ -54,7 +54,10 @@ abstract class DeepDiveTutorTest extends TestCase {
 
 		// add all the tables for the project here
 		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!
-		$dataset->addTable("quote");
+		$dataset->addTable("profile");
+		$dataset->addTable("review");
+		$dataset->addTable("skill");
+		$dataset->addTable("profileSkill");
 		return($dataset);
 	}
 
@@ -92,8 +95,8 @@ abstract class DeepDiveTutorTest extends TestCase {
 		if($this->connection === null) {
 			// connect to mySQL and provide the interface to PHPUnit
 			//update the correct ini file corresponding to group# (0-5)
-			$config = readConfig("/etc/apache2/capstone-mysql/quote0.ini");
-			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/quote0.ini");
+			$config = readConfig("/etc/apache2/capstone-mysql/deepdivetutor.ini");
+			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/deepdivetutor.ini");
 			$this->connection = $this->createDefaultDBConnection($pdo, $config["database"]);
 		}
 		return($this->connection);

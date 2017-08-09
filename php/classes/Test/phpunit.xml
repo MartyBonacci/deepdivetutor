@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <phpunit>
 	<testsuites>
-		<testsuite name = "Deep Dive Tutor">
+		<testsuite name = "DeepDiveTutor">
 			<!--<file>ProfileTest.php</file>
 			<file>ReviewTest.php</file>-->
 			<file>SkillTest.php</file>

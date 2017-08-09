@@ -7,6 +7,9 @@ require_once("autoload.php");
  * Class Skill
  * calling skill table, and defining restrictions on type to pushed through and validated is not validated will throw errors
  */
+
+
+
 class Skill implements \JsonSerializable {
 	/**
 	 * @var skillId is an int its the id of the skill ; a primary key
@@ -127,5 +130,9 @@ class Skill implements \JsonSerializable {
 		}
 		return ($skills);
 	}
+
+		public function jsonSerialize() {
+			return (get_object_vars($this));
+		}
 
 }
