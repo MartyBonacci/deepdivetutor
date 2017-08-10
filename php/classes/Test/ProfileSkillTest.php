@@ -96,7 +96,7 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		$profileSkill->delete($this->getPDO());
 		// grab the data from mySQL and confirm that the profileSkill does not exist
 		$pdoProfileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($this->profile->getProfileId(),$this->skill->getSkillId());
-		$this->assertNull($profileSkill);
+		$this->assertNull($pdoProfileSkill);
 		$this->assertEquals($numRows,$this->getConnection()->getRowCount("profileSkill"));
 	}
 	/**
@@ -129,6 +129,18 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		$this->assertEquals($numRows+1,$this->getConnection()->getRowCount("profileSkill"));
 		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(),$this->profileSkillProfileId());
 		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(),$this->profileSkillSkillId());
+/**
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Like::getLikeByLikeTweetId($this->getPDO(), $this->tweet->getTweetId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("like"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\Like", $results);
+		// grab the result from the array and validate it
+		$pdoLike = $results[0];
+		$this->assertEquals($pdoLike->getLikeProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoLike->getLikeTweetId(), $this->tweet->getTweetId());
+	*/
+
 	}
 
 	/**
