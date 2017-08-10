@@ -849,7 +849,8 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$rate = new Profile($row["profileId"], $row["profileName"], $row["profileType"], $row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+				$rate = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"],
+				$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
 				$rates[$rates->key()] = $rate;
 				$rates->next();
 			} catch(\Exception $exception) {
@@ -893,7 +894,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$activationToken = new Profile($row["profileId"], $row["profileName"], $row["profileType"], $row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+				$activationToken = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"], $row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
 			}
 		} catch(\Exception $exception) {
 			// if row couldn't be converted, rethrow it
