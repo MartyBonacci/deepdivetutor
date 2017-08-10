@@ -48,7 +48,7 @@ class SkillTest extends DeepDiveTutorTest {
 		$numRows = $this->getConnection()->getRowCount("skill");
 
 		//create the skill object
-		$skill = new Skill(null, $this->VALID_GREAT_SKILL/**, $this->VALID_GREAT_SKILL1, $this->VALID_GREAT_SKILL2, $this->VALID_GREAT_SKILL3**/);
+		$skill = new Skill(null, $this->VALID_GREAT_SKILL);
 		$skill->insert($this->getPDO());
 		$pdoSkill = Skill::getSkillNameBySkillId($this->getPDO(), $skill->getSkillId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("skill"));

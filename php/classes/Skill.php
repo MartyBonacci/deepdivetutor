@@ -1,6 +1,6 @@
 <?php
 
-namespace EDU\CNM\DeepDiveTutor;
+namespace Edu\Cnm\DeepDiveTutor;
 require_once("autoload.php");
 
 /**
