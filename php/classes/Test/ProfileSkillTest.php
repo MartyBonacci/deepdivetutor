@@ -51,6 +51,16 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 	 * @var string $profileSalt
 	 */
 	protected $profileSalt;
+	/**
+	 * profile that provides the profile id which is the foreign key in profile skill
+	 * @var Profile $profile
+	 */
+	protected $profile;
+	/**
+	 *  skill that provides the skill id which is the foreign key in profile skill
+	 * @var
+	 */
+	protected $skill;
 
 	/**
 	 * create dependent objects before running each test
@@ -77,10 +87,13 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 	 */
 	public function testInsertValidProfileSkill() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("profileSklill");
+		$numRows = $this->getConnection()->getRowCount("profileSkill");
 		// create a new Profile Skill and insert into mySQL
 		$profileSkill = new ProfileSkill($this->profile->getProfileId(),$this->skill->getSkillId());
 		$profileSkill->insert($this->getPDO());
+		// grab the data from MYSQL and enforce the fields match our expectations
+		$pdoProfileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($this->profile->getProfileId(),$this->skill->getSkillId());
+
 	}
 
 	/**

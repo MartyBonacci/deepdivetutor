@@ -164,11 +164,11 @@ class profileSkill implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $profileSkillProfileId profile id to search for
-	 * @return profileSkillSkillId|null profile id found or null if not found
+	 * @return :\SplFixedArray of skill id's for a profile Id or empty array
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getProfileSkillsByProfileSkillProfileId(\PDO $pdo, int $profileSkillProfileId) {
+	public static function getProfileSkillsByProfileSkillProfileId(\PDO $pdo, int $profileSkillProfileId) :\SplFixedArray{
 		// sanitize the profileSkillProfileId before searching
 		if($profileSkillProfileId <= 0) {
 			throw(new \PDOException("profileSkillProfileId id is not positive"));
@@ -205,11 +205,11 @@ class profileSkill implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $profileSkillSkillId profile id to search for
-	 * @return profileSkillProfileId|null profile id found or null if not found
+	 * @return :\SplFixedArray of profile id's for a skill Id or empty array
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getProfileSkillsByProfileSkillSkillId(\PDO $pdo, int $profileSkillSkillId) {
+	public static function getProfileSkillsByProfileSkillSkillId(\PDO $pdo, int $profileSkillSkillId) :\SplFixedArray{
 		// sanitize the profileSkillSkillId before searching
 		if($profileSkillSkillId <= 0) {
 			throw(new \PDOException("profileSkillSkillId id is not positive"));
@@ -240,6 +240,52 @@ class profileSkill implements \JsonSerializable {
 			return ($profileSkills);
 		}
 	}
+
+
+
+	/**
+	 * gets the profileSkills by skillId and profileId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $profileSkillSkillId skill id to search for for profile skill
+	 * @param int $profileSkillProfileId profile id to search for profile skill
+	 * @return profileSkillProfileId and profileSkillSkillId or null
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getProfileSkillProfileIdAndProfileSkillSkillId(\PDO $pdo,int $profileSkillProfileId, int $profileSkillSkillId) {
+		// sanitize the profileSkillSkillId before searching
+		if($profileSkillSkillId <= 0) {
+			throw(new \PDOException("profileSkillSkillId id is not positive"));
+		}
+		if($profileSkillProfileId <= 0) {
+			throw(new \PDOException("profileSkillProfileId id is not positive"));
+		}
+
+		// create query template
+		$query = "SELECT profileSkillProfileId, profileSkillSkillId FROM profileSkill WHERE profileSkillSkillId = :profileSkillSkillId && profileSkillProfileId = :profileSkillProfileId";
+		$statement = $pdo->prepare($query);
+
+		// bind the profileId to the place holder in the template
+		$parameters = ["profileSkillProfileId" => $profileSkillProfileId, "profileSkillSkillId" => $profileSkillSkillId];
+		$statement->execute($parameters);
+
+		//build an array of profileSkills
+		try {
+			$profileSkill = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$profileSkill = new profileSkill($row["profileSkillProfileId"], $row["profileSkillSkillId"]);
+			}
+		}catch
+			(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return ($profileSkills);
+		}
+
 
 
 	public function jsonSerialize() {
