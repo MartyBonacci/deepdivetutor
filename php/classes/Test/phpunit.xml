@@ -4,7 +4,7 @@
 		<testsuite name = "DeepDiveTutor">
 			<file>ProfileTest.php</file>
 			<!-- <file>ReviewTest.php</file>-->
-			<file>SkillTest.php</file>
+			<!-- <file>SkillTest.php</file> -->
 			<!-- <file>ProfileSkillTest.php</file> -->
 		</testsuite>
 	</testsuites>
