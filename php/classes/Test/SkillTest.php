@@ -21,15 +21,15 @@ class SkillTest extends DeepDiveTutorTest {
 	/*
 	 *	Test to make sure \RangeException throws an error
 	 */
-	//protected $VALID_GREAT_SKILL1 = "there are too many appleseeds in an apple!  -i dont know";
+	protected $VALID_GREAT_SKILL1 = "there are too many appleseeds in an apple!  -i dont know";
 	/*
 	 *Test to make sure \TypeException throws an error
 	 */
-	//protected $VALID_GREAT_SKILL2 = "1234438282828";
+	protected $VALID_GREAT_SKILL2 = "1234438282828";
 	/**
 	 * @var string check to see if it returns back empty error
 	 */
-	//protected $VALID_GREAT_SKILL3 = "";
+	protected $VALID_GREAT_SKILL3 = "";
 
 	/**
 	 * create all dependent objects so that the test can run properly
@@ -48,7 +48,7 @@ class SkillTest extends DeepDiveTutorTest {
 		$numRows = $this->getConnection()->getRowCount("skill");
 
 		//create the skill object
-		$skill = new Skill(null, $this->VALID_GREAT_SKILL);
+		$skill = new Skill(null, $this->VALID_GREAT_SKILL, $this->VALID_GREAT_SKILL1, $this->VALID_GREAT_SKILL2, $this->VALID_GREAT_SKILL3,);
 		$skill->insert($this->getPDO());
 		$pdoSkill = Skill::getSkillNameBySkillId($this->getPDO(), $skill->getSkillId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("skill"));

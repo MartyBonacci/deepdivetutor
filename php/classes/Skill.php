@@ -138,20 +138,24 @@ class Skill implements \JsonSerializable {
 		$statement->execute($parameters);
 		//grab skillName from mySQl
 					try {
-						$skill = null;
+						$skills = null;
 						$statement->setFetchMode(\PDO::FETCH_ASSOC);
 						$row = $statement->fetch();
 						if($row !== false) {
-							$skill = new Skill($row["skillId"], $row["skillName"]);
+							$skills = new Skill($row["skillId"], $row["skillName"]);
 						}
 					}catch(\Exception $exception) {
 						//if the row couldn't be converted, rethrow it
 				throw (new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		}
 		return ($skills);
 	}
 
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resultin state variables to serialize
+	 */
 		public function jsonSerialize() {
 			return (get_object_vars($this));
 		}
