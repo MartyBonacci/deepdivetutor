@@ -6,23 +6,32 @@ require_once("autoload.php");
 /**
  * Class Skill
  * calling skill table, and defining restrictions on type to pushed through and validated is not validated will throw errors
+ *
+ * Created by PhpStorm.
+ * User:George
+ * Date:8/10/2017
+ * Time: 10:08 AM
  */
+
 
 
 
 class Skill implements \JsonSerializable {
 	/**
-	 * @var skillId is an int its the id of the skill ; a primary key
+	 * primary key of the skill
+	 * @var $skilllId int
 	 */
 	private $skillId;
 	/**
-	 * @var skillName is a string it will actually house the names of the skills specified by admin;
+	 * houses names of the skills specified by admin
+	 * @var string $skillName
 	 */
 	private $skillName;
 
 	/**
-	 * Skill constructor.
-	 * @param int|null $newSkillId test if this skill id is null or an int
+	 * Skill constructor I.E the method that creates the quote object.
+	 *
+	 * @param int|null $newSkillId test id of skill or null  if the task is a new insert
 	 * @param string $newSkillName test if this skill id is a string, if it holds under the 32 character limit, and if its an empty value
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data value is out of bounds
@@ -41,18 +50,18 @@ class Skill implements \JsonSerializable {
 
 	/**
 	 * accessor method for skillId
-	 * @return int|null value of skillId
+	 * @return int|null value of skillId, main identifier for a specific quoute object.
 	 */
 	public function getSkillId(): int {
-		return $this->skillId;
+		return ($this->skillId);
 	}
-
 	/**
-	 * @param \RangeException
-	 * $skillId is being set through place holder $newSkillId and checked to see if interger is less than or equal to zero
-	 * if it is then an error is thrown because of invalid range.
+	 * mutator method for the skill ID
+	 * @param int|null $newSkillId value of primary key for quote id.
+	 * @throws \RangeException if the key is negative  throw error
 	 */
-	public function setSkillId(int $newSkillId): void {
+	public function setSkillId(int $newSkillId = null): void {
+		//Checks to see if you are null.
 		if($newSkillId===null){
 			$this->skillId = null;
 			return;
