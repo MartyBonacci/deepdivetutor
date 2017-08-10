@@ -765,7 +765,8 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$type = new Profile($row["profileId"], $row["profileName"], $row["profileType"], $row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+				$type = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"],
+				$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
 				$types[$types->key()] = $type;
 				$types->next();
 			} catch(\Exception $exception) {
