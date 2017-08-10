@@ -96,7 +96,8 @@ class Profile implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 * @documentation https://php.net/manual/en/language.oop5.decon.php
 	 */
-	public function construct__(?int $newProfileId, string $newProfileName, string $newProfileEmail, int $newProfileType, string $newProfileGithubToken, string $newProfileBio, float $newProfileRate, string $newProfileImage, $newProfileLastEditDateTime = null, string $newProfileActivationToken, string $newProfileHash, string $newProfileSalt) {
+	public function __construct(?int $newProfileId, string $newProfileName, string $newProfileEmail, int
+	$newProfileType, string $newProfileGithubToken, string $newProfileBio, float $newProfileRate, string $newProfileImage, $newProfileLastEditDateTime = null, string $newProfileActivationToken, string $newProfileHash, string $newProfileSalt) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileName($newProfileName);
@@ -233,7 +234,7 @@ class Profile implements \JsonSerializable {
 	 */
 	public function setProfileType(int $newProfileType): void {
 		// verify the profile type is 0 or 1
-		if($newProfileType !== 0 | 1) {
+		if($newProfileType !== 0 || $newProfileType !== 1) {
 			throw(new \RangeException("profile type is out of bounds"));
 		}
 
@@ -543,6 +544,7 @@ class Profile implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
+		var_dump($this);
 		$formattedDate = $this->profileLastEditDateTime->format("Y-m-d H:i:s.u");
 		$parameters = ["profileName" => $this->profileName, "profileEmail" => $this->profileEmail, "profileType" =>
 			$this->profileType, "profileGithubToken" => $this->profileGithubToken, "profileBio" => $this->profileBio, "profileRate" => $this->profileRate, "profileImage" => $this->profileImage, "profileLastEditDateTime" => $formattedDate, "profileActivationToken" =>
