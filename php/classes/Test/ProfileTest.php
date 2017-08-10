@@ -400,6 +400,8 @@ class ProfileTest extends DeepDiveTutorTest {
 
 	/**
 	 * test grabbing a Profile by profile type that does not exist
+	 *
+	 * @expectedException \PDOException
 	 */
 	public function testGetInvalidProfileByType(): void {
 		// grab an profile type that does not exist
