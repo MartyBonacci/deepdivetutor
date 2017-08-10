@@ -234,7 +234,7 @@ class Profile implements \JsonSerializable {
 	 */
 	public function setProfileType(int $newProfileType): void {
 		// verify the profile type is 0 or 1
-		if($newProfileType !== 0 || $newProfileType !== 1) {
+		if($newProfileType !== 0 && $newProfileType !== 1) {
 			throw(new \RangeException("profile type is out of bounds"));
 		}
 
@@ -364,7 +364,7 @@ class Profile implements \JsonSerializable {
 		$newProfileImage = filter_var($newProfileImage, FILTER_SANITIZE_STRING);
 
 		// make sure profile image is not empty
-		if(empty($newProfileImage === true)) {
+		if(empty($newProfileImage) === true) {
 			throw(new \InvalidArgumentException("profile image is either empty or insecure"));
 		}
 		// make sure profile image will fit in the database
