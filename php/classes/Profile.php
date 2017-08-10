@@ -123,7 +123,7 @@ class Profile implements \JsonSerializable {
 	 *
 	 * @return int|null value of profile id
 	 */
-	public function getProfileId(): int {
+	public function getProfileId(): ?int {
 		return ($this->profileId);
 	}
 
@@ -713,7 +713,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 
 		// create query template
 		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, 
-profileLAstEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileEmail = :profileEmail";
+profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileEmail = :profileEmail";
 		$statement = $pdo->prepare($query);
 
 		// bind the profileEmail to the place holder in the template
