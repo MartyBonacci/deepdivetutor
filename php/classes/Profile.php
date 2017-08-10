@@ -726,7 +726,8 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$email = new Profile($row["profileId"], $row["profileName"], $row["profileType"], $row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+				$email = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"],
+				$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
 			}
 		} catch(\Exception $exception) {
 			// if row couldn't be converted, rethrow it
@@ -746,7 +747,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 	 */
 	public static function getProfileByProfileType(\PDO $pdo, int $profileType): \SplFixedArray {
 		// sanitize the description before searching
-		if($profileType !== 0 | 1) {
+		if($profileType !== 0 && $profileType !== 1) {
 			throw(new \PDOException("incorrect profile type"));
 		}
 
