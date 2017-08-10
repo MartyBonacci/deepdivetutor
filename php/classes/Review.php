@@ -58,7 +58,7 @@ class Review {
 	 **/
 
 	public function __construct(?int $newReviewId, int $newReviewStudentProfileId, int $newReviewTutorProfileId,
-										 int $newReviewRating, string $newReviewText, \DateTime $newReviewDateTime) {
+										 int $newReviewRating, string $newReviewText, $newReviewDateTime = null) {
 		try {
 			$this->setReviewId($newReviewId);
 			$this->setReviewStudentProfileId($newReviewStudentProfileId);
@@ -357,7 +357,7 @@ class Review {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public static function getReviewByReviewId(\PDO $pdo, int $reviewId, $parameters, $exception): Review {
+	public static function getReviewByReviewId(\PDO $pdo, int $reviewId): Review {
 		// sanitize the reviewId before searching
 		if($reviewId <= 0) {
 			throw(new \PDOException("review id is not positive"));
