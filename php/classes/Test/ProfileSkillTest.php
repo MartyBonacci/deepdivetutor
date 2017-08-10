@@ -85,6 +85,23 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 	/**
 	 * test creating valid profile skill then deleting it
 	 */
+	public function testInsertValidProfileSkillAndDelete() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profileSkill");
+		// create a new Profile Skill and insert into mySQL
+		$profileSkill = new ProfileSkill($this->profile->getProfileId(), $this->skill->getSkillId());
+		$profileSkill->insert($this->getPDO());
+		// delete the profileSkill from MySQL
+		$this->assertEquals($numRows+1,$this->getConnection()->getRowCount("profileSkill"));
+		$profileSkill->delete($this->getPDO());
+		// grab the data from mySQL and confirm that the profileSkill does not exist
+		$pdoProfileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($this->profile->getProfileId(),$this->skill->getSkillId());
+		$this->assertNull($profileSkill);
+		$this->assertEquals($numRows,$this->getConnection()->getRowCount("profileSkill"));
+	}
+	/**
+	 * test creating valid profile skill then verifying that it matches the SQL data
+	 */
 	public function testInsertValidProfileSkill() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profileSkill");
@@ -93,13 +110,10 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		$profileSkill->insert($this->getPDO());
 		// grab the data from MYSQL and enforce the fields match our expectations
 		$pdoProfileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($this->profile->getProfileId(),$this->skill->getSkillId());
-
+		$this->assertEquals($numRows+1,$this->getConnection()->getRowCount("profileSkill"));
+		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(),$this->profileSkillProfileId());
+		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(),$this->profileSkillSkillId());
 	}
-
-	/**
-	 * test creating valid profile skill then verifying that it matches the SQL data
-	 */
-
 	/**
 	 * test getting profile skill by skill id
 	 */
