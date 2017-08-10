@@ -544,7 +544,7 @@ class Profile implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		var_dump($this);
+		// var_dump($this);
 		$formattedDate = $this->profileLastEditDateTime->format("Y-m-d H:i:s.u");
 		$parameters = ["profileName" => $this->profileName, "profileEmail" => $this->profileEmail, "profileType" =>
 			$this->profileType, "profileGithubToken" => $this->profileGithubToken, "profileBio" => $this->profileBio, "profileRate" => $this->profileRate, "profileImage" => $this->profileImage, "profileLastEditDateTime" => $formattedDate, "profileActivationToken" =>
