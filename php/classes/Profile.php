@@ -12,7 +12,7 @@ require_once("autoload.php");
  * @author Jack Reuter <djreuter45@gmail.com>
  * @version 1.0.1
  */
-class Profile {
+class Profile implements \JsonSerializable {
 	use ValidateDate;
 	/**
 	 * Id this profile; This is the primary key
@@ -895,5 +895,18 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return ($activationToken);
+	}
+
+	/**
+	 * format the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 */
+
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		// format the date so that the front end can consume it right up
+		$fields["profileLastEditDateTime"] = round(floatval($this->profileLastEditDateTime->format("U.u")) * 1000);
+		return($fields);
 	}
 }
