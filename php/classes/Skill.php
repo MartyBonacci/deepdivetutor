@@ -61,11 +61,12 @@ class Skill implements \JsonSerializable {
 	 * @throws \RangeException if the key is negative  throw error
 	 */
 	public function setSkillId(int $newSkillId = null): void {
-		//Checks to see if you are null.
+		//Checks to see if the key is null. if it is null it is a new object and needs to be inserted into the database
 		if($newSkillId===null){
 			$this->skillId = null;
 			return;
 		}
+		//Enforce that the key is positive, if not throw range exception
 		if($newSkillId <= 0) {
 			throw(new \RangeException("This Skill Id is not positive"));
 		}
@@ -73,20 +74,22 @@ class Skill implements \JsonSerializable {
 	}
 
 	/**
-	 * @return skillName String
-	 * we are grabing the  collumn skillName from the variable skillName
+	 * accesor method for skillName since acdirectly comunicates with the database no sanitation is needed
+	 * @return string $skillName the actuall  skillName  that was posted
 	 */
 	public function getSkillName(): string {
-		return $this->skillName;
+		return ($this->skillName);
 	}
 
 	/**
-	 * @param string $newSkillName is being tested for \InvalidArgumentException and \RangeException
-	 * @param \RangeException will be thrown if skilll is too long
+	 * Mutator method for SkillName
+	 * @param $newSkillName string value for the quote in question
+	 * @throws \RangeException will be thrown if skilll is too long
+	 * @thros \RangeException: thrown if it wont fit the database
 	 */
 	public function setSkillName(string $newSkillName): void {
 		$newSkillName = trim($newSkillName);
-		$newSkillName = filter_var($newSkillName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$newSkillName = filter_var($newSkillName, FILTER_SANITIZE_STRING);
 		if(empty($newSkillName) === true) {
 			throw(new \InvalidArgumentException("The Skill Name is Empty!"));
 		}
@@ -98,9 +101,10 @@ class Skill implements \JsonSerializable {
 
 	/**
 	 * insert method to insert dynamic values into place holders
+	 *  @param \PDO $pdo PDO connection object
 	 * @throws \TypeError thrown if $pdo is not a connection object
 	 * @throws \PDOException if mySQl related errors occur
-	 * @param \PDO $pdo PDO connection object
+	 *
 	 */
 	public function insert(\PDO $pdo): void {
 		if($this->skillId !== null) {
@@ -122,22 +126,26 @@ class Skill implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data
 	 * @throws\PDOException when mySQL related errors occurs
 	 */
-	public static function getSkillNameBySkillId(\PDO $pdo, int $skillId): \SPLFixedArray {
+	public static function getSkillNameBySkillId(\PDO $pdo, int $skillId): ?Skill {
 		if($skillId <= 0) {
 			throw(new \RangeException("SkillId Must be positive"));
 		}
-		$query = "SELECT skillId, skillName from skill where skillId = :skillId";
+		//create query template
+		$query = "SELECT skillId, skillName FROM skill WHERE skillId = :skillId";
 		$statement = $pdo->prepare($query);
+		//bind the skill id to the place holder in the template
 		$parameters = ["skillId" => $skillId];
 		$statement->execute($parameters);
-		$skills = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$skills = new Skill($row["skillId"], $row["skillName"]);
-				$skills[$skills->key()] = $skills;
-				$skills->next();
-			} catch(\Exception $exception) {
+		//grab skillName from mySQl
+					try {
+						$skill = null;
+						$statement->setFetchMode(\PDO::FETCH_ASSOC);
+						$row = $statement->fetch();
+						if($row !== false) {
+							$skill = new Skill($row["skillId"], $row["skillName"]);
+						}
+					}catch(\Exception $exception) {
+						//if the row couldn't be converted, rethrow it
 				throw (new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
