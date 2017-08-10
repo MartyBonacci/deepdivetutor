@@ -72,6 +72,42 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		// calculate the date (just use the time the unit test was setup...)
 		$this->profileLastEditDateTime = new \DateTime();
 	}
+	/**
+	 * test creating valid profile skill then deleting it
+	 */
+	public function testInsertValidProfileSkill() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profileSklill");
+		// create a new Profile Skill and insert into mySQL
+		$profileSkill = new ProfileSkill($this->profile->getProfileId(),$this->skill->getSkillId());
+		$profileSkill->insert($this->getPDO());
+	}
+
+	/**
+	 * test creating valid profile skill then verifying that it matches the SQL data
+	 */
+
+	/**
+	 * test getting profile skill by skill id
+	 */
+
+
+	/**
+	 * test getting profile skill by profile id
+	 */
+
+
+
+	/**
+	 * test getting a profile skill that does not exist by skill id
+	 */
+
+
+
+	/**
+	 * test getting a profile skill that does not exist by profile id
+	 */
+
 
 
 }
