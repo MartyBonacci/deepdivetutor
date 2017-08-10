@@ -285,7 +285,7 @@ $this->profile = new profile(null, "Billy Bob", "billy@bob.com", 0, "aksjdhfg872
 		$review->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Review::getReviewByReviewContent($this->getPDO(), $review->getReviewContent());
+		$results = Review::getReviewByReviewText($this->getPDO(), $review->getReviewText());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("review"));
 		$this->assertCount(1, $results);
 
@@ -306,9 +306,9 @@ $this->profile = new profile(null, "Billy Bob", "billy@bob.com", 0, "aksjdhfg872
 	/**
 	 * test grabbing a Review by content that does not exist
 	 **/
-	public function testGetInvalidReviewByReviewContent(): void {
+	public function testGetInvalidReviewByReviewText(): void {
 		// grab a review by content that does not exist
-		$review = Review::getReviewByReviewContent($this->getPDO(), "nobody ever reviewed this");
+		$review = Review::getReviewByReviewText($this->getPDO(), "nobody ever reviewed this");
 		$this->assertCount(0, $review);
 	}
 
