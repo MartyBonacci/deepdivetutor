@@ -21,13 +21,13 @@ require_once(dirname(__DIR__) . "/autoload.php");
 class ProfileSkillTest extends DeepDiveTutorTest {
 	/**
 	 * Profile that has the Skill; this is for foreign key relations
-	 * @var Profile Skill Profile Id profile id
+	 * @var Profile $profileSkillProfileId
 	 **/
 	protected $profileSkillProfileId = null;
 
 	/**
 	 * Skill associated with a Profile; this is for foreign key relations
-	 * @var profile Skill Skill Id skill id
+	 * @var profile $profileSkillSkillId
 	 **/
 	protected $profileSkillSkillId = null;
 
