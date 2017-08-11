@@ -124,25 +124,15 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		// create a new Profile Skill and insert into mySQL
 		$profileSkill = new ProfileSkill($this->profile->getProfileId(),$this->skill->getSkillId());
 		$profileSkill->insert($this->getPDO());
-		// grab the data from MYSQL and enforce the fields match our expectations
-		$pdoProfileSkill = ProfileSkill::getProfileSkillByProfileSkillSkillId($this->getPDO(),$this->profile->getProfileId(),$this->skill->getSkillId());
-		$this->assertEquals($numRows+1,$this->getConnection()->getRowCount("profileSkill"));
-		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(),$this->profileSkillProfileId());
-		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(),$this->profileSkillSkillId());
-
-
-
-
-
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = profileSkill::getProfileSkillsByProfileSkillSkillId($this->getPDO(),$this->profile->getProfileId(),$this->skill->getSkillId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profileSkill"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\profileSkill", $results);
 		// grab the result from the array and validate it
-		$pdoLike = $results[0];
-		$this->assertEquals($pdoLike->getLikeProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoLike->getLikeTweetId(), $this->tweet->getTweetId());
+		$pdoProfileSkill = $results[0];
+		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(),$this->profileSkillProfileId());
+		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(),$this->profileSkillSkillId());
 
 	}
 
