@@ -74,7 +74,7 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		$this->profileHash = hash_pbkdf2("sha512", $password, $this->profileSalt, 262144);
 		$this->profileActivationToken = bin2hex(random_bytes(16));
 		// create and insert the mocked profile
-		$this->profile = new profile(null, "Billy Bob", "billy@bob.com", 1, "nfshfndhu4h5j4bjbdjbfjb5j4bj3jbfjb5jbj3bjbj3jbj4jbjbj4dknjb4jb5j", "I'm super awesome! Pick me!", 99.99, "12345678901234567890123456789012", $this->profileLastEditDateTime, $this->profileActivationToken, $this->profileHash, $this->profileSalt);
+		$this->profile = new profile(null, "Billy Bob", "billy@bob.com", 1, "nfshfndhu4h5j4bjbdjbfjb5j4bj3jbfjb5jbj3bjbj3jbj4jbjbj4dknjb4jb5j", "I'm super awesome! Pick me!", 20, "12345678901234567890123456789012", $this->profileLastEditDateTime, $this->profileActivationToken, $this->profileHash, $this->profileSalt);
 		$this->profile->insert($this->getPDO());
 		// create the and insert the mocked skill
 		$this->skill = new skill(null, "JavaScript");
