@@ -2,8 +2,9 @@
 
 namespace Edu\Cnm\DeepDiveTutor\Test;
 
-use Edu\Cnm\DeepDiveTutor\{
-	Review
+use Edu\Cnm\DeepDiveTutor\ {
+Profile as Profile, Review
+
 };
 
 // grab the class under scrutiny
@@ -93,8 +94,10 @@ class ReviewTest extends DeepDiveTutorTest {
 		//$this->valid_Datetime = new \DateTime();
 
 		// create and insert the mocked profile
-		$this->profile = new profile(null, "22222222222222222222222222222222", "@handle", "test@phpunit.com", $this->valid_Hash, "null", $this->valid_Salt);
-		$this->profile->insert($this->getPDO());
+		$profile = new Profile(null, "John Smith", "test@phpunit.de", "0", "Loremipsumdolorsitametconsecteturadipiscingelitposuerefhdrtuiseb",
+			 "is a bio", 25.00, "Loremipsdolorsitametconthirtytwo", null, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+			"nfshfndhu4h5j4bjbdjbfjb5j4bj3jbfjb5jbj3bjbj3jbj4jbjbj4dknjb4jb5jbjb5jbjfb444t4t4t4tgdggbsbfhg4ybyudfddjbhb3hb2hbhb4hbfhhb5bhjhjs", "nfshfndhu4h5j4bjbdjbfjb5j4bj3jbfjb5jbj3bjbj3jbj4jbjbj4dknjb4jb5j");
+		$profile->insert($this->getPDO());
 	}
 
 	/**
