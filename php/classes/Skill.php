@@ -148,7 +148,7 @@ class Skill implements \JsonSerializable {
 		return ($skills);
 	}
 
-	public static function getAllSkillNames(\PDO $Pdo): \SplFixedArray {
+	public static function getAllSkillNames(\PDO $pdo): \SplFixedArray {
 		//create query template
 		$query = "SELECT skillId, skillName FROM skill";
 		$statement = $pdo->prepare($query);
