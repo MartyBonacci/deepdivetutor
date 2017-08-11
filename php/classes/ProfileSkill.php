@@ -29,8 +29,8 @@ class profileSkill implements \JsonSerializable {
 	/**
 	 * constructor for this profileSkill
 	 *
-	 * @param int and not null $newProfileSkillProfileId of the profile that has the skill
-	 * @param int and not null $newProfileSkillSkillId of the skill that the profile has
+	 * @param int & not null $newProfileSkillProfileId of the profile that has the skill
+	 * @param int & not null $newProfileSkillSkillId of the skill that the profile has
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints

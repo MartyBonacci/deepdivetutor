@@ -21,13 +21,13 @@ require_once(dirname(__DIR__) . "/autoload.php");
 class ProfileSkillTest extends DeepDiveTutorTest {
 	/**
 	 * Profile that has the Skill; this is for foreign key relations
-	 * @var ProfileSkillProfileId profile id
+	 * @var Profile Skill Profile Id profile id
 	 **/
 	protected $profileSkillProfileId = null;
 
 	/**
 	 * Skill associated with a Profile; this is for foreign key relations
-	 * @var profileSkillSkillId skill id
+	 * @var profile Skill Skill Id skill id
 	 **/
 	protected $profileSkillSkillId = null;
 
@@ -74,7 +74,7 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		$this->profileHash = hash_pbkdf2("sha512", $password, $this->profileSalt, 262144);
 		$this->profileActivationToken = bin2hex(random_bytes(16));
 		// create and insert the mocked profile
-		$this->profile = new profile(null, "Billy Bob", "billy@bob.com", 1, "aksjdhfg872346sdjfg", "I'm super awesome! Pick me!", 99.99, "awesomepic.jpg", $this->profileLastEditDateTime, "aksjfgasdjkhf892345747956", $this->profileHash, "+12125551212", $this->profileSalt);
+		$this->profile = new profile(null, "Billy Bob", "billy@bob.com", 1, "aksjdhfg872346sdjfg", "I'm super awesome! Pick me!", 99.99, "12345678901234567890123456789012", $this->profileLastEditDateTime, $this->profileActivationToken, $this->profileHash, $this->profileSalt);
 		$this->profile->insert($this->getPDO());
 		// create the and insert the mocked skill
 		$this->skill = new skill(null, "JavaScript");

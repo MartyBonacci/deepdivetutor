@@ -15,7 +15,7 @@ require_once("autoload.php");
 class Skill implements \JsonSerializable {
 	/**
 	 * primary key of the skill
-	 * @var $skilllId int
+	 * @var $skillId int
 	 */
 	private $skillId;
 	/**
