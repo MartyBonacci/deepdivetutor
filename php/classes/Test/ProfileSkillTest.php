@@ -82,76 +82,98 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		// calculate the date (just use the time the unit test was setup...)
 		$this->profileLastEditDateTime = new \DateTime();
 	}
+
 	/**
 	 * test creating valid profile skill then deleting it
 	 */
-	public function testInsertValidProfileSkillAndDelete() : void {
+	public function testInsertValidProfileSkillAndDelete(): void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profileSkill");
 		// create a new Profile Skill and insert into mySQL
 		$profileSkill = new ProfileSkill($this->profile->getProfileId(), $this->skill->getSkillId());
 		$profileSkill->insert($this->getPDO());
 		// delete the profileSkill from MySQL
-		$this->assertEquals($numRows+1,$this->getConnection()->getRowCount("profileSkill"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profileSkill"));
 		$profileSkill->delete($this->getPDO());
 		// grab the data from mySQL and confirm that the profileSkill does not exist
-		$pdoProfileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($this->getPDO(),$this->profile->getProfileId(),$this->skill->getSkillId());
+		$pdoProfileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($this->getPDO(), $this->profile->getProfileId(), $this->skill->getSkillId());
 		$this->assertNull($pdoProfileSkill);
-		$this->assertEquals($numRows,$this->getConnection()->getRowCount("profileSkill"));
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profileSkill"));
 	}
+
 	/**
 	 * test creating valid profile skill then verifying that it matches the SQL data
 	 */
-	public function testInsertValidProfileSkill() : void {
+	public function testInsertValidProfileSkill(): void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profileSkill");
 		// create a new Profile Skill and insert into mySQL
-		$profileSkill = new ProfileSkill($this->profile->getProfileId(),$this->skill->getSkillId());
+		$profileSkill = new ProfileSkill($this->profile->getProfileId(), $this->skill->getSkillId());
 		$profileSkill->insert($this->getPDO());
 		// grab the data from MYSQL and enforce the fields match our expectations
-		$pdoProfileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($this->getPDO(),$this->profile->getProfileId(),$this->skill->getSkillId());
-		$this->assertEquals($numRows+1,$this->getConnection()->getRowCount("profileSkill"));
-		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(),$this->profileSkillProfileId());
-		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(),$this->profileSkillSkillId());
+		$pdoProfileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($this->getPDO(), $this->profile->getProfileId(), $this->skill->getSkillId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profileSkill"));
+		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(), $this->profileSkillProfileId());
+		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(), $this->profileSkillSkillId());
 	}
 
 	/**
 	 * test getting profile skills by skill id
 	 */
-	public function testGetProfileSkillByProfileSkillSkillId() : void {
+	public function testGetProfileSkillByProfileSkillSkillId(): void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profileSkill");
 		// create a new Profile Skill and insert into mySQL
-		$profileSkill = new ProfileSkill($this->profile->getProfileId(),$this->skill->getSkillId());
+		$profileSkill = new ProfileSkill($this->profile->getProfileId(), $this->skill->getSkillId());
 		$profileSkill->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = profileSkill::getProfileSkillsByProfileSkillSkillId($this->getPDO(),$this->profile->getProfileId(),$this->skill->getSkillId());
+		$results = ProfileSkill::getProfileSkillsByProfileSkillSkillId($this->getPDO(), $this->profile->getProfileId(), $this->skill->getSkillId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profileSkill"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\profileSkill", $results);
 		// grab the result from the array and validate it
 		$pdoProfileSkill = $results[0];
-		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(),$this->profileSkillProfileId());
-		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(),$this->profileSkillSkillId());
-
+		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(), $this->profileSkillProfileId());
+		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(), $this->profileSkillSkillId());
 	}
 
 	/**
 	 * test getting profile skill by profile id
 	 */
-
+	public function testGetProfileSkillByProfileSkillProfileId(): void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profileSkill");
+		// create a new Profile Skill and insert into mySQL
+		$profileSkill = new ProfileSkill($this->profile->getProfileId(), $this->skill->getSkillId());
+		$profileSkill->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = ProfileSkill::getProfileSkillsByProfileSkillProfileId($this->getPDO(), $this->profile->getProfileId(), $this->skill->getSkillId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profileSkill"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\profileSkill", $results);
+		// grab the result from the array and validate it
+		$pdoProfileSkill = $results[0];
+		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(), $this->profileSkillProfileId());
+		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(), $this->profileSkillSkillId());
+	}
 
 
 	/**
 	 * test getting a profile skill that does not exist by skill id
 	 */
-
-
+	public function testGetInvalidProfileSkillByProfileSkillProfileId(): void {
+		// grab a profile skill id that exceeds the maximum allowable profile skill id
+		$profileSkill = ProfileSkill::getProfileSkillsByProfileSkillProfileId($this->getPDO(), DataDesignTest::INVALID_KEY);
+		$this->assertCount(0, $profileSkill);
+	}
 
 	/**
 	 * test getting a profile skill that does not exist by profile id
 	 */
-
-
+	public function testGetInvalidProfileSkillByProfileSkillSkillId(): void {
+		// grab a profile skill id that exceeds the maximum allowable profile skill id
+		$profileSkill = ProfileSkill::getProfileSkillsByProfileSkillSkillId($this->getPDO(), DataDesignTest::INVALID_KEY);
+		$this->assertCount(0, $profileSkill);
+	}
 
 }
