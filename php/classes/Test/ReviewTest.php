@@ -136,7 +136,7 @@ class ReviewTest extends DeepDiveTutorTest {
 				$numRows = $this->getConnection()->getRowCount("review");
 
 				// create a new Review and insert into mySQL
-				$review = new Review(DeepDiveTutorTest::INVALID_KEY, $this->valid_StudentProfile, $this->valid_TutorProfile,
+				$review = new Review(null, $this->valid_StudentProfile, $this->valid_TutorProfile,
 					$this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 				$review->insert($this->getPDO());
 
