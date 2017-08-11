@@ -57,7 +57,7 @@ class Skill implements \JsonSerializable {
 	 * @param int|null $newSkillId value of primary key for quote id.
 	 * @throws \RangeException if the key is negative  throw error
 	 */
-	public function setSkillId(int $newSkillId = null): void {
+	public function setSkillId(?int $newSkillId): void {
 		//Checks to see if the key is null. if it is null it is a new object and needs to be inserted into the database
 		if($newSkillId === null) {
 			$this->skillId = null;
@@ -105,10 +105,10 @@ class Skill implements \JsonSerializable {
 	 */
 	public function insert(\PDO $pdo): void {
 		if($this->skillId !== null) {
-			throw(new \PDOException("Not A New Skill"));
+			throw(new \PDOException("Not A new Skill"));
 		}
 		//create query template
-		$query = "INSERT INTO skill(skillName) VALUE (:skillName)";
+		$query = "INSERT INTO skill(skillName) VALUES (:skillName)";
 		$statement = $pdo->prepare($query);
 		//bind the member variables to the placeholder template
 		$parameters = ["skillName" => $this->skillName];
@@ -124,6 +124,7 @@ class Skill implements \JsonSerializable {
 	 * @throws\PDOException when mySQL related errors occurs
 	 */
 	public static function getSkillNameBySkillId(\PDO $pdo, int $skillId): ?Skill {
+		//Sanitize skillId
 		if($skillId <= 0) {
 			throw(new \RangeException("SkillId Must be positive"));
 		}
@@ -135,17 +136,17 @@ class Skill implements \JsonSerializable {
 		$statement->execute($parameters);
 		//grab skillName from mySQl
 		try {
-			$skills = null;
+			$skill = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$skills = new Skill($row["skillId"], $row["skillName"]);
+				$skill = new Skill($row["skillId"], $row["skillName"]);
 			}
 		} catch(\Exception $exception) {
 			//if the row couldn't be converted, rethrow it
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($skills);
+		return ($skill);
 	}
 
 	public static function getAllSkillNames(\PDO $pdo): \SplFixedArray {
