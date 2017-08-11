@@ -12,10 +12,6 @@ require_once("autoload.php");
  * Date:8/10/2017
  * Time: 10:08 AM
  */
-
-
-
-
 class Skill implements \JsonSerializable {
 	/**
 	 * primary key of the skill
@@ -55,6 +51,7 @@ class Skill implements \JsonSerializable {
 	public function getSkillId(): int {
 		return ($this->skillId);
 	}
+
 	/**
 	 * mutator method for the skill ID
 	 * @param int|null $newSkillId value of primary key for quote id.
@@ -62,7 +59,7 @@ class Skill implements \JsonSerializable {
 	 */
 	public function setSkillId(int $newSkillId = null): void {
 		//Checks to see if the key is null. if it is null it is a new object and needs to be inserted into the database
-		if($newSkillId===null){
+		if($newSkillId === null) {
 			$this->skillId = null;
 			return;
 		}
@@ -101,7 +98,7 @@ class Skill implements \JsonSerializable {
 
 	/**
 	 * insert method to insert dynamic values into place holders
-	 *  @param \PDO $pdo PDO connection object
+	 * @param \PDO $pdo PDO connection object
 	 * @throws \TypeError thrown if $pdo is not a connection object
 	 * @throws \PDOException if mySQl related errors occur
 	 *
@@ -137,27 +134,48 @@ class Skill implements \JsonSerializable {
 		$parameters = ["skillId" => $skillId];
 		$statement->execute($parameters);
 		//grab skillName from mySQl
-					try {
-						$skills = null;
-						$statement->setFetchMode(\PDO::FETCH_ASSOC);
-						$row = $statement->fetch();
-						if($row !== false) {
-							$skills = new Skill($row["skillId"], $row["skillName"]);
-						}
-					}catch(\Exception $exception) {
-						//if the row couldn't be converted, rethrow it
-				throw (new \PDOException($exception->getMessage(), 0, $exception));
+		try {
+			$skills = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$skills = new Skill($row["skillId"], $row["skillName"]);
 			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($skills);
+	}
+
+	public static function getAllSkillNames(\PDO $Pdo): \SplFixedArray {
+		//create query template
+		$query = "SELECT skillId, skillName FROM skill";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+		//build and array of skills
+		$skills = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$skill = new Skill($row["skillId"], $row["skillName"]);
+				$skills[$skills->key()] = $skill;
+				$skills->next();
+			} catch(\Exception $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
 		return ($skills);
 	}
 
 	/**
 	 * formats the state variables for JSON serialization
 	 *
+	 *
 	 * @return array resultin state variables to serialize
 	 */
-		public function jsonSerialize() {
-			return (get_object_vars($this));
-		}
+	public function jsonSerialize() {
+		return (get_object_vars($this));
+	}
 
 }

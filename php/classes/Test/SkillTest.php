@@ -48,7 +48,7 @@ class SkillTest extends DeepDiveTutorTest {
 		$numRows = $this->getConnection()->getRowCount("skill");
 
 		//create the skill object
-		$skill = new Skill(null, $this->VALID_GREAT_SKILL, $this->VALID_GREAT_SKILL1, $this->VALID_GREAT_SKILL2, $this->VALID_GREAT_SKILL3,);
+		$skill = new Skill(null, $this->VALID_GREAT_SKILL, $this->VALID_GREAT_SKILL1, $this->VALID_GREAT_SKILL2, $this->VALID_GREAT_SKILL3);
 		$skill->insert($this->getPDO());
 		$pdoSkill = Skill::getSkillNameBySkillId($this->getPDO(), $skill->getSkillId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("skill"));
@@ -56,4 +56,45 @@ class SkillTest extends DeepDiveTutorTest {
 		$this->assertEquals($pdoSkill->getSkillName(), $skill->getSkillName());
 
 	}
+	public function testInvalidQuoteInsert(){
+		//create a invalid quote object and try and insert it into the database
+		$skill = new Skill(DeepDiveTutorTest::INVALID_KEY,$this->VALID_GREAT_SKILL, $this->VALID_GREAT_SKILL1, $this->VALID_GREAT_SKILL2, $this->VALID_GREAT_SKILL3);
+		$skill->insert($this->getPDO());
+	}
+	public function testGetValidSkillNameBySkillId(): void {
+		$numRows = $this->getConnection()->getRowCount("skill");
+		$skill = new Skill(null,$this->profile->getSkillID(), $this->VALID_GREAT_SKILL, $this->VALID_GREAT_SKILL1, $this->VALID_GREAT_SKILL2, $this->VALID_GREAT_SKILL3);
+		$skill->insert($this->getPDO());
+		$results= Skill::getSkillNameBySkillId($this->getPDO(), $skill->getSkillId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("skill"));
+		$this->assertCount(1,$results);
+
+
+	}
+//grab the skillName by an invalid key
+	public function testInvalidGetBySkillId(){
+		$skill = Skill::getSkillNameBySkillId($this->getPDO(),DeepDiveTutorTest::INVALID_KEY);
+		$this->assertEmpty($skill);
+	}
+
+	public function testGetAllSkillNames(){
+		$numRows = $this->getConnection()->getRowCount("skill");
+
+		//insert skillName into database
+		$skill = new Skill(null, $this->VALID_GREAT_SKILL, $this->VALID_GREAT_SKILL1, $this->VALID_GREAT_SKILL2, $this->VALID_GREAT_SKILL3);
+
+		//insert the skill into the database
+		$skill-> insert($this->getPDO());
+
+		//grab the results from mySQL and enforce it meets expectations
+		$results = Skill::getAllSkillNames($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("skill"));
+		$this->assertCount(1, $results);
+		//$this->>assertContainsOnlyIstancesOf()
+
+		//grab the results from the array and make sure it meets expectations
+		$pdoSkill = $results[0];
+		$this->assertEquals($pdoSkill->getSkillName(),$skill->getSkillName());
+	}
+
 }
