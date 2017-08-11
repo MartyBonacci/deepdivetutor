@@ -119,7 +119,7 @@ class Skill implements \JsonSerializable {
 	/**
 	 * @param \PDO $pdo pulling data from database and filling them into variables
 	 * @param int $skillId is being defined and constricted to an int value to be used to call an array of data
-	 * @return \SplFixedArray is returning the skill names
+	 * @return Skill|null Skill found or null if not found
 	 * @throws \TypeError when variables are not the correct data
 	 * @throws\PDOException when mySQL related errors occurs
 	 */

@@ -57,6 +57,12 @@ class SkillTest extends DeepDiveTutorTest {
 		$this->assertEquals($pdoSkill->getSkillName(), $skill->getSkillName());
 
 	}
+
+	/**
+	 * test inserting a Skill that already exit
+	 * @expectedException  \PDOException
+	 */
+
 	public function testInvalidSkillInsert() : void {
 		//create a invalid  object and try and insert it into the database
 		$skill = new Skill(DeepDiveTutorTest::INVALID_KEY, $this->VALID_GREAT_SKILL);
