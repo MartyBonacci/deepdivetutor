@@ -3,7 +3,7 @@
 namespace Edu\Cnm\DeepDiveTutor\Test;
 
 use Edu\Cnm\DeepDiveTutor\{
-	StudentProfile, TutorProfile,  Review
+	Review
 };
 
 // grab the class under scrutiny
@@ -61,28 +61,33 @@ class ReviewTest extends DeepDiveTutorTest {
 	 * @var $VALID_HASH
 	 **/
 
-	protected $Valid_Hash;
+	protected $valid_Hash;
 
 	/**
 	 * valid hash to create the organization and profile object for the test
 	 * @var string $VALID_SALT
 	 **/
 
-	protected $Valid_Salt;
+	protected $valid_Salt;
 
 	/**
 	 * create dependent objects before running each test
 	 **/
+
 
 	public final function setUp(): void {
 		// run the default setUp() method first
 		parent::setUp();
 
 		$password = "abc123";
-		$this->Valid_Salt = bin2hex(random_bytes(32));
-		$this->Valid_Hash = hash_pbkdf2("sha512", $password, $this->Valid_Salt, 262144);
-		$this->Valid_Activation = bin2hex(random_bytes(16));
-		$this->Valid_Datetime = new \DateTime();
+		$this->valid_Salt = bin2hex(random_bytes(32));
+		$this->valid_Hash = hash_pbkdf2("sha512", $password, $this->valid_Salt, 262144);
+		$this->valid_Activation = bin2hex(random_bytes(16));
+		//$this->valid_Datetime = new \DateTime();
+
+		// create and insert the mocked profile
+		$this->profile = new profile(null, "22222222222222222222222222222222", "@handle", "test@phpunit.com", $this->valid_Hash, "null", $this->valid_Salt);
+		$this->profile->insert($this->getPDO());
 	}
 
 	/**
@@ -94,9 +99,8 @@ class ReviewTest extends DeepDiveTutorTest {
 		$numRows = $this->getConnection()->getRowCount("review");
 
 		//create a new review and insert into mySQL
-
-		$review = new Review(null, $this->valid_StudentProfile, $this->valid_TutorProfile, $this->valid_Rating, $this->valid_Text,
-			$this->valid_Datetime);
+		var_dump($this->valid_Datetime);
+		$review = new Review(null, $this->valid_StudentProfile, $this->valid_TutorProfile, $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 		$review->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations

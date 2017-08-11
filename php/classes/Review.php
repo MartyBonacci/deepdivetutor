@@ -9,7 +9,9 @@ require_once("autoload.php");
  * @author Timothy Williams <tkotalik@cnm.edu>
  * @version 1.0
  **/
-class Review {
+
+class Review implements \JsonSerializable {
+	use ValidateDate;
 	/**
 	 * primary key for profileId
 	 * @var int reviewId
@@ -290,7 +292,7 @@ class Review {
 		$formattedDate = $this->reviewDateTime->format("y-m-d H:i:s");
 
 		$parameters = ["reviewStudentProfileId" => $this->reviewStudentProfileId, "reviewTutorProfileId" => $this->reviewTutorProfileId,
-			"reviewRating" => $this->reviewRating, "reviewText" => $this->reviewText, "reviewDateTime" => $this->reviewDateTime];
+			"reviewRating" => $this->reviewRating, "reviewText" => $this->reviewText, "reviewDateTime" => $formattedDate];
 		$statement -> execute($parameters);
 
 		// update the null reviewId with what mySQL just gave us
@@ -476,7 +478,7 @@ class Review {
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
 		// format the date so that the front end can consume it
-		$fields["reviewDatetime"] = round(floatval($this->reviewDateTime->format("U.u")) * 1000);
+		$fields["reviewDateTime"] = round(floatval($this->reviewDateTime->format("U.u")) * 1000);
 		return ($fields);
 	}
 }
