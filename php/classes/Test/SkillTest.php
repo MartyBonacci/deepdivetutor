@@ -61,27 +61,43 @@ class SkillTest extends DeepDiveTutorTest {
 		$skill = new Skill(DeepDiveTutorTest::INVALID_KEY,$this->VALID_GREAT_SKILL, $this->VALID_GREAT_SKILL1, $this->VALID_GREAT_SKILL2, $this->VALID_GREAT_SKILL3);
 		$skill->insert($this->getPDO());
 	}
+
+	/**
+	 * test inserting a skill and regrabbing it from mySQL
+	 */
 	public function testGetValidSkillNameBySkillId(): void {
+		//count the number of Rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("skill");
-		$skill = new Skill(null,$this->profile->getSkillID(), $this->VALID_GREAT_SKILL, $this->VALID_GREAT_SKILL1, $this->VALID_GREAT_SKILL2, $this->VALID_GREAT_SKILL3);
+
+		//create a new Skill and insert to into mySql
+		$skill = new Skill(null,$this->profile->getSkillID(), $this->VALID_GREAT_SKILL);
 		$skill->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
 		$results= Skill::getSkillNameBySkillId($this->getPDO(), $skill->getSkillId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("skill"));
 		$this->assertCount(1,$results);
+		$this->assertContainsOnlyIntancesOf("Edu\\Cnm\\DeepDiveTutor\\Skill", $results);
 
+		//grab the reslut from the array and validate it
+		$pdoSkill = $results[0];
+		$this->assertEquals($pdoSkill->getSkillId(), $this->skill->getSkillId());
+		$this->assertEquals($podSkill->getSkillName(),$this->VALID_GREAT_SKILL);
 
 	}
 //grab the skillName by an invalid key
-	public function testInvalidGetBySkillId(){
+	public function testInvalidGetBySkillId() : void{
 		$skill = Skill::getSkillNameBySkillId($this->getPDO(),DeepDiveTutorTest::INVALID_KEY);
 		$this->assertEmpty($skill);
+		$this->assertCount(0,$skill);
 	}
 
-	public function testGetAllSkillNames(){
+	public function testGetAllSkillNames() : void {
+		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("skill");
 
 		//insert skillName into database
-		$skill = new Skill(null, $this->VALID_GREAT_SKILL, $this->VALID_GREAT_SKILL1, $this->VALID_GREAT_SKILL2, $this->VALID_GREAT_SKILL3);
+		$skill = new Skill(null, $this->VALID_GREAT_SKILL);
 
 		//insert the skill into the database
 		$skill-> insert($this->getPDO());
@@ -90,7 +106,7 @@ class SkillTest extends DeepDiveTutorTest {
 		$results = Skill::getAllSkillNames($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("skill"));
 		$this->assertCount(1, $results);
-		//$this->>assertContainsOnlyIstancesOf()
+		$this->>assertContainsOnlyIstancesOf("Edu\\Cnm\\DeepDiveTutor\\Skill", $results);
 
 		//grab the results from the array and make sure it meets expectations
 		$pdoSkill = $results[0];
