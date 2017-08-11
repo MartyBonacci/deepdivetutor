@@ -82,7 +82,7 @@ class SkillTest extends DeepDiveTutorTest {
 		//grab the reslut from the array and validate it
 		$pdoSkill = $results[0];
 		$this->assertEquals($pdoSkill->getSkillId(), $this->skill->getSkillId());
-		$this->assertEquals($podSkill->getSkillName(),$this->VALID_GREAT_SKILL);
+		$this->assertEquals($pdoSkill->getSkillName(),$this->VALID_GREAT_SKILL);
 
 	}
 //grab the skillName by an invalid key
@@ -106,7 +106,7 @@ class SkillTest extends DeepDiveTutorTest {
 		$results = Skill::getAllSkillNames($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("skill"));
 		$this->assertCount(1, $results);
-		$this->>assertContainsOnlyIstancesOf("Edu\\Cnm\\DeepDiveTutor\\Skill", $results);
+		$this->assertContainsOnlyIstancesOf("Edu\\Cnm\\DeepDiveTutor\\Skill", $results);
 
 		//grab the results from the array and make sure it meets expectations
 		$pdoSkill = $results[0];
