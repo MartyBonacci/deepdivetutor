@@ -86,6 +86,13 @@ class ReviewTest extends DeepDiveTutorTest {
 	protected $valid_Activation;
 
 	/**
+	 * placeholder until account activation is created
+	 * @var string $valid_Github
+	 **/
+
+	protected $valid_Github;
+
+	/**
 	 * create dependent objects before running each test
 	 **/
 
@@ -97,11 +104,12 @@ class ReviewTest extends DeepDiveTutorTest {
 		$this->valid_Salt = bin2hex(random_bytes(32));
 		$this->valid_Hash = hash_pbkdf2("sha512", $password, $this->valid_Salt, 262144);
 		$this->valid_Activation = bin2hex(random_bytes(16));
+		$this->valid_Github = bin2hex(random_bytes(32));
 		//$this->valid_Datetime = new \DateTime();
 
 		// create and insert the mocked profile
 		$profile = new Profile(null, "John Smith", "test@phpunit.de", "0", "Loremipsumdolorsitametconsecteturadipiscingelitposuerefhdrtuiseb",
-			 "is a bio", 25.00, "Loremipsdolorsitametconthirtytwo", null, $this->valid_Hash, $this->valid_Salt, $this->valid_Activation);
+			 "is a bio", 25.00, "Loremipsdolorsitametconthirtytwo", null, $this->valid_Hash, $this->valid_Salt, $this->valid_Activation, $this->valid_Github);
 		$profile->insert($this->getPDO());
 	}
 	/**
