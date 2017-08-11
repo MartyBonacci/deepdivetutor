@@ -79,9 +79,15 @@ class ReviewTest extends DeepDiveTutorTest {
 	protected $valid_Salt;
 
 	/**
-	 * create dependent objects before running each test
+	 * placeholder until account activation is created
+	 * @var string $VALID_ACTIVATION
 	 **/
 
+	protected $valid_Activation;
+
+	/**
+	 * create dependent objects before running each test
+	 **/
 
 	public final function setUp(): void {
 		// run the default setUp() method first
@@ -95,11 +101,9 @@ class ReviewTest extends DeepDiveTutorTest {
 
 		// create and insert the mocked profile
 		$profile = new Profile(null, "John Smith", "test@phpunit.de", "0", "Loremipsumdolorsitametconsecteturadipiscingelitposuerefhdrtuiseb",
-			 "is a bio", 25.00, "Loremipsdolorsitametconthirtytwo", null, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-			"nfshfndhu4h5j4bjbdjbfjb5j4bj3jbfjb5jbj3bjbj3jbj4jbjbj4dknjb4jb5jbjb5jbjfb444t4t4t4tgdggbsbfhg4ybyudfddjbhb3hb2hbhb4hbfhhb5bhjhjs", "nfshfndhu4h5j4bjbdjbfjb5j4bj3jbfjb5jbj3bjbj3jbj4jbjbj4dknjb4jb5j");
+			 "is a bio", 25.00, "Loremipsdolorsitametconthirtytwo", null, $this->valid_Hash, $this->valid_Salt, $this->valid_Activation);
 		$profile->insert($this->getPDO());
 	}
-
 	/**
 	 * test inserting a valid review and verify that the actual mySQL data matches
 	 **/
