@@ -50,6 +50,13 @@ class ReviewTest extends DeepDiveTutorTest {
 	protected $valid_Text = "tutor was great";
 
 	/**
+	 * actual text of review
+	 * @var string $valid_Text2
+	 **/
+
+	protected $valid_Text2= "tutor was terrible";
+
+	/**
 	 * timestamp of the review; this starts as null and is assigned later
 	 * @var \DateTime $valid_datetime
 	 **/
@@ -141,7 +148,7 @@ class ReviewTest extends DeepDiveTutorTest {
 				$review->insert($this->getPDO());
 
 				// edit the Review and update it in mySQL
-				$review->setReviewText($this->valid_Text);
+				$review->setReviewText($this->valid_Text2);
 				$review->update($this->getPDO());
 
 				// grab the data from mySQL and enforce the fields match our expectations
