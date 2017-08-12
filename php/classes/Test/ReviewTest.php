@@ -2,7 +2,7 @@
 
 namespace Edu\Cnm\DeepDiveTutor\Test;
 
-use Edu\Cnm\DeepDiveTutor\ {Review, Profile};
+use Edu\Cnm\DeepDiveTutor\ {Review, Profile as profile};
 
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
@@ -17,6 +17,13 @@ require_once(dirname(__DIR__) . "/autoload.php");
  * @author Timothy Williams <tkotalik@cnm.edu>
  **/
 class ReviewTest extends DeepDiveTutorTest {
+
+	/**
+	 * Profile that created the Review; this is foreign key relations
+	 * @var mixed $profile
+	 **/
+
+	protected $profile;
 
 	protected $valid_ReviewId = null;
 	/**
@@ -94,12 +101,13 @@ class ReviewTest extends DeepDiveTutorTest {
 		$this->valid_Salt = bin2hex(random_bytes(32));
 		$this->valid_Hash = hash_pbkdf2("sha512", $password, $this->valid_Salt, 262144);
 		$this->valid_Activation = bin2hex(random_bytes(16));
-		//$this->valid_Datetime = new \DateTime();
+		$this->valid_Datetime = new \DateTime();
 
 		// create and insert the mocked profile
-		$this->valid_StudentProfile = new Profile(null, "John Smith", "test@phpunit.de", "0", "Loremipsumdolorsitametconsecteturadipiscingelitposuerefhdrtuiseb",
+		$this->profile = new Profile(null, "John Smith", "test@phpunit.de", 1, "Loremipsumdolorsitametconsecteturadipiscingelitposuerefhdrtuiseb",
 			 "is a bio", 25.00, "Loremipsdolorsitametconthirtytwo", null, $this->valid_Activation, $this->valid_Hash, $this->valid_Salt);
-		$this->valid_StudentProfile->insert($this->getPDO());
+		$this->profile->insert($this->getPDO());
+
 	}
 
 	/**
@@ -112,7 +120,7 @@ class ReviewTest extends DeepDiveTutorTest {
 
 		//create a new review and insert into mySQL
 		var_dump($this->valid_Datetime);
-		$review = new Review(null, $this->valid_StudentProfile->getProfileId(), $this->valid_TutorProfile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
+		$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 		$review->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -132,8 +140,7 @@ class ReviewTest extends DeepDiveTutorTest {
 
 			public function testInsertInvalidReview(): void {
 				// create a Review with a non null review id and watch it fail
-				$review = new Review(DeepDiveTutorTest::INVALID_KEY, $this->valid_StudentProfile->getProfileId(), $this->valid_TutorProfile->getProfileId(),
-					$this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
+				$review = new Review(DeepDiveTutorTest::INVALID_KEY, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 				$review->insert($this->getPDO());
 			}
 
@@ -147,7 +154,7 @@ class ReviewTest extends DeepDiveTutorTest {
 				$numRows = $this->getConnection()->getRowCount("review");
 
 				// create a new Review and insert into mySQL
-				$review = new Review(null, $this->valid_StudentProfile->getProfileId(), $this->valid_TutorProfile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
+				$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 				$review->insert($this->getPDO());
 
 				// edit the Review and update it in mySQL
@@ -172,7 +179,7 @@ class ReviewTest extends DeepDiveTutorTest {
 
 			public function testUpdateInvalidReview(): void {
 				// create a Review with a non null review id and watch it fail
-				$review = new Review(0, $this->valid_StudentProfile->getProfileId(), $this->valid_TutorProfile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
+				$review = new Review(0, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 				$review->update($this->getPDO());
 
 			}
@@ -186,7 +193,7 @@ class ReviewTest extends DeepDiveTutorTest {
 				$numRows = $this->getConnection()->getRowCount("review");
 
 				// create a new Review and insert to into mySQL
-				$review = new Review(null, $this->valid_StudentProfile->getProfileId(), $this->valid_TutorProfile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
+				$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 				$review->insert($this->getPDO());
 
 				// delete the Review from mySQL
@@ -207,7 +214,7 @@ class ReviewTest extends DeepDiveTutorTest {
 
 			public function testDeleteInvalidReview(): void {
 				// create a Review and try to delete it without actually inserting it
-				$review = new Review(null, $this->valid_StudentProfile->getProfileId(), $this->valid_TutorProfile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
+				$review = new Review(null,$this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 				$review->delete($this->getPDO());
 			}
 
@@ -219,7 +226,7 @@ class ReviewTest extends DeepDiveTutorTest {
 				$numRows = $this->getConnection()->getRowCount("review");
 
 				// create a new Review and insert to into mySQL
-				$review = new Review(null, $this->valid_StudentProfile->getProfileId(), $this->valid_TutorProfile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
+				$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 				$review->insert($this->getPDO());
 
 				// grab the data from mySQL and enforce the fields match our expectations
@@ -249,7 +256,7 @@ class ReviewTest extends DeepDiveTutorTest {
 				$numRows = $this->getConnection()->getRowCount("review");
 
 				// create a new Review and insert to into mySQL
-				$review = new Review(null, $this->valid_StudentProfile->getProfileId(), $this->valid_TutorProfile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
+				$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 				$review->insert($this->getPDO());
 
 				// grab the data from mySQL and enforce the fields match our expectations
@@ -284,7 +291,7 @@ class ReviewTest extends DeepDiveTutorTest {
 		$numRows = $this->getConnection()->getRowCount("review");
 
 		// create a new Review and insert to into mySQL
-		$review = new Review(null, $this->valid_StudentProfile->getProfileId(), $this->valid_TutorProfile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
+		$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 		$review->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
