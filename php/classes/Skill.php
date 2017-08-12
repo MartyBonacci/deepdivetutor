@@ -149,6 +149,14 @@ class Skill implements \JsonSerializable {
 		return ($skill);
 	}
 
+	/**
+	 * gets all SkillNames
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Tweets found or null if not found
+	 *
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
 	public static function getAllSkillNames(\PDO $pdo): \SplFixedArray {
 		//create query template
 		$query = "SELECT skillId, skillName FROM skill";

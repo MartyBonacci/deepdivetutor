@@ -79,6 +79,9 @@ class SkillTest extends DeepDiveTutorTest {
 		$this->assertEmpty($skill);
 	}
 
+	/**
+	 * Test Grabing all tweets
+	 */
 	public function testGetAllSkillNames() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("skill");
