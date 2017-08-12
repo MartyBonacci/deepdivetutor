@@ -109,7 +109,7 @@ class ReviewTest extends DeepDiveTutorTest {
 		$this->profile = new Profile(null, "John Smith", "test@phpunit.de", "0", "Loremipsumdolorsitametconsecteturadipiscingelitposuerefhdrtuiseb",
 			 "is a bio", 25.00, "Loremipsdolorsitametconthirtytwo", null, $this->valid_Activation, $this->valid_Hash, $this->valid_Salt);
 		$this->profile->insert($this->getPDO());
-
+		//generates time and date for testing
 		$this->valid_Datetime = new \DateTime();
 	}
 
