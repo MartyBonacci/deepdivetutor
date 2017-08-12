@@ -44,7 +44,7 @@ class SkillTest extends DeepDiveTutorTest {
 	/**
 	 * perform the actual insert method and enforce that it meets expectations
 	 */
-	public function testValidSkillInsert() :void {
+	public function testValidSkillInsert(): void {
 		$numRows = $this->getConnection()->getRowCount("skill");
 
 		//create the skill object
@@ -63,7 +63,7 @@ class SkillTest extends DeepDiveTutorTest {
 	 * @expectedException  \PDOException
 	 */
 
-	public function testInvalidSkillInsert() : void {
+	public function testInvalidSkillInsert(): void {
 		//create a invalid  object and try and insert it into the database
 		$skill = new Skill(DeepDiveTutorTest::INVALID_KEY, $this->VALID_GREAT_SKILL);
 		$skill->insert($this->getPDO());
@@ -72,17 +72,38 @@ class SkillTest extends DeepDiveTutorTest {
 	/**
 	 * test inserting a skill and regrabbing it from mySQL
 	 */
+	/**
+	 * test inserting a tweet and regrabbing it from mysql
+	 */
 
-//grab the skillName by an invalid key
-	public function testInvalidGetBySkillId() : void{
-		$skill = Skill::getSkillNameBySkillId($this->getPDO(),DeepDiveTutorTest::INVALID_KEY);
+
+
+	public function testGetValidSkillBySkillId(): void{
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("skill");
+
+		//create a new Skill and Insert into mySQL
+		$skill = new Skill(null, $this-> VALID_GREAT_SKILL);
+		$skill->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields to match expectations
+		$pdoSkill = Skill::getSkillNameBySkillId($this->getPDO(),$skill->getSkillId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("skill"));
+		$this->assertEquals($pdoSkill->getSkillName(),$this->VALID_GREAT_SKILL);
+	}
+
+
+
+	//grab the skillName by an invalid key
+	public function testInvalidGetBySkillId(): void {
+		$skill = Skill::getSkillNameBySkillId($this->getPDO(), DeepDiveTutorTest::INVALID_KEY);
 		$this->assertEmpty($skill);
 	}
 
 	/**
 	 * Test Grabing all tweets
 	 */
-	public function testGetAllSkillNames() : void {
+	public function testGetAllSkillNames(): void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("skill");
 
@@ -90,7 +111,7 @@ class SkillTest extends DeepDiveTutorTest {
 		$skill = new Skill(null, $this->VALID_GREAT_SKILL);
 
 		//insert the skill into the database
-		$skill-> insert($this->getPDO());
+		$skill->insert($this->getPDO());
 
 		//grab the results from mySQL and enforce it meets expectations
 		$results = Skill::getAllSkillNames($this->getPDO());
@@ -100,7 +121,8 @@ class SkillTest extends DeepDiveTutorTest {
 
 		//grab the results from the array and make sure it meets expectations
 		$pdoSkill = $results[0];
-		$this->assertEquals($pdoSkill->getSkillName(),$skill->getSkillName());
-	}
+		$this->assertEquals($pdoSkill->getSkillName(), $skill->getSkillName());
 
+
+	}
 }
