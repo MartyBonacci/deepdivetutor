@@ -154,7 +154,7 @@ class Review implements \JsonSerializable {
 	 * @throws \TypeError if $newReviewTutorProfileId is not an integer
 	 **/
 
-	public function setReviewTutorProfileId(?int $newReviewTutorProfileId): void {
+	public function setReviewTutorProfileId(int $newReviewTutorProfileId): void {
 		// if reviewTutorProfileId is null immediately return it
 		//if($newReviewTutorProfileId === null) {
 	//		$this->reviewTutorprofileId = null;
@@ -359,7 +359,7 @@ class Review implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public static function getReviewByReviewId(\PDO $pdo, int $reviewId): Review {
+	public static function getReviewByReviewId(\PDO $pdo, int $reviewId): ?Review {
 		// sanitize the reviewId before searching
 		if($reviewId <= 0) {
 			throw(new \PDOException("review id is not positive"));

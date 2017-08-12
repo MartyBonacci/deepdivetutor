@@ -72,11 +72,6 @@ class SkillTest extends DeepDiveTutorTest {
 	/**
 	 * test inserting a skill and regrabbing it from mySQL
 	 */
-	/**
-	 * test inserting a tweet and regrabbing it from mysql
-	 */
-
-
 
 	public function testGetValidSkillBySkillId(): void{
 		//count the number of rows and save it for later
