@@ -90,7 +90,7 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profileSkill");
 		// create a new Profile Skill and insert into mySQL
-		$profileSkill = new ProfileSkill($this->profile->getProfileId(),$this->skill->getSkillId());
+		$profileSkill = new ProfileSkill($this->profile->getProfileId(), $this->skill->getSkillId());
 		$profileSkill->insert($this->getPDO());
 		// delete the profileSkill from MySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profileSkill"));
@@ -130,7 +130,7 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		$results = ProfileSkill::getProfileSkillsByProfileSkillSkillId($this->getPDO(), $this->profile->getProfileId(), $this->skill->getSkillId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profileSkill"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\profileSkill", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\profileSkill", $results);
 		// grab the result from the array and validate it
 		$pdoProfileSkill = $results[0];
 		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(), $this->profileSkillProfileId());
@@ -150,7 +150,7 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		$results = ProfileSkill::getProfileSkillsByProfileSkillProfileId($this->getPDO(), $this->profile->getProfileId(), $this->skill->getSkillId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profileSkill"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\profileSkill", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\profileSkill", $results);
 		// grab the result from the array and validate it
 		$pdoProfileSkill = $results[0];
 		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(), $this->profileSkillProfileId());
