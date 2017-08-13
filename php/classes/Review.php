@@ -375,18 +375,18 @@ class Review implements \JsonSerializable {
 
 		// grab review from mySQL
 		try {
-			$profile = null;
+			$review = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
 				$review = new Review($row["reviewId"], $row["reviewStudentProfileId"], $row["reviewTutorProfileId"],
-					$row["reviewRating"], $row["reviewTest"], $row["reviewDateTime"]);
+					$row["reviewRating"], $row["reviewText"], $row["reviewDateTime"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($profile);
+		return ($review);
 	}
 
 	/**
@@ -417,7 +417,7 @@ class Review implements \JsonSerializable {
 		while(($row = $statement->Fetch()) !== false) {
 			try {
 				$review = new Review($row["reviewId"], $row["reviewStudentProfileId"], $row["reviewTutorProfileId"],
-					$row["reviewRating"], $row["reviewText"], $row["reviewDateTIme"]);
+					$row["reviewRating"], $row["reviewText"], $row["reviewDateTime"]);
 				$reviews[$reviews->key()] = $review;
 				$reviews->next();
 			} catch(\Exception $exception) {
@@ -457,7 +457,7 @@ class Review implements \JsonSerializable {
 		while(($row = $statement->Fetch()) !== false) {
 			try {
 				$review = new Review($row["reviewId"], $row["reviewStudentProfileId"], $row["reviewTutorProfileId"],
-					$row["reviewRating"], $row["reviewText"], $row["reviewDateTIme"]);
+					$row["reviewRating"], $row["reviewText"], $row["reviewDateTime"]);
 				$reviews[$reviews->key()] = $review;
 				$reviews->next();
 			} catch(\Exception $exception) {
