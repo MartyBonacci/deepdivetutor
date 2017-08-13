@@ -163,7 +163,7 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 	 */
 	public function testGetInvalidProfileSkillByProfileSkillProfileId(): void {
 		// grab a profile skill id that exceeds the maximum allowable profile skill id
-		$profileSkill = ProfileSkill::getProfileSkillsByProfileSkillProfileId($this->getPDO(), ProfileSkill::INVALID_KEY);
+		$profileSkill = ProfileSkill::getProfileSkillsByProfileSkillProfileId($this->getPDO(), DeepDiveTutorTest::INVALID_KEY);
 		$this->assertCount(0, $profileSkill);
 	}
 
@@ -172,7 +172,7 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 	 */
 	public function testGetInvalidProfileSkillByProfileSkillSkillId(): void {
 		// grab a profile skill id that exceeds the maximum allowable profile skill id
-		$profileSkill = ProfileSkill::getProfileSkillsByProfileSkillSkillId($this->getPDO(), ProfileSkill::INVALID_KEY);
+		$profileSkill = ProfileSkill::getProfileSkillsByProfileSkillSkillId($this->getPDO(), DeepDiveTutorTest::INVALID_KEY);
 		$this->assertCount(0, $profileSkill);
 	}
 
