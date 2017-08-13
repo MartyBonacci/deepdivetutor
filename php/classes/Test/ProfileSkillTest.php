@@ -3,7 +3,7 @@
 namespace Edu\Cnm\DeepDiveTutor\Test;
 
 use Edu\Cnm\DeepDiveTutor\{
-	Profile, Skill, ProfileSkill
+	Profile as profile, Skill as skill, ProfileSkill
 };
 
 // grab the class under scrutiny
@@ -90,7 +90,7 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profileSkill");
 		// create a new Profile Skill and insert into mySQL
-		$profileSkill = new ProfileSkill($this->profile->getProfileId(), $this->skill->getSkillId());
+		$profileSkill = new ProfileSkill($this->profile->getProfileId(),$this->skill->getSkillId());
 		$profileSkill->insert($this->getPDO());
 		// delete the profileSkill from MySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profileSkill"));
