@@ -48,7 +48,7 @@ class Skill implements \JsonSerializable {
 	 * accessor method for skillId
 	 * @return int|null value of skillId, main identifier for a specific quoute object.
 	 */
-	public function getSkillId(): int {
+	public function getSkillId(): ?int {
 		return ($this->skillId);
 	}
 
