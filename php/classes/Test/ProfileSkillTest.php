@@ -3,7 +3,7 @@
 namespace Edu\Cnm\DeepDiveTutor\Test;
 
 use Edu\Cnm\DeepDiveTutor\{
-	Profile as profile, Skill as skill, ProfileSkill
+	Profile, Skill, ProfileSkill
 };
 
 // grab the class under scrutiny
