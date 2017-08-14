@@ -150,7 +150,7 @@ class profileSkill implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "DELETE FROM profileSkill WHERE profileSkillProfileId = :profileSkillProfileId && profileSkillSkillId =:profileSkillSkillId";
+		$query = "DELETE FROM profileSkill WHERE profileSkillProfileId = :profileSkillProfileId AND profileSkillSkillId =:profileSkillSkillId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holder in the template
@@ -263,7 +263,7 @@ class profileSkill implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "SELECT profileSkillProfileId, profileSkillSkillId FROM profileSkill WHERE profileSkillSkillId = :profileSkillSkillId && profileSkillProfileId = :profileSkillProfileId";
+		$query = "SELECT profileSkillProfileId, profileSkillSkillId FROM profileSkill WHERE profileSkillSkillId = :profileSkillSkillId AND profileSkillProfileId = :profileSkillProfileId";
 		$statement = $pdo->prepare($query);
 
 		// bind the profileId to the place holder in the template
