@@ -13,7 +13,7 @@ require_once("autoload.php");
  * @author MartyBonacci <mbonacci@@cnm.edu>
  * @version 1.0.0
  **/
-class profileSkill implements \JsonSerializable {
+class ProfileSkill implements \JsonSerializable {
 
 	/**
 	 * FOREIGN KEY for profile (profileId),
@@ -253,7 +253,7 @@ class profileSkill implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getProfileSkillProfileIdAndProfileSkillSkillId(\PDO $pdo,int $profileSkillProfileId, int $profileSkillSkillId) {
+	public static function getProfileSkillProfileIdAndProfileSkillSkillId(\PDO $pdo,int $profileSkillProfileId, int $profileSkillSkillId) : ?ProfileSkill {
 		// sanitize the profileSkillSkillId before searching
 		if($profileSkillSkillId <= 0) {
 			throw(new \PDOException("profileSkillSkillId id is not positive"));
