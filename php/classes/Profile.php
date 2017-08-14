@@ -823,30 +823,34 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 	 * gets profile by profile rate
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param int $profileRate to search for
+	 * @param float $brokeProfileRate low profile rate to search for
+	 * @param float $loadedProfileRate high profile rate to search for
 	 * @return \SplFixedArray SplFixedArray of profile rates
 	 * @throws \PDOException when MySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
+	 * @throws \InvalidArgumentException if broke or loaded rates are in the wrong format
 	 */
-	public static function getProfileByProfileRate(\PDO $pdo, int $profileRate): \SplFixedArray {
-		// sanitize the profile rate before searching
-		$profileRate = filter_var($profileRate, FILTER_SANITIZE_NUMBER_INT);
-		if($profileRate < 0) {
-			throw(new \PDOException("profile rate is not positive"));
+	public static function getProfileByProfileRate(\PDO $pdo, float $brokeProfileRate, float $loadedProfileRate):
+	\SplFixedArray {
+		// enforce both rates are present
+		if((empty($brokeProfileRate) === true) || (empty($loadedProfileRate) === true)) {
+			throw(new \InvalidArgumentException("the rates are empty or insecure"));
 		}
 
-		// create query template
+		// create query template verifying range
 		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, 
-profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileRate = :profileRate";
+profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileRate >= 
+:brokeProfileRate AND profileRate <= :loadedProfileRate";
 		$statement = $pdo->prepare($query);
 
 		// bind the profile type to the placeholder in the template
-		$parameters = ["profileRate" => $profileRate];
+		$parameters = ["brokeProfileRate" => $brokeProfileRate, "loadedProfileRate" => $loadedProfileRate];
 		$statement->execute($parameters);
 
 		// build an array of profile rates
 		$rates = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$rate = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"],
