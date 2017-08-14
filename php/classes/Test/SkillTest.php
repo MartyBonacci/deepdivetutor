@@ -3,6 +3,7 @@ namespace Edu\Cnm\DeepDiveTutor\Test;
 use Edu\Cnm\DeepDiveTutor\{
 	Skill
 };
+use Zend\Stdlib\DateTime;
 
 require_once(dirname(__DIR__) . "/autoload.php");
 /**
