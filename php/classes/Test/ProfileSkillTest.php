@@ -113,8 +113,8 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		// grab the data from MYSQL and enforce the fields match our expectations
 		$pdoProfileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($this->getPDO(), $this->profile->getProfileId(), $this->skill->getSkillId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profileSkill"));
-		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(), $this->profileSkillProfileId());
-		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(), $this->profileSkillSkillId());
+		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(), $this->getProfileSkillProfileId());
+		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(), $this->getProfileSkillSkillId());
 	}
 
 	/**
