@@ -178,6 +178,7 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 
 	/**
 	 * test getting a profile skill  by negative skill id
+	 * expected exception profileSkillProfileId id is not positive
 	 */
 	public function testGetProfileSkillByNegativeProfileSkillProfileId(): void {
 		// grab a profile skill id that exceeds the maximum allowable profile skill id
@@ -187,6 +188,7 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 
 	/**
 	 * test getting a profile skill  by negative profile id
+	 * expected exception profileSkillSkillId id is not positive
 	 */
 	public function testGetProfileSkillByNegativeProfileSkillSkillId(): void {
 		// grab a profile skill id that exceeds the maximum allowable profile skill id
