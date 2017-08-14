@@ -113,8 +113,8 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		// grab the data from MYSQL and enforce the fields match our expectations
 		$pdoProfileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($this->getPDO(), $this->profile->getProfileId(), $this->skill->getSkillId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profileSkill"));
-		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(), $this->getProfileSkillProfileId());
-		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(), $this->getProfileSkillSkillId());
+		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(), $this->skill->getSkillId());
 	}
 
 	/**
@@ -133,8 +133,8 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\profileSkill", $results);
 		// grab the result from the array and validate it
 		$pdoProfileSkill = $results[0];
-		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(), $this->getProfileSkillProfileId());
-		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(), $this->getProfileSkillSkillId());
+		$this->assertEquals($pdoProfileSkill->getProfileSkillProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoProfileSkill->getProfileSkillSkillId(), $this->skill->getSkillId());
 	}
 
 	/**
