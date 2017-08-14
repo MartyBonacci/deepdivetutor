@@ -270,7 +270,7 @@ class profileSkill implements \JsonSerializable {
 		$parameters = ["profileSkillProfileId" => $profileSkillProfileId, "profileSkillSkillId" => $profileSkillSkillId];
 		$statement->execute($parameters);
 
-		//build an array of profileSkills
+		// grab profileSkill from mysql
 		try {
 			$profileSkill = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -293,4 +293,3 @@ class profileSkill implements \JsonSerializable {
 		return ($fields);
 	}
 }
-
