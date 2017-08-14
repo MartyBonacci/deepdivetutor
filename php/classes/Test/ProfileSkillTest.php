@@ -176,4 +176,22 @@ class ProfileSkillTest extends DeepDiveTutorTest {
 		$this->assertCount(0, $profileSkill);
 	}
 
+	/**
+	 * test getting a profile skill  by negative skill id
+	 */
+	public function testGetProfileSkillByNegativeProfileSkillProfileId(): void {
+		// grab a profile skill id that exceeds the maximum allowable profile skill id
+		$profileSkill = ProfileSkill::getProfileSkillsByProfileSkillProfileId($this->getPDO(), -1);
+		$this->assertCount(0, $profileSkill);
+	}
+
+	/**
+	 * test getting a profile skill  by negative profile id
+	 */
+	public function testGetProfileSkillByNegativeProfileSkillSkillId(): void {
+		// grab a profile skill id that exceeds the maximum allowable profile skill id
+		$profileSkill = ProfileSkill::getProfileSkillsByProfileSkillSkillId($this->getPDO(), -1);
+		$this->assertCount(0, $profileSkill);
+	}
+
 }
