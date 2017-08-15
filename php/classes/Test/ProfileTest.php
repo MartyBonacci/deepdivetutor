@@ -69,6 +69,18 @@ class ProfileTest extends DeepDiveTutorTest {
 	protected $VALID_RATE = 25.00;
 
 	/**
+	 * valid min profile rate
+	 * @var float $VALID_BROKE_RATE
+	 */
+	protected $VALID_BROKE_RATE = 0.01;
+
+	/**
+	 * valid max profile rate
+	 * @var float $VALID_LOADED_RATE
+	 */
+	protected $VALID_LOADED_RATE = 999.99;
+
+	/**
 	 * valid profile image
 	 * @var $VALID_IMAGE
 	 */
@@ -492,6 +504,41 @@ class ProfileTest extends DeepDiveTutorTest {
 		// grab a rate that does not exist
 		$profile = Profile::getProfileByProfileRate($this->getPDO(), 1923.99);
 		$this->assertCount(0, $profile);
+	}
+
+	/**
+	 * test grabbing a valid profile by broke and loaded rates
+	 */
+	public function testGetValidProfileByRateRange(): void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		// create a new profile and insert it into the database
+		$profile = new Profile(null, $this->VALID_NAME, $this->VALID_EMAIL, $this->VALID_TYPE_S, $this->VALID_GITHUBTOKEN, $this->VALID_BIO, $this->VALID_RATE, $this->VALID_IMAGE, $this->VALID_DATETIME, $this->VALID_ACTIVATION, $this->VALID_HASH, $this->VALID_SALT);
+		$profile->insert($this->getPDO());
+
+		// grab the profile from the database and see if it matches expectations
+		$results = Profile::getProfileByProfileRate($this->getPDO(), $this->VALID_BROKE_RATE, $this->VALID_LOADED_RATE);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertCount(1, $results);
+
+		// enforce that no other objects are bleeding into the test
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\Profile", $results);
+
+		// use the first result to make sure that inserted profile meets expectations
+		$pdoProfile = $results[0];
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_TYPE_S);
+		$this->assertEquals($pdoProfile->getProfileGithubToken(), $this->VALID_GITHUBTOKEN);
+		$this->assertEquals($pdoProfile->getProfileBio(), $this->VALID_BIO);
+		$this->assertEquals($pdoProfile->getProfileRate(), $this->VALID_RATE);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileLastEditDateTime(), $this->VALID_DATETIME);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
 	}
 
 	/**
