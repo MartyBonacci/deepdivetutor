@@ -161,7 +161,52 @@ try {
 				$profile->getProfileSalt(), 262144);
 
 			// make sure the hash given by the end user matches what is in the database
+			if($currentPasswordHash !== $profile->getProfileHash()) {
+				throw(new \RuntimeException("Old password is incorrect", 401));
+			}
 
+			// salt and hash the new password and update the profile object
+			$newPasswordSalt = bin2hex(random_bytes(16));
+			$newPasswordHash = hash_pbkdf2("sha512", $requestObject->newProfilePassword, $newPasswordSalt, 262144);
+			$profile->setProfileHash($newPasswordHash);
+			$profile->setProfileSalt($newPasswordSalt);
 		}
+
+		// perform the actual update to the database and update the message
+		$profile->update($pdo);
+		$reply->message = "profile password successfully updated";
+
+	} elseif($method === "DELETE") {
+		// verify the XSRF token
+		verifyXsrf();
+
+		$profile = Profile::getProfileByProfileId($pdo, $id);
+		if($profile === null) {
+			throw(new RuntimeException("Profile does not exist"));
+		}
+
+		// enforce the user is signed in and trying to edit their own profile
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $profile->getProfileId()) {
+			throw(new \InvalidArgumentException("You are not allowed to access this profile", 403));
+		}
+
+		// delete the profile from the database
+		$profile->delete($pdo);
+		$reply->message = "Profile deleted";
+	} else {
+		throw(new InvalidArgumentException("Invalid HTTP request", 400));
 	}
+
+	// catch any exceptions that were thrown and update the status and message state variable fields
+} catch(\Exception | \TypeError $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
 }
+
+header("Content-type: application/json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+
+// encode and return reply to front end caller
+echo json_encode($reply);
