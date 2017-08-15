@@ -72,7 +72,7 @@ class ProfileTest extends DeepDiveTutorTest {
 	 * valid min profile rate
 	 * @var float $VALID_BROKE_RATE
 	 */
-	protected $VALID_BROKE_RATE = 0.01;
+	protected $VALID_BROKE_RATE = 1.01;
 
 	/**
 	 * valid max profile rate
@@ -503,7 +503,7 @@ class ProfileTest extends DeepDiveTutorTest {
 	 */
 	public function testGetInvalidProfileByRate(): void {
 		// grab a rate that does not exist
-		$profile = Profile::getProfileByProfileRate($this->getPDO(), 0.00, 1500.00);
+		$profile = Profile::getProfileByProfileRate($this->getPDO(), 0.01, 1500.00);
 		$this->assertCount(0, $profile);
 	}
 

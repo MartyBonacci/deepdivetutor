@@ -833,8 +833,11 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 	public static function getProfileByProfileRate(\PDO $pdo, float $brokeProfileRate, float $loadedProfileRate):
 	\SplFixedArray {
 		// enforce both rates are present
-		if((empty($brokeProfileRate) === true) || (empty($loadedProfileRate) === true)) {
-			throw(new \InvalidArgumentException("the rates are empty or insecure"));
+		if(empty($brokeProfileRate) === true) {
+			throw(new \InvalidArgumentException("the broke rate is empty or insecure"));
+		}
+		if(empty($loadedProfileRate) === true) {
+			throw(new \InvalidArgumentException("the loaded rate is empty or insecure"));
 		}
 
 		// create query template verifying range
