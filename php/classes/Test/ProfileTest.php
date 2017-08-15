@@ -475,7 +475,8 @@ class ProfileTest extends DeepDiveTutorTest {
 		$profile->insert($this->getPDO());
 
 		// grab the data from MySQL
-		$results = Profile::getProfileByProfileRate($this->getPDO(), $this->VALID_RATE);
+		// unsure $this->VALID_RATE instead of broke and loaded
+		$results = Profile::getProfileByProfileRate($this->getPDO(), $this->VALID_BROKE_RATE, $this->VALID_LOADED_RATE);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 
 		// enforce no other objects are bleeding into profile
@@ -502,7 +503,7 @@ class ProfileTest extends DeepDiveTutorTest {
 	 */
 	public function testGetInvalidProfileByRate(): void {
 		// grab a rate that does not exist
-		$profile = Profile::getProfileByProfileRate($this->getPDO(), 1923.99);
+		$profile = Profile::getProfileByProfileRate($this->getPDO(), 0.00, 1500.00);
 		$this->assertCount(0, $profile);
 	}
 
