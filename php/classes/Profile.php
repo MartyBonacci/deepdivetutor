@@ -10,7 +10,7 @@ require_once("autoload.php");
  * This is the Profile class for deepdivetutor.
  *
  * @author Jack Reuter <djreuter45@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  */
 class Profile implements \JsonSerializable {
 	use ValidateDate;
