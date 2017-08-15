@@ -24,7 +24,7 @@ CREATE TABLE profile (
 	PRIMARY KEY (profileId)
 );
 
--- create review entity
+-- create index.php entity
 CREATE TABLE review (
 	reviewId               INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	reviewStudentProfileId INT UNSIGNED                NOT NULL,

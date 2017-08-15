@@ -10,9 +10,9 @@ use Edu\Cnm\DeepDiveTutor\ {
 require_once(dirname(__DIR__) . "/autoload.php");
 
 /**
- * Full PHPUnit test for the review class
+ * Full PHPUnit test for the index.php class
  *
- * This is a complete PHPUnit test of the review class. It is complete because *ALL* mySQL/PDO enabled methods are tested
+ * This is a complete PHPUnit test of the index.php class. It is complete because *ALL* mySQL/PDO enabled methods are tested
  * for both invalid and valid inputs.
  *
  * @see review
@@ -28,21 +28,21 @@ class ReviewTest extends DeepDiveTutorTest {
 	protected $profile = null;
 
 	/**
-	 * Id for this review; This is the primary key
+	 * Id for this index.php; This is the primary key
 	 * @var int $reviewId
 	 */
 
 	protected $reviewId;
 
 	/**
-	 *profile that saved the review; this is for foreign key relations
+	 *profile that saved the index.php; this is for foreign key relations
 	 * @var Profile $valid_StudentProfile
 	 **/
 
 	protected $valid_StudentProfile = null;
 
 	/**
-	 * profile that saved the review; this is for foreign key relations
+	 * profile that saved the index.php; this is for foreign key relations
 	 * @var Profile $valid_TutorProfileId
 	 **/
 
@@ -56,21 +56,21 @@ class ReviewTest extends DeepDiveTutorTest {
 	protected $valid_Rating = 3;
 
 	/**
-	 * actual text of review
+	 * actual text of index.php
 	 * @var string $valid_Text
 	 **/
 
 	protected $valid_Text = "tutor was great";
 
 	/**
-	 * actual text of review
+	 * actual text of index.php
 	 * @var string $valid_Text2
 	 **/
 
 	protected $valid_Text2 = "tutor was terrible";
 
 	/**
-	 * timestamp of the review; this starts as null and is assigned later
+	 * timestamp of the index.php; this starts as null and is assigned later
 	 * @var \DateTime $valid_datetime
 	 **/
 
@@ -123,21 +123,21 @@ class ReviewTest extends DeepDiveTutorTest {
 	}
 
 	/**
-	 * test inserting a valid review and verify that the actual mySQL data matches
+	 * test inserting a valid index.php and verify that the actual mySQL data matches
 	 **/
 
 	public function testInsertValidReview() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("review");
+		$numRows = $this->getConnection()->getRowCount("index.php");
 
-		//create a new review and insert into mySQL
+		//create a new index.php and insert into mySQL
 		//var_dump($this->valid_Datetime);
 		$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 		$review->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoReview = Review::getReviewByReviewId($this->getPDO(), $review->getReviewId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("review"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("index.php"));
 		$this->assertEquals($pdoReview->getReviewStudentProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoReview->getReviewTutorProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoReview->getReviewRating(), $this->valid_Rating);
@@ -152,18 +152,18 @@ class ReviewTest extends DeepDiveTutorTest {
 	 **/
 
 	public function testInsertInvalidReview() : void {
-		// create a Review with a non null review id and watch it fail
+		// create a Review with a non null index.php id and watch it fail
 		$review = new Review(DeepDiveTutorTest::INVALID_KEY, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 		$review->insert($this->getPDO());
 	}
 
 	/**
-	 * test inserting a review, editing it, and then updating it
+	 * test inserting a index.php, editing it, and then updating it
 	 **/
 
 	public function testUpdateValidReview() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("review");
+		$numRows = $this->getConnection()->getRowCount("index.php");
 
 		// create a new Review and insert into mySQL
 		$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
@@ -175,7 +175,7 @@ class ReviewTest extends DeepDiveTutorTest {
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoReview = Review::getReviewByReviewId($this->getPDO(), $review->getReviewId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("review"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("index.php"));
 		$this->assertEquals($pdoReview->getReviewStudentProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoReview->getReviewTutorProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoReview->getReviewRating(), $this->valid_Rating);
@@ -190,7 +190,7 @@ class ReviewTest extends DeepDiveTutorTest {
 	 **/
 
 	public function testUpdateInvalidReview() : void {
-		// create a Review with a non null review id and watch it fail
+		// create a Review with a non null index.php id and watch it fail
 		$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 		$review->update($this->getPDO());
 
@@ -202,20 +202,20 @@ class ReviewTest extends DeepDiveTutorTest {
 
 	public function testDeleteValidReview() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("review");
+		$numRows = $this->getConnection()->getRowCount("index.php");
 
 		// create a new Review and insert to into mySQL
 		$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
 		$review->insert($this->getPDO());
 
 		// delete the Review from mySQL
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("review"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("index.php"));
 		$review->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the Review does not exist
 		$pdoReview = Review::getReviewByReviewId($this->getPDO(), $review->getReviewId());
 		$this->assertNull($pdoReview);
-		$this->assertEquals($numRows, $this->getConnection()->getRowCount("review"));
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("index.php"));
 	}
 
 	/**
@@ -235,7 +235,7 @@ class ReviewTest extends DeepDiveTutorTest {
 	 **/
 	public function testGetValidReviewByReviewId() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("review");
+		$numRows = $this->getConnection()->getRowCount("index.php");
 
 		// create a new Review and insert to into mySQL
 		$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
@@ -243,7 +243,7 @@ class ReviewTest extends DeepDiveTutorTest {
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoReview = Review::getReviewByReviewId($this->getPDO(), $review->getReviewId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("review"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("index.php"));
 		$this->assertEquals($pdoReview->getReviewStudentProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoReview->getReviewTutorProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoReview->getReviewRating(), $this->valid_Rating);
@@ -265,7 +265,7 @@ class ReviewTest extends DeepDiveTutorTest {
 	 **/
 	public function testGetValidReviewByReviewStudentProfileId() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("review");
+		$numRows = $this->getConnection()->getRowCount("index.php");
 
 		// create a new Review and insert to into mySQL
 		$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
@@ -273,7 +273,7 @@ class ReviewTest extends DeepDiveTutorTest {
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Review::getReviewByReviewStudentProfileId($this->getPDO(), $review->getReviewStudentProfileId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("review"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("index.php"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\Review", $results);
 
@@ -300,7 +300,7 @@ class ReviewTest extends DeepDiveTutorTest {
 	 **/
 	public function testGetValidReviewByReviewTutorProfileId() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("review");
+		$numRows = $this->getConnection()->getRowCount("index.php");
 
 		// create a new Review and insert to into mySQL
 		$review = new Review(null, $this->profile->getProfileId(), $this->profile->getProfileId(), $this->valid_Rating, $this->valid_Text, $this->valid_Datetime);
@@ -308,7 +308,7 @@ class ReviewTest extends DeepDiveTutorTest {
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Review::getReviewByReviewTutorProfileId($this->getPDO(), $review->getReviewTutorProfileId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("review"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("index.php"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DeepDiveTutor\\Review", $results);
 
