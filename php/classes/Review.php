@@ -156,7 +156,7 @@ class Review implements \JsonSerializable {
 	public function setReviewTutorProfileId(int $newReviewTutorProfileId) : void {
 		// if reviewTutorProfileId is null immediately return it
 		//if($newReviewTutorProfileId === null) {
-		//$this->reviewTutorprofileId = null;
+		//$this->reviewTutorProfileId = null;
 		//return;
 		//	}
 
