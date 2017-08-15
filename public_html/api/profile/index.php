@@ -39,6 +39,11 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$profileName = filter_input(INPUT_GET, "profileName", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$profileType = filter_input(INPUT_GET, "profileType", FILTER_SANITIZE_NUMBER_INT);
+	$profileGithubToken = filter_input(INPUT_GET, "profileGithubToken", FILTER_SANITIZE_STRING);
+	$brokeProfileRate = filter_input(INPUT_GET, "profileBrokeRate", FILTER_SANITIZE_NUMBER_FLOAT);
+	$loadedProfileRate = filter_input(INPUT_GET, "profileLoadedRate", FILTER_SANITIZE_NUMBER_FLOAT);
+	$profileActivationToken = filter_input(INPUT_GET, "profileActivationToken", FILTER_SANITIZE_STRING);
 
 
 	// make sure the id is valid for methods that require it
@@ -64,6 +69,26 @@ try {
 			}
 		} elseif(empty($profileEmail) === false) {
 			$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
+			if($profile !== null) {
+				$reply->data = $profile;
+			}
+		} elseif(empty($profileType) === false) {
+			$profile = Profile::getProfileByProfileType($pdo, $profileType);
+			if($profile !== null) {
+				$reply->data = $profile;
+			}
+		} elseif(empty($profileGithubToken) === false) {
+			$profile = Profile::getProfileByProfileGithubToken($pdo, $profileGithubToken);
+			if($profile !== null) {
+				$reply->data = $profile;
+			}
+		} elseif(empty($brokeProfileRate) === false) {
+			$profile = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
+			if($profile !== null) {
+				$reply->data = $profile;
+			}
+		} elseif(empty($loadedProfileRate) === false) {
+			$profile = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
 			if($profile !== null) {
 				$reply->data = $profile;
 			}
@@ -100,6 +125,42 @@ try {
 				throw(new \InvalidArgumentException("No profile email present", 405));
 			}
 
+			// profile type is a required field
+			if(empty($requestObject->profileType) === true) {
+				throw(new \InvalidArgumentException("No profile type selected", 405));
+			}
+
+			// profile bio is required
+			if(empty($requestObject->profileBio) === true) {
+				throw(new \InvalidArgumentException("No profile bio is filled out", 405));
+			}
+
+			$profile->setProfileName($requestObject->profileName);
+			$profile->setProfileEmail($requestObject->profileEmail);
+			$profile->setProfileType($requestObject->profileType);
+			$profile->setProfileBio($requestObject->profileBio);
+
+			// update reply
+			$reply->message = "Profile information updated successfully";
+		}
+
+		/**
+		 * update the password if requested
+		 */
+		// enforce that the current password and new password are present
+		if(empty($requestObject->profilePassword) === false && empty($requestObject->profileConfirmPassword) === false
+			&& empty($requestObject->Confirm) === false) {
+
+			// make sure of new password and enforce the password exists
+			if($requestObject->newProfilePassword !== $requestObject->profileConfirmPassword) {
+				throw(new RuntimeException("New passwords do not match", 401));
+			}
+
+			// hash the previous password
+			$currentPasswordHash = hash_pbkdf2("sha512", $requestObject->currentProfilePassword,
+				$profile->getProfileSalt(), 262144);
+
+			// make sure the hash given by the end user matches what is in the database
 
 		}
 	}
