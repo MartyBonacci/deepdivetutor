@@ -78,6 +78,8 @@ try {
 		// Initialize profile variables here
 		$profileName = "";
 		$profileEmail = "";
+		$profileType = "";
+		$profileRate = 0.0;
 		$profileGithubAccessToken = "";
 		$params = array('code' => $_GET['code'], 'redirect_uri' => $REDIRECT_URI);
 		$response = $client->getAccessToken($TOKEN_ENDPOINT, 'authorization_code', $params);
@@ -98,10 +100,14 @@ try {
 		if(empty($profile) === true) {
 			// create a new profile
 			$profile = new Profile(null, "D", null, true, null, null, "Please update your profile content!", $profileEmail, $profileGithubAccessToken, null, "Please update your location!", $profileName, null);
+			$profile = new Profile(null,$profileName, $profileEmail, 0,$profileGithubAccessToken, "Please update your profile content!", 20, null, null, null, null, null);
+
+			$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"], $row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+
 			$profile->insert($pdo);
-			$reply->message = "Welcome to DevConnect!";
+			$reply->message = "Welcome to Deep Dive Turor!";
 		} else {
-			$reply->message = "Welcome back to DevConnect!";
+			$reply->message = "Welcome back to Deep Dive Tutor!";
 		}
 		//grab profile from database and put into a session
 		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
