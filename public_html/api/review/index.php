@@ -31,6 +31,9 @@ try {
 	//grab the mySQL connection
 	$pdo = connectToEncrptedMySQL("/etc/apache2/capstone-mysql-deepdivetutor.ini");
 
+	// grab a profile by its profileId and add it to the session
+	$_SESSION["profile"] = Profile::getProfileByProfileId($pdo, $person);
+
 	// mock a logged in user by mocking the session and assigning a specefic user to it.
 	// this is only for testing purposes and should not be in the live code.
 	// $_SESSION["profile"] = Profile::getProfileByProfileId($pdo, 732);
@@ -42,6 +45,7 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$reviewStudentProfileId = filter_input(INPUT_GET, "reviewStudentProfileId", FILTER_VALIDATE_INT);
 	$reviewTutorProfileId = filter_input(INPUT_GET, "reviewTutorProfileId", FILTER_VALIDATE_INT);
+	$reviewText = filter_input(INPUT_GET, "reviewText", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -60,19 +64,26 @@ try {
 				$reply->data = $review;
 			}
 		} else if(empty($reviewProfileId) === false) {
-			$reviews = Review::getReviewByReviewStudentProfileId($pdo, $reviewStudentProfileId)->toArray();
-			if($reviews !== null) {
+			$review = Review::getReviewByReviewStudentProfileId($pdo, $reviewStudentProfileId)->toArray();
+			if($review !== null) {
 				$reply->data = $review;
 			}
 		} else if(empty($reviewProfileId) === false) {
-			$reviews = Review::getReviewByReviewTutorProfileId($pdo, $reviewTutorProfileId)->toArray();
-			if($reviews !== null) {
+			$review = Review::getReviewByReviewTutorProfileId($pdo, $reviewTutorProfileId)->toArray();
+			if($review !== null) {
 				$reply->data = $review;
 			}
+
+		} else if(empty($reviewText) === false) {
+			$review = Review::getReviewByReviewText($pdo, $reviewText)->toArray();
+			if($review !== null) {
+				$reply->data = $review;
+			}
+
 		} else if($method === "PUT" || $method == "POST") {
 
 			//enforce that the user has an XSRF token
-			veifyXsrf();
+			verifyXsrf();
 
 			$requestContent = file_get_contents("php://input");
 			//Retrieves the JSON package that the front end sent, and stores it in $requestContent. Here we are using file_get_contents("php://input") to get the request from the front end. file_get_contents() is a PHP function that reads a file into a string. The argument for the function, here, is "php://input". This is a read only stream that allows raw data to be read from the front end request which is, in this case, a JSON package.
@@ -94,9 +105,94 @@ try {
 				throw(new \invalidArgumentException ("No Review Tutor Profile Id.", 405));
 			}
 
+			// make sure review text is available (required field)
+			if(empty($requestObject->reviewText) === true) {
+				throw(new \InvalidArgumentException ("No text for Review.", 405));
+			}
 
 
+			// perform the actual put or post
+			if($method === "PUT") {
+
+				// retrieve the review to update
+				$review = Review::getReviewByReviewId($pdo, $id);
+				if($review === null) {
+					throw(new RuntimeException("Review does not exist", 404));
+				}
+
+				// enforce the user is signed in and only trying to edit their own review
+				if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $review->getReviewStudentProfileId()) {
+					throw(new \invalidArgumentException("You are not allowed to edit this review", 403));
+				}
+
+				// enforce the user is signed in and only trying to edit their own review
+				if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $review->getReviewTutorProfileId()) {
+					throw(new \invalidArgumentException("You are not allowed to edit this review", 403));
+				}
+
+				// update all atributes
+				$review->setReviewStudentProfileId($requestObject->reviewStudentProfileId);
+				$review->setReviewTutorProfileId($requestObject->reviewTutorProfileId);
+				$review->setReviewText($requestObject->reviewText);
+				$review->update($pdo);
+
+				// update reply
+				$reply->message = "review updated ok";
+			}
+		} else if($method === "POST") {
+			// enforce the user is signed in
+			if(empty($SESSION["profile"]) === true) {
+				throw(new \InvalidArgumentException("you must be logged in to post reviews", 403));
+			}
+
+			// create new review and insert into database
+			$review = new Review(null, $_SESSIOIN["profile"]->getProfileId(), $requestObject->reviewText, null);
+			$review->insert($pdo);
+
+			// update reply
+			$reply->message = "review created ok";
 		}
+
+	} else if($method === "DELETE") {
+
+		// enforce that the end user has a XSRF token.
+		verifyXsrf();
+
+		// retrieve the Review to be deleted
+		$review = Review::getReviewByReviewId($pdo, $id);
+		if($review === null) {
+			throw(new RuntimeException("Review does not exist", 404));
 		}
 
+		// enforce the user is signed in and only trying to edit their own review
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $review->getReviewStudentProfileId()) {
+			throw(new \InvalidArgumentException("You are not allowed to delete this review", 403));
+		}
+
+		// enforce the user is signed in and only trying to edit their own review
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $review->getReviewTutorProfileId()) {
+			throw(new \InvalidArgumentException("You are not allowed to delete this review", 403));
+		}
+
+		// delete review
+		$review->delete($pdo);
+		// update reply
+		$reply->message = "Review deleted Ok";
+
+	} else {
+		throw (new \Zend\EventManager\Exception\InvalidArgumentException("Invalid HTTP method request"));
 	}
+
+	// update the $reply->status $reply->message
+	} catch(\Exception | \TypeError $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+}
+
+header("content-type: appliation/json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+
+// encode and return reply to front end caller
+echo json_encode($reply);
