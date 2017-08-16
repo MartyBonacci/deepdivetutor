@@ -1,16 +1,18 @@
 <?php
+
 namespace Edu\Cnm\DeepDiveTutor\Test;
+
 use Edu\Cnm\DeepDiveTutor\{
 	Skill
 };
 
 
 require_once(dirname(__DIR__) . "/autoload.php");
+
 /**
  * Class SkillTest
  * @package Edu\Cnm\DeepDiveTutor\Skill\Test
  */
-
 class SkillTest extends DeepDiveTutorTest {
 	/**
 	 * Test to make sure the correct data doesn't throw errors
@@ -74,20 +76,19 @@ class SkillTest extends DeepDiveTutorTest {
 	 * test inserting a skill and regrabbing it from mySQL
 	 */
 
-	public function testGetValidSkillBySkillId(): void{
+	public function testGetValidSkillBySkillId(): void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("skill");
 
 		//create a new Skill and Insert into mySQL
-		$skill = new Skill(null, $this-> VALID_GREAT_SKILL);
+		$skill = new Skill(null, $this->VALID_GREAT_SKILL);
 		$skill->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields to match expectations
-		$pdoSkill = Skill::getSkillNameBySkillId($this->getPDO(),$skill->getSkillId());
+		$pdoSkill = Skill::getSkillNameBySkillId($this->getPDO(), $skill->getSkillId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("skill"));
-		$this->assertEquals($pdoSkill->getSkillName(),$this->VALID_GREAT_SKILL);
+		$this->assertEquals($pdoSkill->getSkillName(), $this->VALID_GREAT_SKILL);
 	}
-
 
 
 	//grab the skillName by an invalid key
