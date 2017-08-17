@@ -87,9 +87,9 @@ try {
 		parse_str($response['result'], $info);
 		$client->setAccessToken($info['access_token']);
 		$profileGithubAccessToken = $info['access_token'];
-		$response = $client->fetch('https://api.github.com/user', [], 'GET', ['User-Agent' => 'Talcott Auto Deleter']);
+		$response = $client->fetch('https://api.github.com/user', [], 'GET', ['User-Agent' => 'Jack Auto Deleter']);
 		$profileName = $response["result"]["login"];
-		$response = $client->fetch('https://api.github.com/user/emails', [], 'GET', ['User-Agent' => 'Talcott Auto Deleter']);
+		$response = $client->fetch('https://api.github.com/user/emails', [], 'GET', ['User-Agent' => 'Jack Auto Deleter']);
 		foreach($response['result'] as $result) {
 			if($result['primary'] === true) {
 				$profileEmail = $result['email'];
