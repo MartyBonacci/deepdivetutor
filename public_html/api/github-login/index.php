@@ -78,7 +78,7 @@ try {
 		// Initialize profile variables here
 		$profileName = "";
 		$profileEmail = "";
-		$profileType = "";
+		$profileType = 0;
 		$profileRate = 0.0;
 		$profileGithubAccessToken = "";
 		$profileLastEditDateTime = Date("Y-m-d H:i:s.u");
@@ -100,7 +100,7 @@ try {
 		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 		if(empty($profile) === true) {
 			// create a new profile
-			$profile = new Profile(null,$profileName, $profileEmail, 0,$profileGithubAccessToken, "Please update your profile content!", null, null, $profileLastEditDateTime, null, null, null);
+			$profile = new Profile(null,$profileName, $profileEmail, $profileType,$profileGithubAccessToken, "Please update your profile content!", null, null, $profileLastEditDateTime, null, null, null);
 			$profile->insert($pdo);
 			$reply->message = "Welcome to Deep Dive Tutor!";
 		} else {
