@@ -49,7 +49,28 @@ if ($method==="GET"){
 	setXsrfCookie ();
 	//get a specific skillName and update reply
 	if(empty($skillId)===false){
-		$
+		//set XSRF cookie
+		setXSrfCookie();
+		//get a specific skillName or all skillNames  and update reply
+		if(empty (skillId)===false ){
+			$skill=Skill::getSkillBySkillId($pdo, $skillId)
+				if($skill !== null){
+				$reply->data= $skill;
+				}
+		}else if(empty($skillName) === false) {
+			$skill=Skill::getSkillNameBySkillId($pdo, $skillName)->toArray();
+			if($skill !== null ){
+				$reply->data= $skill;
+			}
+			else{
+				$skills=Skill::getAllSkillNames($pdo)->toArray();
+				if ($skills !== null){
+					$reply->data=$skills;
+				}else if($method === "PUT" || $method === "POST") {
+					verifyXsrf();
+				}
+			}
+		}
 	}
 	}
 }
