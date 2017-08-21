@@ -29,10 +29,10 @@ $reply->data = null;
 
 try {
 	//grab the mySQL connection
-	$pdo = connectToEncrptedMySQL("/etc/apache2/capstone-mysql-deepdivetutor.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/deepdivetutor.ini");
 
 	// grab a profile by its profileId and add it to the session
-	$_SESSION["profile"] = Profile::getProfileByProfileId($pdo, $person);
+	//$_SESSION["profile"] = Profile::getProfileByProfileId($pdo, $person);
 
 	// mock a logged in user by mocking the session and assigning a specefic user to it.
 	// this is only for testing purposes and should not be in the live code.
@@ -40,6 +40,7 @@ try {
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
@@ -180,7 +181,7 @@ try {
 		$reply->message = "Review deleted Ok";
 
 	} else {
-		throw (new \Zend\EventManager\Exception\InvalidArgumentException("Invalid HTTP method request"));
+		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
 
 	// update the $reply->status $reply->message

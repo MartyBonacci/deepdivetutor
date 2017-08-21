@@ -1,12 +1,12 @@
 <?php
 
-require_once dirname(__DIR__) . "../../vendor/autoload.php";
-require_once dirname(__DIR__) . "../../php/classes/autoload.php";
-require_once dirname(__DIR__) . "../../php/lib/xsrf.php";
+require_once dirname(__DIR__,3) . "/vendor/autoload.php";
+require_once dirname(__DIR__,3) . "/php/classes/autoload.php";
+require_once dirname(__DIR__,3) . "/php/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\DeepDiveTutor\ {
-	profile
+	Profile
 };
 
 /**
@@ -63,7 +63,17 @@ try {
 
 		//update reply
 		$reply->message = "Profile Activated";
-	} else {
+	}
+	elseif($method="POST"){
+		$activation = bin2hex(random_bytes(16));
+		$salt = bin2hex(random_bytes(32));
+		$hash = hash_pbkdf2("sha512", "password", $salt, 222222);
+		$date = new \DateTime();
+
+		$profile = new Profile(null, "name", "email@email.com", 1, null, "bio", .05, null, $date,$activation,$hash, $salt );
+		$profile->insert($pdo);
+	}
+	else {
 		throw (new\Exception("Invalid HTTP method", 405));
 	}
 

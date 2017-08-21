@@ -96,8 +96,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 * @documentation https://php.net/manual/en/language.oop5.decon.php
 	 */
-	public function __construct(?int $newProfileId, string $newProfileName, string $newProfileEmail, int
-	$newProfileType, string $newProfileGithubToken, string $newProfileBio, float $newProfileRate, string $newProfileImage, $newProfileLastEditDateTime = null, string $newProfileActivationToken, string $newProfileHash, string $newProfileSalt) {
+	public function __construct(?int $newProfileId, string $newProfileName, string $newProfileEmail, int $newProfileType, ?string $newProfileGithubToken, string $newProfileBio, float $newProfileRate, ?string $newProfileImage, $newProfileLastEditDateTime = null, ?string $newProfileActivationToken, string $newProfileHash, string $newProfileSalt) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileName($newProfileName);
@@ -259,7 +258,11 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileGithubToken is > 64 characters
 	 * @throws \TypeError if $newProfileGithubToken is not a string
 	 */
-	public function setProfileGithubToken(string $newProfileGithubToken): void {
+	public function setProfileGithubToken(?string $newProfileGithubToken): void {
+		if ($newProfileGithubToken === null) {
+			$this->profileGithubToken = null;
+			return;
+		}
 		// verify github token is secure
 		$newProfileGithubToken = trim($newProfileGithubToken);
 		$newProfileGithubToken = filter_var($newProfileGithubToken, FILTER_SANITIZE_STRING);
@@ -358,7 +361,11 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileImage is > 32 characters
 	 * @throws \TypeError if $newProfileImage is not a string
 	 */
-	public function setProfileImage(string $newProfileImage): void {
+	public function setProfileImage(?string $newProfileImage): void {
+		if($newProfileImage === null) {
+			$this->profileImage = null;
+			return;
+		}
 		// verify image is secure
 		$newProfileImage = trim($newProfileImage);
 		$newProfileImage = filter_var($newProfileImage, FILTER_SANITIZE_STRING);
@@ -727,7 +734,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 			$row = $statement->fetch();
 			if($row !== false) {
 				$email = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"],
-				$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+					$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
 			}
 		} catch(\Exception $exception) {
 			// if row couldn't be converted, rethrow it
@@ -766,7 +773,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$type = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"],
-				$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+					$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
 				$types[$types->key()] = $type;
 				$types->next();
 			} catch(\Exception $exception) {
@@ -810,7 +817,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 			$row = $statement->fetch();
 			if($row !== false) {
 				$githubToken = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"],
-				$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+					$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
 			}
 		} catch(\Exception $exception) {
 			// if row couldn't be converted, rethrow it
@@ -857,7 +864,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$rate = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"],
-				$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+					$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
 				$rates[$rates->key()] = $rate;
 				$rates->next();
 			} catch(\Exception $exception) {
@@ -920,6 +927,6 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		$fields = get_object_vars($this);
 		// format the date so that the front end can consume it right up
 		$fields["profileLastEditDateTime"] = round(floatval($this->profileLastEditDateTime->format("U.u")) * 1000);
-		return($fields);
+		return ($fields);
 	}
 }
