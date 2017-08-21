@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__DIR__,3)."/php/classes/autoload.php";
 require_once dirname(__DIR__,3)."/php/lib/xsr.php";
-require once dirname("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once dirname("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 /**
  *
@@ -25,6 +25,22 @@ try{
 	$method= array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER)? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	if ($method === "GET"){
 		$_SESSION =[];
+		$reply->message= "You are now signed out";
 
 	}
+	else {
+		throw(new\InvalidArgumentException("Invalid HTTP method request"));
+	}
+} catch (Exception $exception){
+	$reply->status=$exception->getCode();
+	$reply->message=$exception->getMessage();
+}catch(TypeError $typeError){
+	$reply->status =$exception->getCode();
+	$reply->message=$exception->getMessage();
 }
+header("Content-type: application /json");
+if($reply->data ===null){
+	unset($reply->data);
+}
+
+echo json_encode($reply);
