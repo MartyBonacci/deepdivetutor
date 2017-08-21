@@ -1,12 +1,11 @@
 <?php
 
-require_once dirname(__DIR__,3) . "/vendor/autoload.php";
-require_once dirname(__DIR__,3) . "/php/classes/autoload.php";
-require_once dirname(__DIR__,3) . "/php/lib/xsrf.php";
+require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
+require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
+require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 
 use Edu\Cnm\DeepDiveTutor\{
-	Skill,
-	Profile
+	Skill
 };
 
 /**
@@ -16,13 +15,14 @@ use Edu\Cnm\DeepDiveTutor\{
  */
 
 //verify session, start if not active
-if(session_status()!==PHP_SESSION_ACTIVE){
+if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
+
 try {
 	//grab the mySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/deepdivetutor.ini");
@@ -43,34 +43,33 @@ try {
 	}
 
 
-
 //handle GET request - if id is present, that tweet is returned, otherwise all tweets are returned
-if ($method==="GET"){
-	setXsrfCookie ();
-	//get a specific skillName and update reply
-	if(empty($skillId)===false){
-		//set XSRF cookie
-		setXSrfCookie();
-		//get a specific skillName or all skillNames  and update reply
-		if(empty (skillId)===false ){
-			$skill=Skill::getSkillBySkillId($pdo, $skillId)
-				if($skill !== null){
-				$reply->data= $skill;
-				}
-		}else if(empty($skillName) === false) {
-			$skill=Skill::getSkillNameBySkillId($pdo, $skillName)->toArray();
-			if($skill !== null ){
-				$reply->data= $skill;
+	if($method === "GET") {
+		setXsrfCookie();
+		if(empty($skillId) === false) {
+			$skill = Skill::getSkillNameBySkillId($pdo, $skillId);
+			if($skill !== null) {
+				$reply->data = $skill;
 			}
-			else{
-				$skills=Skill::getAllSkillNames($pdo)->toArray();
-				if ($skills !== null){
-					$reply->data=$skills;
-				}else if($method === "PUT" || $method === "POST") {
-					verifyXsrf();
-				}
+		} else {
+			$skills = Skill::getAllSkillNames($pdo)->toArray();
+			if($skills !== null) {
+				$reply->data = $skills;
 			}
-		}
+		catch
+			(\Exception | \TypeError $exception ){
+				$reply->status = $exception->getCode();
+				$reply->message = $exception->getMessage();
+			}
+					header("Content-type:application/json");
+					if($reply->data == null) {
+						unset($reply->data);
+					}
+					echo json_encode($reply);
+					}
 	}
-	}
-}
+
+
+
+
+
