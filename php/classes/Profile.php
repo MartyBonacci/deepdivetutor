@@ -36,7 +36,7 @@ class Profile implements \JsonSerializable {
 	private $profileType;
 	/**
 	 * GitHub Token for profile
-	 * @var string $profileGithubToken
+	 * @var string|null $profileGithubToken
 	 */
 	private $profileGithubToken;
 	/**
@@ -82,7 +82,7 @@ class Profile implements \JsonSerializable {
 	 * @param string $newProfileName name of this profile owner
 	 * @param string $newProfileEmail email address for this profile
 	 * @param int $newProfileType type of profile
-	 * @param string $newProfileGithubToken GitHub token for this profile
+	 * @param string|null $newProfileGithubToken GitHub token for this profile
 	 * @param string $newProfileBio bio for this profile
 	 * @param float $newProfileRate rate for this profile
 	 * @param string $newProfileImage image for this profile
@@ -244,7 +244,7 @@ class Profile implements \JsonSerializable {
 	/**
 	 * accessor method for profile github token
 	 *
-	 * @return string value of github token
+	 * @return string|null value of github token
 	 */
 	public function getProfileGithubToken(): string {
 		return ($this->profileGithubToken);
@@ -253,7 +253,7 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile github token
 	 *
-	 * @param string $newProfileGithubToken new github token for profile
+	 * @param string|null $newProfileGithubToken new github token for profile
 	 * @throws \InvalidArgumentException if $newProfileGithubToken is not a string or is insecure
 	 * @throws \RangeException if $newProfileGithubToken is > 64 characters
 	 * @throws \TypeError if $newProfileGithubToken is not a string
