@@ -366,7 +366,7 @@ class Review implements \JsonSerializable {
 
 		//create query template
 		$query = "SELECT reviewId, reviewStudentProfileId, reviewTutorProfileId, reviewRating, reviewText,
-		reviewDateTime FROM index.php WHERE reviewId = :reviewId";
+		reviewDateTime FROM review WHERE reviewId = :reviewId";
 		$statement = $pdo->prepare($query);
 
 		// bind the index.php id to the place holder in the template
@@ -406,7 +406,7 @@ class Review implements \JsonSerializable {
 		}
 		// create query template
 		$query = "SELECT reviewId, reviewStudentProfileId, reviewTutorProfileId, reviewRating, reviewText, 
-		reviewDateTime FROM index.php WHERE reviewStudentProfileId = :reviewStudentProfileId";
+		reviewDateTime FROM review WHERE reviewStudentProfileId = :reviewStudentProfileId";
 		$statement = $pdo->prepare($query);
 		// bind the index.php student profile id to the place holder in the template
 		$parameters = ["reviewStudentProfileId" => $reviewStudentProfileId];
@@ -446,7 +446,7 @@ class Review implements \JsonSerializable {
 		}
 		// create query template
 		$query = "SELECT reviewId, reviewStudentProfileId, reviewTutorProfileId, reviewRating, reviewText, 
-		reviewDateTime FROM index.php WHERE reviewTutorProfileId = :reviewTutorProfileId";
+		reviewDateTime FROM review WHERE reviewTutorProfileId = :reviewTutorProfileId";
 		$statement = $pdo->prepare($query);
 		// bind the index.php tutor profile id to the place holder in the template
 		$parameters = ["reviewTutorProfileId" => $reviewTutorProfileId];

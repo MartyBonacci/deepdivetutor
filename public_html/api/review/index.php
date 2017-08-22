@@ -64,12 +64,12 @@ try {
 			if($review !== null) {
 				$reply->data = $review;
 			}
-		} else if(empty($reviewProfileId) === false) {
+		} else if(empty($reviewStudentProfileId) === false) {
 			$review = Review::getReviewByReviewStudentProfileId($pdo, $reviewStudentProfileId)->toArray();
 			if($review !== null) {
 				$reply->data = $review;
 			}
-		} else if(empty($reviewProfileId) === false) {
+		} else if(empty($reviewTutorProfileId) === false) {
 			$review = Review::getReviewByReviewTutorProfileId($pdo, $reviewTutorProfileId)->toArray();
 			if($review !== null) {
 				$reply->data = $review;
@@ -190,7 +190,7 @@ try {
 	$reply->message = $exception->getMessage();
 }
 
-header("content-type: appliation/json");
+header("content-type: application/json");
 if($reply->data === null) {
 	unset($reply->data);
 }
