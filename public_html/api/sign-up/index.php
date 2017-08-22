@@ -31,9 +31,25 @@ try {
 		//decode the json and turn it into a php object
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
+		//profile name is a required field
+		if(empty($requestObject->profileName) === true) {
+			throw(new \InvalidArgumentException ("No profile name present", 405));
+		}
 		//profile email is a required field
 		if(empty($requestObject->profileEmail) === true) {
 			throw(new \InvalidArgumentException ("No profile email present", 405));
+		}
+		//profile type is a required field
+		if(empty($requestObject->profileType) === true) {
+			throw(new \InvalidArgumentException ("No profile type present", 405));
+		}
+		//profile bio is a required field
+		if(empty($requestObject->profileBio) === true) {
+			throw(new \InvalidArgumentException ("No profile bio present", 405));
+		}
+		//profile bio is a required field
+		if(empty($requestObject->profileRate) === true) {
+			throw(new \InvalidArgumentException ("No profile rate present", 405));
 		}
 		//verify that profile password is present
 		if(empty($requestObject->profilePassword) === true) {
@@ -51,7 +67,7 @@ try {
 		$hash = hash_pbkdf2("sha512", $requestObject->profilePassword, $salt, 262144);
 		$profileActivationToken = bin2hex(random_bytes(16));
 		//create the profile object and prepare to insert into the database
-		$profile = new Profile(null, $profileActivationToken, $requestObject->profileEmail, $hash, $salt);
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail,$requestObject->profileType, $profileActivationToken,$requestObject->profileBio,$requestObject->profileRate,"","","",  $hash, $salt);
 		//insert the profile into the database
 		$profile->insert($pdo);
 		//compose the email message to send with the activation token
