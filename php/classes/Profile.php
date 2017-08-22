@@ -87,7 +87,7 @@ class Profile implements \JsonSerializable {
 	 * @param float $newProfileRate rate for this profile
 	 * @param string $newProfileImage image for this profile
 	 * @param \DateTime $newProfileLastEditDateTime last edit date for this profile
-	 * @param string $newProfileActivationToken activation token for this profile
+	 * @param string|null $newProfileActivationToken activation token for this profile
 	 * @param string $newProfileHash hash for this profile
 	 * @param string $newProfileSalt salt for this profile
 	 * @throws \InvalidArgumentException if data types are not valid
@@ -419,16 +419,16 @@ class Profile implements \JsonSerializable {
 	/**
 	 * accessor method for profile activation token
 	 *
-	 * @return string value of profile activation token
+	 * @return string|null value of profile activation token
 	 */
-	public function getProfileActivationToken(): string {
+	public function getProfileActivationToken(): ?string {
 		return ($this->profileActivationToken);
 	}
 
 	/**
 	 * mutator method for profile activation token
 	 *
-	 * @param string $newProfileActivationToken
+	 * @param string|null $newProfileActivationToken
 	 * @throws \InvalidArgumentException if $newProfileActivationToken is not a string
 	 * @throws \RangeException if $newProfileActivationToken is not exactly 32 characters
 	 * @throws \TypeError if $newProfileActivationToken is not a string
