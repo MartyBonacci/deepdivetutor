@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__DIR__,3)."/php/classes/autoload.php";
-require_once dirname(__DIR__,3)."/php/lib/xsr.php";
-require_once dirname("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once dirname(__DIR__,3)."/php/lib/xsrf.php";
+require_once ("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 /**
  *
@@ -21,7 +21,7 @@ $reply->status =200;
 $reply->data=null;
 
 try{
-	$pdo = connectToEncrytedMySQL("/etc/apache2/capstone-mysql/deepdivetutor.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/deepdivetutor.ini");
 	$method= array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER)? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	if ($method === "GET"){
 		$_SESSION =[];
