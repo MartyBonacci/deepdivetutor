@@ -1,9 +1,9 @@
 <?php
 /** this was copied directly from Dylan's github and modified my Marty Bonacci*/
 
-require_once dirname(__DIR__) . "../../vendor/autoload.php";
-require_once dirname(__DIR__) . "../../php/classes/autoload.php";
-require_once dirname(__DIR__) . "../../php/lib/xsrf.php";
+require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
+require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
+require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\DeepDiveTutor\Profile;
@@ -12,6 +12,7 @@ use Edu\Cnm\DeepDiveTutor\Profile;
  * api for signing up to deep dive tutor
  *
  * @author Gkephart <GKephart@cnm.edu>
+ * edited by Marty Bonacci
  **/
 //verify the session, start if not active
 if(session_status() !== PHP_SESSION_ACTIVE) {
