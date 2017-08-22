@@ -68,4 +68,5 @@ header("Content-type:application/json");
 if($reply->data === null){
 	unset($reply->data);
 }
+//encodes json
 echo json_encode($reply);
