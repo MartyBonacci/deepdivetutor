@@ -246,7 +246,7 @@ class Profile implements \JsonSerializable {
 	 *
 	 * @return string|null value of github token
 	 */
-	public function getProfileGithubToken(): string {
+	public function getProfileGithubToken(): ?string {
 		return ($this->profileGithubToken);
 	}
 
