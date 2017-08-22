@@ -10,7 +10,7 @@ use Edu\Cnm\DeepDiveTutor\{
 
 /**
  *
- * api for the Tweet class
+ * api for the skill class
  * @author Gdavis@cnm.edu
  *
  */
