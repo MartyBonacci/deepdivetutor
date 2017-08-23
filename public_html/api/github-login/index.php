@@ -63,7 +63,7 @@ try {
 	//grab the MySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/deepdivetutor.ini");
 	$config = readConfig("/etc/apache2/capstone-mysql/deepdivetutor.ini");
-	$oauth = json_decode($config["oauth"]);
+	$oauth = json_decode($config["github"]);
 
 // now $oauth->github->clientId and $oauth->github->clientKey exist
 	$REDIRECT_URI = 'https://bootcamp-coders.cnm.edu/~mbonacci/deepdivetutor/php/apis/github-login/';
