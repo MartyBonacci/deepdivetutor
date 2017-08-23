@@ -46,6 +46,7 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$reviewStudentProfileId = filter_input(INPUT_GET, "reviewStudentProfileId", FILTER_VALIDATE_INT);
 	$reviewTutorProfileId = filter_input(INPUT_GET, "reviewTutorProfileId", FILTER_VALIDATE_INT);
+	$reviewRating = filter_input(INPUT_GET, "reviewRating", FILTER_VALIDATE_INT );
 	$reviewText = filter_input(INPUT_GET, "reviewText", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 	// make sure the id is valid for methods that require it
@@ -71,6 +72,12 @@ try {
 			}
 		} else if(empty($reviewTutorProfileId) === false) {
 			$review = Review::getReviewByReviewTutorProfileId($pdo, $reviewTutorProfileId)->toArray();
+			if($review !== null) {
+				$reply->data = $review;
+			}
+
+		} else if(empty($reviewRating) === false) {
+			$review = Review::getReviewByReviewRating($pdo, $reviewRating)->toArray();
 			if($review !== null) {
 				$reply->data = $review;
 			}
@@ -104,6 +111,11 @@ try {
 			//  make sure reviewTutorProfileId is available
 			if(empty($requestObject->reviewTutorProfileId) === true) {
 				throw(new \invalidArgumentException ("No Review Tutor Profile Id.", 405));
+			}
+
+			// make sure reviewRating is available
+			if(empty($requestObject->reviewRating)=== true) {
+				throw(new \invalidArgumentException ("No Review Rating", 405));
 			}
 
 			// make sure review text is available (required field)
