@@ -51,7 +51,7 @@ class Profile implements \JsonSerializable {
 	private $profileRate;
 	/**
 	 * Image for this profile
-	 * @var string $profileImage
+	 * @var string|null $profileImage
 	 */
 	private $profileImage;
 	/**
@@ -61,17 +61,17 @@ class Profile implements \JsonSerializable {
 	private $profileLastEditDateTime;
 	/**
 	 * Activation token for this profile
-	 * @var string $profileActivationToken
+	 * @var string|null $profileActivationToken
 	 */
 	private $profileActivationToken;
 	/**
 	 * Hash for this profile password
-	 * @var string $profileHash
+	 * @var string|null $profileHash
 	 */
 	private $profileHash;
 	/**
 	 * Salt for this profile
-	 * @var string $profileSalt
+	 * @var string|null $profileSalt
 	 */
 	private $profileSalt;
 
@@ -85,18 +85,18 @@ class Profile implements \JsonSerializable {
 	 * @param string|null $newProfileGithubToken GitHub token for this profile
 	 * @param string $newProfileBio bio for this profile
 	 * @param float $newProfileRate rate for this profile
-	 * @param string $newProfileImage image for this profile
+	 * @param string|null $newProfileImage image for this profile
 	 * @param \DateTime $newProfileLastEditDateTime last edit date for this profile
 	 * @param string|null $newProfileActivationToken activation token for this profile
-	 * @param string $newProfileHash hash for this profile
-	 * @param string $newProfileSalt salt for this profile
+	 * @param string|null $newProfileHash hash for this profile
+	 * @param string|null $newProfileSalt salt for this profile
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 * @documentation https://php.net/manual/en/language.oop5.decon.php
 	 */
-	public function __construct(?int $newProfileId, string $newProfileName, string $newProfileEmail, int $newProfileType, ?string $newProfileGithubToken, string $newProfileBio, float $newProfileRate, ?string $newProfileImage, $newProfileLastEditDateTime = null, ?string $newProfileActivationToken, string $newProfileHash, string $newProfileSalt) {
+	public function __construct(?int $newProfileId, string $newProfileName, string $newProfileEmail, int $newProfileType, ?string $newProfileGithubToken, string $newProfileBio, float $newProfileRate, ?string $newProfileImage, $newProfileLastEditDateTime = null, ?string $newProfileActivationToken, ?string $newProfileHash, ?string $newProfileSalt) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileName($newProfileName);
@@ -347,16 +347,16 @@ class Profile implements \JsonSerializable {
 	/**
 	 * accessor method for profile image
 	 *
-	 * @return string value for profile image
+	 * @return string|null value for profile image
 	 */
-	public function getProfileImage(): string {
+	public function getProfileImage(): ?string {
 		return ($this->profileImage);
 	}
 
 	/**
 	 * mutator method for profile image
 	 *
-	 * @param string $newProfileImage new value of profile image
+	 * @param string|null $newProfileImage new value of profile image
 	 * @throws \InvalidArgumentException if $newProfileImage is not a string or insecure
 	 * @throws \RangeException if $newProfileImage is > 32 characters
 	 * @throws \TypeError if $newProfileImage is not a string
@@ -458,21 +458,21 @@ class Profile implements \JsonSerializable {
 	/**
 	 * accessor method for profile hash
 	 *
-	 * @return string value of profile hash
+	 * @return string|null value of profile hash
 	 */
-	public function getProfileHash(): string {
+	public function getProfileHash(): ?string {
 		return ($this->profileHash);
 	}
 
 	/**
 	 * mutator method for profile hash
 	 *
-	 * @param string $newProfileHash
+	 * @param string|null $newProfileHash
 	 * @throws \InvalidArgumentException if $newProfileHash is not a string
 	 * @throws \RangeException if $newProfileHash is not exactly 128 characters
 	 * @throws \TypeError if $newProfileHash is not a string
 	 */
-	public function setProfileHash(string $newProfileHash): void {
+	public function setProfileHash(?string $newProfileHash): void {
 		// make sure hash is properly formatted
 		$newProfileHash = trim($newProfileHash);
 		$newProfileHash = strtolower($newProfileHash);
@@ -497,21 +497,21 @@ class Profile implements \JsonSerializable {
 	/**
 	 * accessor method for profile salt
 	 *
-	 * @returns string value for profile salt
+	 * @returns string|null value for profile salt
 	 */
-	public function getProfileSalt(): string {
+	public function getProfileSalt(): ?string {
 		return ($this->profileSalt);
 	}
 
 	/**
 	 * mutator method for profile salt
 	 *
-	 * @param string $newProfileSalt
+	 * @param string|null $newProfileSalt
 	 * @throws \InvalidArgumentException if $newProfileSalt is not secure
 	 * @throws \RangeException if $newProfileSalt is not exactly 64 characters
 	 * @throws \TypeError if $newProfileSalt is not a string
 	 */
-	public function setProfileSalt(string $newProfileSalt): void {
+	public function setProfileSalt(?string $newProfileSalt): void {
 		// make sure profile salt is the right format
 		$newProfileSalt = trim($newProfileSalt);
 		$newProfileSalt = strtolower($newProfileSalt);
@@ -927,6 +927,10 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		$fields = get_object_vars($this);
 		// format the date so that the front end can consume it right up
 		$fields["profileLastEditDateTime"] = round(floatval($this->profileLastEditDateTime->format("U.u")) * 1000);
+		unset($fields["profileGithubToken"]);
+		unset($fields["profileActivationToken"]);
+		unset($fields["profileHash"]);
+		unset($fields["profileSalt"]);
 		return ($fields);
 	}
 }
