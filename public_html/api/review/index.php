@@ -22,7 +22,7 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
-//prepare and empty reply
+//prepare an empty reply
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
@@ -30,6 +30,9 @@ $reply->data = null;
 try {
 	//grab the mySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/deepdivetutor.ini");
+
+	// profileId of profile to use for testing,
+	//$person = 95;
 
 	// grab a profile by its profileId and add it to the session
 	//$_SESSION["profile"] = Profile::getProfileByProfileId($pdo, $person);
@@ -146,6 +149,7 @@ try {
 				// update all atributes
 				$review->setReviewStudentProfileId($requestObject->reviewStudentProfileId);
 				$review->setReviewTutorProfileId($requestObject->reviewTutorProfileId);
+				$review->setReviewRating($requestObject->reviewRating);
 				$review->setReviewText($requestObject->reviewText);
 				$review->update($pdo);
 
@@ -159,7 +163,7 @@ try {
 			}
 
 			// create new review and insert into database
-			$review = new Review(null, $_SESSIOIN["profile"]->getProfileId(), $requestObject->reviewText, null);
+			$review = new Review(null, $_SESSION["profile"]->getProfileId(), $requestObject->reviewRating, $requestObject->reviewText, null);
 			$review->insert($pdo);
 
 			// update reply
