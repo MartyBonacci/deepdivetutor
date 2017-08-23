@@ -3,7 +3,8 @@
       "adoy/oauth2": "@stable",
       "phpdocumentor/phpdocumentor": "@stable",
       "phpunit/dbunit": "@stable",
-      "phpunit/phpunit": "@stable"
+      "phpunit/phpunit": "@stable",
+      "swiftmailer/swiftmailer": "@stable"
     },
 
   "scripts":{
