@@ -50,6 +50,44 @@ try {
 		throw (new InvalidArgumentException("Id cannot be empty or negitive", 405));
 	}
 
-	// handle the GET request
+	// handle the POST request
+	if($method === "POST") {
+		// set XSRF token
+		setXsrfCookie();
+
+		// verify user ids logged into their profile before uploading an image
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $id) {
+			throw (new \InvalidArgumentException("you are not allowed to access this profile", 403));
+		}
+
+		// assigning variable to the user profile, add image extension
+		$tempUserFileName = $_FILES["image"] ["temp_name"];
+
+		// upload image to cloudinary and get public id
+		$cloudinaryResult = \Cloudinary\Uploader::upload($tempUserFileName, array("width" => 500, "crop" => "scale"));
+
+		// after sending the image to Cloudinary, create a new image
+		$password = "password1234";
+		$validSalt = bin2hex(random_bytes(32));
+		$validHash = hash_pbkdf2("sha512", $password, $validSalt, 262144);
+
+		$image = new Profile(null, $profileName["Slim Shady"], $profileEmail["slim@shady.com"], $profileType[0],
+			$profileGithubToken[null], "Im the real Slim Shady", 999.99, $profileImage[$cloudinaryResult], null,
+			null, $validHash, $validSalt);
+
+		$image->insert($pdo);
+
+		$reply->data = $image->getProfileImage();
+		$reply->message = "Image uploaded Ok";
+
+	}
+
+} catch(Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
 }
+
+header("Content-Type: application/json");
+// encode and return reply to front end caller
+echo json_encode($reply);
 
