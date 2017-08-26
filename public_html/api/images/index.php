@@ -34,5 +34,22 @@ try {
 	 *
 	 */
 
+	$config = readConfig("/etc/apache2/capstone-mysql/deepdivetutor.ini");
+	$cloudinary = json_decode($config["cloudinary"]);
+	\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_security" => $cloudinary->apiSecurity, "api_secret" => $cloudinary->apiSecret]);
+
+	// determine which HTTP method was used
+	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+
+	// sanitize input
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$imageCloudinaryId = filter_input(INPUT_GET, "imageCloudinaryId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+	// make sure id is valid for methods that require it
+	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
+		throw (new InvalidArgumentException("Id cannot be empty or negitive", 405));
+	}
+
+	// handle the GET request
 }
 
