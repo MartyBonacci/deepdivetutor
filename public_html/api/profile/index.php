@@ -133,10 +133,15 @@ try {
 				throw(new \InvalidArgumentException("No profile bio is filled out", 405));
 			}
 
+			if(empty($profileImage) === true) {
+				throw(new \InvalidArgumentException("profile image is empty", 405));
+			}
+
 			$profile->setProfileName($requestObject->profileName);
 			$profile->setProfileEmail($requestObject->profileEmail);
 			$profile->setProfileType($requestObject->profileType);
 			$profile->setProfileBio($requestObject->profileBio);
+			$profile->setProfileImage($requestObject->profileImage);
 
 			// update reply
 			$reply->message = "Profile information updated successfully";

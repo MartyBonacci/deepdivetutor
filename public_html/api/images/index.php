@@ -47,7 +47,7 @@ try {
 
 	// make sure id is valid for methods that require it
 	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
-		throw (new InvalidArgumentException("Id cannot be empty or negitive", 405));
+		throw (new InvalidArgumentException("Id cannot be empty or negative", 405));
 	}
 
 	// handle the POST request
@@ -67,13 +67,6 @@ try {
 		$cloudinaryResult = \Cloudinary\Uploader::upload($tempUserFileName, array("width" => 500, "crop" => "scale"));
 
 		// after sending the image to Cloudinary, create a new image
-		$password = "password1234";
-		$validSalt = bin2hex(random_bytes(32));
-		$validHash = hash_pbkdf2("sha512", $password, $validSalt, 262144);
-
-		$image = new Profile(null, $profileName["Slim Shady"], $profileEmail["slim@shady.com"], $profileType[0],
-			$profileGithubToken[null], "Im the real Slim Shady", 999.99, $profileImage[$cloudinaryResult], null,
-			null, $validHash, $validSalt);
 
 		$image->insert($pdo);
 
