@@ -24,7 +24,7 @@ $reply->data = null;
 try {
 
 	// start session
-	if(session_start() !== PHP_SESSION_ACTIVE) {
+	if(session_status() !== PHP_SESSION_ACTIVE) {
 		session_start();
 	}
 
@@ -42,7 +42,7 @@ try {
 
 	$config = readConfig("/etc/apache2/capstone-mysql/deepdivetutor.ini");
 	$cloudinary = json_decode($config["cloudinary"]);
-	\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_security" => $cloudinary->apiSecurity, "api_secret" => $cloudinary->apiSecret]);
+	\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_secret" => $cloudinary->apiSecret]);
 
 	// handle the POST request
 	if($method === "POST") {
@@ -56,7 +56,7 @@ try {
 
 
 		// assigning variable to the user profile, add image extension
-		$tempUserFileName = $_FILES["image"] ["temp_name"];
+		$tempUserFileName = $_FILES["image"]["tmp_name"];
 
 		// upload image to cloudinary and get public id
 		$cloudinaryResult = \Cloudinary\Uploader::upload($tempUserFileName, array("width" => 500, "crop" => "scale"));
