@@ -55,7 +55,7 @@ abstract class DeepDiveTutorTest extends TestCase {
 		// add all the tables for the project here
 		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!
 		$dataset->addTable("profile");
-		$dataset->addTable("index.php");
+		$dataset->addTable("review");
 		$dataset->addTable("skill");
 		$dataset->addTable("profileSkill");
 		return($dataset);
