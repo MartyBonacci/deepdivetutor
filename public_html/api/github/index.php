@@ -59,6 +59,7 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 $reply = new \stdClass();
 $reply->status = 200;
 $reply->data = null;
+
 try {
 	//grab the MySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/deepdivetutor.ini");
@@ -66,20 +67,22 @@ try {
 	$oauth = json_decode($config["github"]);
 
 // now $oauth->github->clientId and $oauth->github->clientKey exist
-	$REDIRECT_URI = 'https://bootcamp-coders.cnm.edu/~mbonacci/deepdivetutor/public_html/api/github-login/';
+	$REDIRECT_URI = 'https://bootcamp-coders.cnm.edu/~mbonacci/deepdivetutor/public_html/api/github/';
 	$AUTHORIZATION_ENDPOINT = 'https://github.com/login/oauth/authorize';
 	$TOKEN_ENDPOINT = 'https://github.com/login/oauth/access_token';
-	$client = new \OAuth2\Client($oauth->github->clientId, $oauth->github->clientKey);
+	$client = new \OAuth2\Client($oauth->clientId, $oauth->clientKey);
 	if(!isset($_GET['code'])) {
 		$auth_url = $client->getAuthenticationUrl($AUTHORIZATION_ENDPOINT, $REDIRECT_URI, ['scope' => 'user:email']);
 		header('Location: ' . $auth_url);
 		die('Redirect');
 	} else {
 		// Initialize profile variables here
+
 		$profileName = "";
 		$profileEmail = "";
 		$profileType = 0;
 		$profileRate = 0.0;
+
 		$profileGithubAccessToken = "";
 		$profileLastEditDateTime = Date("Y-m-d H:i:s.u");
 		$params = array('code' => $_GET['code'], 'redirect_uri' => $REDIRECT_URI);
@@ -96,12 +99,18 @@ try {
 				break;
 			}
 		}
+
 		// get profile by email to see if it exists, if it does not then create a new one
 		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
-		if(empty($profile) === true) {
+		var_dump($profile);
+		if(($profile) === null) {
+
+			//var_dump($profileGithubAccessToken);
 			// create a new profile
-			$profile = new Profile(null,$profileName, $profileEmail, $profileType,$profileGithubAccessToken, "Please update your profile content!", null, null, $profileLastEditDateTime, null, null, null);
-			$profile->insert($pdo);
+			$user = new Profile(null,$profileName, $profileEmail, $profileType,$profileGithubAccessToken, "Please update your profile content!", $profileRate, null, $profileLastEditDateTime, null, null, null);
+
+			//var_dump($user);
+			$user->insert($pdo);
 			$reply->message = "Welcome to Deep Dive Tutor!";
 		} else {
 			$reply->message = "Welcome back to Deep Dive Tutor!";
