@@ -375,8 +375,8 @@ class Profile implements \JsonSerializable {
 			throw(new \InvalidArgumentException("profile image is either empty or insecure"));
 		}
 		// make sure profile image will fit in the database
-		if(strlen($newProfileImage) !== 32) {
-			throw(new \RangeException("profile image must be 32 characters"));
+		if(strlen($newProfileImage) > 32) {
+			throw(new \RangeException("profile is too large"));
 		}
 
 		// store the profile image
