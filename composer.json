@@ -4,7 +4,8 @@
       "phpdocumentor/phpdocumentor": "@stable",
       "phpunit/dbunit": "@stable",
       "phpunit/phpunit": "@stable",
-      "swiftmailer/swiftmailer": "@stable"
+      "swiftmailer/swiftmailer": "@stable",
+      "cloudinary/cloudinary_php": "dev-master"
     },
 
   "scripts":{
@@ -12,3 +13,5 @@
     "phpunit" : "./vendor/bin/phpunit -c ./php/classes/Test --coverage-html coverage"
   }
 }
+
+

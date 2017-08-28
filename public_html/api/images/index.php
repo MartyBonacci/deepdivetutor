@@ -10,15 +10,11 @@ use Edu\Cnm\DeepDiveTutor\ {
 };
 
 /**
- * API for Images
+ * Cloudinary API for Images
  *
  * @author Jack Reuter
  * @version 1.0
  */
-
-if(session_status() !== PHP_SESSION_ACTIVE) {
-	session_start();
-}
 
 // prepare an empty reply
 $reply = new StdClass();
@@ -26,39 +22,32 @@ $reply->status = 200;
 $reply->data = null;
 
 try {
+
+	// start session
+	if(session_start() !== PHP_SESSION_ACTIVE) {
+		session_start();
+	}
+
 	// Grab the MySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/deepdivetutor.ini");
-
-	/**
-	 * Cloudinary API
-	 *
-	 */
-
-	$config = readConfig("/etc/apache2/capstone-mysql/deepdivetutor.ini");
-	$cloudinary = json_decode($config["cloudinary"]);
-	\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_security" => $cloudinary->apiSecurity, "api_secret" => $cloudinary->apiSecret]);
 
 	// determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	// sanitize input
-	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$imageCloudinaryId = filter_input(INPUT_GET, "imageCloudinaryId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-
-	// make sure id is valid for methods that require it
-	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
-		throw (new InvalidArgumentException("Id cannot be empty or negative", 405));
-	}
+	$config = readConfig("/etc/apache2/capstone-mysql/deepdivetutor.ini");
+	$cloudinary = json_decode($config["cloudinary"]);
+	\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_security" => $cloudinary->apiSecurity, "api_secret" => $cloudinary->apiSecret]);
 
 	// handle the POST request
 	if($method === "POST") {
 		// set XSRF token
 		setXsrfCookie();
 
-		// verify user ids logged into their profile before uploading an image
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $id) {
+		// verify user is logged into their profile before uploading an image
+		if(empty($_SESSION["profile"]) === true) {
 			throw (new \InvalidArgumentException("you are not allowed to access this profile", 403));
 		}
+
 
 		// assigning variable to the user profile, add image extension
 		$tempUserFileName = $_FILES["image"] ["temp_name"];
@@ -67,10 +56,10 @@ try {
 		$cloudinaryResult = \Cloudinary\Uploader::upload($tempUserFileName, array("width" => 500, "crop" => "scale"));
 
 		// after sending the image to Cloudinary, create a new image
+		$profile = Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId());
+		$profile->setProfileImage($cloudinaryResult["public_id"]);
+		$profile->update($pdo);
 
-		$image->insert($pdo);
-
-		$reply->data = $image->getProfileImage();
 		$reply->message = "Image uploaded Ok";
 
 	}
