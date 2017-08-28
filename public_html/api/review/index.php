@@ -46,7 +46,7 @@ try {
 
 
 	//sanitize input
-	$Id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$reviewId = filter_input(INPUT_GET, "reviewId", FILTER_VALIDATE_INT);
 	$reviewStudentProfileId = filter_input(INPUT_GET, "reviewStudentProfileId", FILTER_VALIDATE_INT);
 	$reviewTutorProfileId = filter_input(INPUT_GET, "reviewTutorProfileId", FILTER_VALIDATE_INT);
@@ -104,14 +104,14 @@ try {
 		// This line then decodes the JSON package and stores that result in $requestObject
 
 		//  make sure Id is available
-		if(empty($requestObject->id) === true) {
-			throw(new \invalidArgumentException ("No Review Id.", 405));
-		}
+//		if(empty($requestObject->reviewId) === true) {
+//			throw(new \invalidArgumentException ("No Review id.", 405));
+//		}
 //
 //		//  make sure reviewStudentProfileId is available
-//		if(empty($requestObject->reviewStudentProfileId) === true) {
-//			throw(new \invalidArgumentException ("No Review Student Profile Id.", 405));
-//		}
+		if(empty($requestObject->reviewStudentProfileId) === true) {
+			throw(new \invalidArgumentException ("No Review Student Profile Id.", 405));
+		}
 
 		//  make sure reviewTutorProfileId is available
 		if(empty($requestObject->reviewTutorProfileId) === true) {
