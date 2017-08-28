@@ -46,7 +46,7 @@ try {
 
 
 	//sanitize input
-	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$Id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$reviewId = filter_input(INPUT_GET, "reviewId", FILTER_VALIDATE_INT);
 	$reviewStudentProfileId = filter_input(INPUT_GET, "reviewStudentProfileId", FILTER_VALIDATE_INT);
 	$reviewTutorProfileId = filter_input(INPUT_GET, "reviewTutorProfileId", FILTER_VALIDATE_INT);
@@ -54,7 +54,7 @@ try {
 	$reviewText = filter_input(INPUT_GET, "reviewText", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 	// make sure the id is valid for methods that require it
-	if(($method === "DELETE" || $method === "PUT") && (empty($reviewId) === true || $reviewId < 0)) {
+	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
@@ -64,8 +64,8 @@ try {
 		setXsrfCookie();
 
 		//get a specific review or all reviews and update reply
-		if(empty($reviewId) === false) {
-			$review = Review::getReviewByReviewId($pdo, $reviewId);
+		if(empty($id) === false) {
+			$review = Review::getReviewByReviewId($pdo, $id);
 			if($review !== null) {
 				$reply->data = $review;
 			}
@@ -104,7 +104,7 @@ try {
 		// This line then decodes the JSON package and stores that result in $requestObject
 
 		//  make sure Id is available
-		if(empty($requestObject->reviewId) === true) {
+		if(empty($requestObject->id) === true) {
 			throw(new \invalidArgumentException ("No Review Id.", 405));
 		}
 //
@@ -133,7 +133,7 @@ try {
 		if($method === "PUT") {
 
 			// retrieve the review to update
-			$review = Review::getReviewByReviewId($pdo, $reviewId);
+			$review = Review::getReviewByReviewId($pdo, $id);
 			if($review === null) {
 				throw(new RuntimeException("Review does not exist", 404));
 			}
@@ -177,7 +177,7 @@ try {
 		verifyXsrf();
 
 		// retrieve the Review to be deleted
-		$review = Review::getReviewByReviewId($pdo, $reviewId);
+		$review = Review::getReviewByReviewId($pdo, $id);
 		if($review === null) {
 			throw(new RuntimeException("Review does not exist", 404));
 		}
