@@ -31,6 +31,12 @@ try {
 	// Grab the MySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/deepdivetutor.ini");
 
+	// profile id of profile to use for testing
+	// $person = 64;
+
+	// grab a profile by its profileId and add it to the session
+	// $_SESSION["profile"] = Profile::getProfileByProfileId($pdo, $person);
+
 	// determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
