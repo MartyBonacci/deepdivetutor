@@ -473,9 +473,16 @@ class Profile implements \JsonSerializable {
 	 * @throws \TypeError if $newProfileHash is not a string
 	 */
 	public function setProfileHash(?string $newProfileHash): void {
+		// return if hash is null
+		if($newProfileHash === null) {
+			$this->profileHash = null;
+			return;
+		}
+
 		// make sure hash is properly formatted
 		$newProfileHash = trim($newProfileHash);
 		$newProfileHash = strtolower($newProfileHash);
+
 		if(empty($newProfileHash) === true) {
 			throw(new \InvalidArgumentException("profile hash is empty or insecure"));
 		}
@@ -512,6 +519,13 @@ class Profile implements \JsonSerializable {
 	 * @throws \TypeError if $newProfileSalt is not a string
 	 */
 	public function setProfileSalt(?string $newProfileSalt): void {
+
+		// return if salt is null
+		if($newProfileSalt === null) {
+			$this->profileSalt = null;
+			return;
+		}
+
 		// make sure profile salt is the right format
 		$newProfileSalt = trim($newProfileSalt);
 		$newProfileSalt = strtolower($newProfileSalt);
