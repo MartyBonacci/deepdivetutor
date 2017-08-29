@@ -8,3 +8,8 @@
 /public_html/dist
 /public_html/index.php
 /npm-debug.log
+/.sync-config.cson
+/src/**/*.js
+/src/**/*.js.map
+/public_html/index.html
+/webpack/target.js
