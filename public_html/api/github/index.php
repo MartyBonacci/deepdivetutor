@@ -4,9 +4,7 @@ require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
-use Edu\Cnm\DeepDiveTutor\ {
-	Profile
-};
+use Edu\Cnm\DeepDiveTutor\Profile;
 
 /**  ___________________________________
  *
@@ -80,16 +78,16 @@ try {
 
 		$profileName = "";
 		$profileEmail = "";
-		$profileType = 0;
-		$profileRate = 0.0;
+		$profileType = 1;
+		$profileRate = 1;
 
-		$profileGithubAccessToken = "";
+		$profileGithubToken = "";
 		$profileLastEditDateTime = Date("Y-m-d H:i:s.u");
 		$params = array('code' => $_GET['code'], 'redirect_uri' => $REDIRECT_URI);
 		$response = $client->getAccessToken($TOKEN_ENDPOINT, 'authorization_code', $params);
 		parse_str($response['result'], $info);
 		$client->setAccessToken($info['access_token']);
-		$profileGithubAccessToken = $info['access_token'];
+		$profileGithubToken = $info['access_token'];
 		$response = $client->fetch('https://api.github.com/user', [], 'GET', ['User-Agent' => 'Jack Auto Deleter']);
 		$profileName = $response["result"]["login"];
 		$response = $client->fetch('https://api.github.com/user/emails', [], 'GET', ['User-Agent' => 'Jack Auto Deleter']);
@@ -102,14 +100,18 @@ try {
 
 		// get profile by email to see if it exists, if it does not then create a new one
 		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
+
 		var_dump($profile);
 		if(($profile) === null) {
 
-			//var_dump($profileGithubAccessToken);
-			// create a new profile
-			$user = new Profile(null,$profileName, $profileEmail, $profileType,$profileGithubAccessToken, "Please update your profile content!", $profileRate, null, $profileLastEditDateTime, null, null, null);
+			var_dump($profileGithubToken);
+			var_dump($profileName, $profileEmail, $profileType,$profileGithubToken,$profileRate, $profileLastEditDateTime);
 
-			//var_dump($user);
+			// create a new profile
+			$user = new Profile(null,$profileName, $profileEmail, $profileType,$profileGithubToken, "Please update your profile content!", $profileRate, null, null, null, null, null);
+
+			var_dump($user);
+
 			$user->insert($pdo);
 			$reply->message = "Welcome to Deep Dive Tutor!";
 		} else {
@@ -127,4 +129,5 @@ try {
 } catch(\TypeError $typeError) {
 	$reply->status = $typeError->getCode();
 	$reply->message = $typeError->getMessage();
+	$reply->trace = $exception->getTraceAsString();
 }

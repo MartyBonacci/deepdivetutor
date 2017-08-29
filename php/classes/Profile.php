@@ -96,7 +96,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 * @documentation https://php.net/manual/en/language.oop5.decon.php
 	 */
-	public function __construct(?int $newProfileId, string $newProfileName, string $newProfileEmail, int $newProfileType, ?string $newProfileGithubToken, string $newProfileBio, float $newProfileRate, ?string $newProfileImage, $newProfileLastEditDateTime = null, ?string $newProfileActivationToken, ?string $newProfileHash, ?string $newProfileSalt) {
+	public function __construct(?int $newProfileId, string $newProfileName, string $newProfileEmail, int $newProfileType, ?string $newProfileGithubToken, string $newProfileBio, ?float $newProfileRate, ?string $newProfileImage, $newProfileLastEditDateTime = null, ?string $newProfileActivationToken, ?string $newProfileHash, ?string $newProfileSalt) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileName($newProfileName);
@@ -273,8 +273,8 @@ class Profile implements \JsonSerializable {
 		}
 
 		// verify github token will fit in the database
-		if(strlen($newProfileGithubToken) !== 64) {
-			throw(new \RangeException("github token must be 64 characters"));
+		if(strlen($newProfileGithubToken) > 64) {
+			throw(new \RangeException("github token must be less than 64 characters"));
 		}
 
 		// store github token
@@ -320,7 +320,7 @@ class Profile implements \JsonSerializable {
 	 *
 	 * @return float value of profile rate
 	 */
-	public function getProfileRate(): float {
+	public function getProfileRate(): ?float {
 		return ($this->profileRate);
 	}
 
@@ -331,7 +331,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileRate is > 999.99
 	 * @throws \TypeError if $newProfileRate is not a float
 	 */
-	public function setProfileRate(float $newProfileRate): void {
+	public function setProfileRate(?float $newProfileRate): void {
 		// allow for float
 		$newProfileRate = filter_var($newProfileRate, FILTER_SANITIZE_NUMBER_FLOAT);
 

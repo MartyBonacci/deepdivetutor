@@ -2,9 +2,10 @@
 	<testsuites>
 		<testsuite name="Deep Dive Tutor">
 			<file>ProfileTest.php</file>
-			<file>ReviewTest.php</file>
+<!--			<file>ReviewTest.php</file>
 			<file>SkillTest.php</file>
 			<file>ProfileSkillTest.php</file>
+-->
 		</testsuite>
 	</testsuites>
 
