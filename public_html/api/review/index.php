@@ -39,7 +39,7 @@ try {
 
 	// mock a logged in user by mocking the session and assigning a specefic user to it.
 	// this is only for testing purposes and should not be in the live code.
-	$_SESSION["profile"]= 3;
+	//$_SESSION["profile"]= 74;
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -47,7 +47,7 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$reviewId = filter_input(INPUT_GET, "reviewId", FILTER_VALIDATE_INT);
+	//$reviewId = filter_input(INPUT_GET, "reviewId", FILTER_VALIDATE_INT);
 	$reviewStudentProfileId = filter_input(INPUT_GET, "reviewStudentProfileId", FILTER_VALIDATE_INT);
 	$reviewTutorProfileId = filter_input(INPUT_GET, "reviewTutorProfileId", FILTER_VALIDATE_INT);
 	$reviewRating = filter_input(INPUT_GET, "reviewRating", FILTER_VALIDATE_INT);
@@ -79,18 +79,6 @@ try {
 			if($review !== null) {
 				$reply->data = $review;
 			}
-
-		} else if(empty($reviewRating) === false) {
-			$review = Review::getReviewByReviewRating($pdo, $reviewRating)->toArray();
-			if($review !== null) {
-				$reply->data = $review;
-			}
-
-		} else if(empty($reviewText) === false) {
-			$review = Review::getReviewByReviewText($pdo, $reviewText)->toArray();
-			if($review !== null) {
-				$reply->data = $review;
-			}
 		}
 
 	} else if($method === "PUT" || $method == "POST") {
@@ -103,12 +91,8 @@ try {
 		$requestObject = json_decode($requestContent);
 		// This line then decodes the JSON package and stores that result in $requestObject
 
-		//  make sure Id is available
-//		if(empty($requestObject->reviewId) === true) {
-//			throw(new \invalidArgumentException ("No Review id.", 405));
-//		}
-//
-//		//  make sure reviewStudentProfileId is available
+
+		//  make sure reviewStudentProfileId is available
 		if(empty($requestObject->reviewStudentProfileId) === true) {
 			throw(new \invalidArgumentException ("No Review Student Profile Id.", 405));
 		}
@@ -128,6 +112,22 @@ try {
 			throw(new \InvalidArgumentException ("No text for Review.", 405));
 		}
 
+		// make sure tutor can't post or put review
+		if ($_SESSION["profile"]->getProfileType() === 1){
+			throw(new \InvalidArgumentException ("Silly Tutor Review's are for Student's", 405));
+		}
+
+		if ($_SESSION["profile"]->getProfileId() !== $requestObject->reviewStudentProfileId) {
+			throw(new \InvalidArgumentException ("Your logged into the wrong account"));
+		}
+
+		$tutorProfileType=Profile::getProfileByProfileId($pdo, $requestObject->reviewTutorProfileId);
+
+		// make sure a student can't post or put review for another student
+		if ($tutorProfileType->getProfileType() !== 1)  {
+			throw(new \InvalidArgumentException ("Silly student you cant review another student", 405));
+		}
+
 
 		// perform the actual put or post
 		if($method === "PUT") {
@@ -143,17 +143,13 @@ try {
 				throw(new \invalidArgumentException("You are not allowed to edit this review", 403));
 			}
 
-			// enforce the user is signed in and only trying to edit their own review
-			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $review->getReviewTutorProfileId()) {
-				throw(new \invalidArgumentException("You are not allowed to edit this review", 403));
-			}
 
 			// update all atributes
-			$review->setReviewStudentProfileId($requestObject->reviewStudentProfileId);
-			$review->setReviewTutorProfileId($requestObject->reviewTutorProfileId);
+			//$review->setReviewStudentProfileId($requestObject->reviewStudentProfileId);
+			//$review->setReviewTutorProfileId($requestObject->reviewTutorProfileId);
 			$review->setReviewRating($requestObject->reviewRating);
 			$review->setReviewText($requestObject->reviewText);
-			$review->update($pdo);
+			$review->update($pdo, $id);
 
 			// update reply
 			$reply->message = "review updated ok";
@@ -165,7 +161,6 @@ try {
 
 			// create new review and insert into database
 			$review = new Review(null, $_SESSION["profile"]->getProfileId(), $requestObject->reviewTutorProfileId, $requestObject->reviewRating, $requestObject->reviewText, null);
-			var_dump($review);
 			$review->insert($pdo);
 
 			// update reply

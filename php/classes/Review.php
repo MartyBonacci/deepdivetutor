@@ -79,7 +79,7 @@ class Review implements \JsonSerializable {
 	 * accessor method for item id
 	 * @return int|null value of item id
 	 **/
-	public function getReviewId() : ?int {
+	public function getReviewId(): ?int {
 		return ($this->reviewId);
 	}
 
@@ -89,7 +89,7 @@ class Review implements \JsonSerializable {
 	 * @throw \RangException if $newReviewId is not positive
 	 * @throws \TypeError if $newProfileId is not an integer
 	 **/
-	public function setReviewId(?int $newReviewId) : void {
+	public function setReviewId(?int $newReviewId): void {
 		// review id is null immediately return it
 		if($newReviewId === null) {
 			$this->reviewId = null;
@@ -110,7 +110,7 @@ class Review implements \JsonSerializable {
 	 * @return int value of reviewStudentProfileId
 	 **/
 
-	public function getReviewStudentProfileId() : int {
+	public function getReviewStudentProfileId(): int {
 		return ($this->reviewStudentProfileId);
 	}
 
@@ -121,7 +121,7 @@ class Review implements \JsonSerializable {
 	 * @throws \TypeError if $newReviewStudentProfileId is not an integer
 	 **/
 
-	public function setReviewStudentProfileId(int $newReviewStudentProfileId) : void {
+	public function setReviewStudentProfileId(int $newReviewStudentProfileId): void {
 		// if reviewStudentProfileId is null immediately return it
 		//if($newReviewStudentProfileId === null) {
 //			$this->reviewStudentprofileId = null;
@@ -142,7 +142,7 @@ class Review implements \JsonSerializable {
 	 * @return int value of reviewTutorProfileId
 	 **/
 
-	public function getReviewTutorProfileId() : int {
+	public function getReviewTutorProfileId(): int {
 		return ($this->reviewTutorProfileId);
 	}
 
@@ -153,7 +153,7 @@ class Review implements \JsonSerializable {
 	 * @throws \TypeError if $newReviewTutorProfileId is not an integer
 	 **/
 
-	public function setReviewTutorProfileId(int $newReviewTutorProfileId) : void {
+	public function setReviewTutorProfileId(int $newReviewTutorProfileId): void {
 		// if reviewTutorProfileId is null immediately return it
 		//if($newReviewTutorProfileId === null) {
 		//$this->reviewTutorProfileId = null;
@@ -174,7 +174,7 @@ class Review implements \JsonSerializable {
 	 * @return int value of reviewRating
 	 **/
 
-	public function getReviewRating() : int {
+	public function getReviewRating(): int {
 		return ($this->reviewRating);
 	}
 
@@ -185,7 +185,7 @@ class Review implements \JsonSerializable {
 	 * @throws \TypeError if $newReviewRating is not an integer
 	 **/
 
-	public function setReviewRating(?int $newReviewRating) : void {
+	public function setReviewRating(?int $newReviewRating): void {
 		// if reviewRating is null immediately return it
 		if($newReviewRating === null) {
 			$this->reviewRating = null;
@@ -206,7 +206,7 @@ class Review implements \JsonSerializable {
 	 * @return string value of review text
 	 **/
 
-	public function getReviewText() : string {
+	public function getReviewText(): string {
 		return ($this->reviewText);
 	}
 
@@ -218,7 +218,7 @@ class Review implements \JsonSerializable {
 	 * @throws \TypeError if $newReviewText is not a string
 	 **/
 
-	public function setReviewText(string $newReviewText) : void {
+	public function setReviewText(string $newReviewText): void {
 		// verify review text is secure
 		$newReviewText = trim($newReviewText);
 		$newReviewText = filter_var($newReviewText, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -239,7 +239,7 @@ class Review implements \JsonSerializable {
 	 * @return \DateTime value of  review date time
 	 **/
 
-	public function getReviewDateTime() : \DateTime {
+	public function getReviewDateTime(): \DateTime {
 		return ($this->reviewDateTime);
 	}
 
@@ -250,10 +250,10 @@ class Review implements \JsonSerializable {
 	 * @throws \RangeException if $newReviewDateTime is a date that does not exist
 	 **/
 
-	public function setReviewDateTime($newReviewDateTime = null) : void {
+	public function setReviewDateTime($newReviewDateTime = null): void {
 		// base case: if the date is null use the current date and time
 		if($newReviewDateTime === null) {
-			$this->ReviewDateTime = new \DateTime();
+			$this->reviewDateTime = new \DateTime();
 			return;
 		}
 		// store the review date using the ValidateDate trait
@@ -275,7 +275,7 @@ class Review implements \JsonSerializable {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 
-	public function insert(\PDO $pdo) : void {
+	public function insert(\PDO $pdo): void {
 		//enforce the reviewId is null (i.e., don't insert a review that already exists)
 		if($this->reviewId !== null) {
 			throw(new \PDOException("not a new review"));
@@ -306,7 +306,7 @@ class Review implements \JsonSerializable {
 	 * @throws |\TypeError if $pdo is not a PDO connection object
 	 **/
 
-	public function delete(\PDO $pdo) : void {
+	public function delete(\PDO $pdo): void {
 		// enforce the reviewId is not null (i.e., don't delete a review that hasn't been inserted)
 		if($this->reviewId === null) {
 			throw(new \PDOException("unable to delete a review that does not exist"));
@@ -329,23 +329,23 @@ class Review implements \JsonSerializable {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 
-	public function update(\PDO $pdo) : void {
+	public function update(\PDO $pdo): void {
 		// enforce the reviewId is not null (i.e., don't update a review that hasn't been inserted)
 		if($this->reviewId === null) {
 			throw(new \PDOException("unable to update a review that does not exist"));
 		}
 
 		// create query template
-		$query = "UPDATE review SET reviewStudentProfileId = :reviewStudentProfileId, reviewTutorProfileId =:reviewTutorProfileId,
-		reviewRating = :reviewRating, reviewText = :reviewText, reviewDateTime = :reviewDateTime";
+		$query = "UPDATE review SET reviewStudentProfileId = :reviewStudentProfileId, reviewTutorProfileId = :reviewTutorProfileId,
+		reviewRating = :reviewRating, reviewText = :reviewText, reviewDateTime = :reviewDateTime WHERE reviewId = :reviewId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
 		$formattedDate = $this->reviewDateTime->format("y-m-d H:i:s");
 		$parameters = ["reviewStudentProfileId" => $this->reviewStudentProfileId, "reviewTutorProfileId" =>
 			$this->reviewTutorProfileId, "reviewRating" => $this->reviewRating, "reviewText" => $this->reviewText,
-			"reviewDateTime" => $this->reviewDateTime];
-		$statement = $pdo->prepare($query);
+			"reviewDateTime" => $formattedDate, "reviewId" => $this->reviewId];
+		$statement->execute($parameters);
 	}
 
 	/**
@@ -358,7 +358,7 @@ class Review implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public static function getReviewByReviewId(\PDO $pdo, int $reviewId) : ?Review {
+	public static function getReviewByReviewId(\PDO $pdo, int $reviewId): ?Review {
 		// sanitize the reviewId before searching
 		if($reviewId <= 0) {
 			throw(new \PDOException("review id is not positive"));
@@ -399,7 +399,7 @@ class Review implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public static function getReviewByReviewStudentProfileId(\PDO $pdo, int $reviewStudentProfileId) : \SPLFixedArray {
+	public static function getReviewByReviewStudentProfileId(\PDO $pdo, int $reviewStudentProfileId): \SPLFixedArray {
 		// sanitize the review student profile id before searching
 		if($reviewStudentProfileId <= 0) {
 			throw(new \RangeException("review student profile id must be positive"));
@@ -439,7 +439,7 @@ class Review implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public static function getReviewByReviewTutorProfileId(\PDO $pdo, int $reviewTutorProfileId) : \SPLFixedArray {
+	public static function getReviewByReviewTutorProfileId(\PDO $pdo, int $reviewTutorProfileId): \SPLFixedArray {
 		// sanitize the review student profile id before searching
 		if($reviewTutorProfileId <= 0) {
 			throw(new \RangeException("review tutor profile id must be positive"));
