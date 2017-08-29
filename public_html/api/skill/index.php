@@ -35,10 +35,10 @@ try{
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"]: $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
-	$skillId =filter_input(INPUT_GET,"skillId", FILTER_VALIDATE_INT);
+	$id =filter_input(INPUT_GET,"skillId", FILTER_VALIDATE_INT);
 	$skillName=filter_input(INPUT_GET,"skillName", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
 // make sucre the id is valid for methods that require it
-	if(($method=== "DELETE" || $method=== "PUT")&& (empty($skillId)=== true || $skillId < 0)){
+	if(($method=== "DELETE" || $method=== "PUT")&& (empty($id)=== true || $id < 0)){
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
@@ -47,8 +47,8 @@ try{
 		setXsrfCookie();
 
 		//get a specific skillname based on arguments provided or all the skill names and update reply
-		if(empty ($skillId)===false){
-			$skill = Skill::getSkillNameBySkillId($pdo, $skillId);
+		if(empty ($id)===false){
+			$skill = Skill::getSkillNameBySkillId($pdo, $id);
 			if($skill !== null){
 				$reply->data=$skill;
 			}else {
