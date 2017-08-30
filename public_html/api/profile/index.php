@@ -6,7 +6,9 @@ require_once(dirname(__DIR__, 3) . "/php/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\DeepDiveTutor\ {
-	Profile
+	Profile,
+	JsonObjectStorage,
+	ProfileSkill
 };
 
 /**
@@ -58,22 +60,39 @@ try {
 			$profile = Profile::getProfileByProfileId($pdo, $id);
 
 			if($profile !== null) {
-				$reply->data = $profile;
+				$reply->data = $storage;
 			}
 		} elseif(empty($profileName) === false) {
 			$profile = Profile::getProfileByProfileName($pdo, $profileName);
 			if($profile !== null) {
-				$reply->data = $profile;
+
+
+				// create a json object storage
+				$storage = new JsonObjectStorage();
+
+				// loop through each profile and grab the profile by either student or tutor
+				foreach($profile as $profiles) {
+
+					// grab the tutor profiles and attach profile skill
+					$skills = ProfileSkill::getProfileSkillsByProfileSkillSkillId($pdo, $profiles->getProfileSkillSkillId());
+					$profile = Profile::getProfileByProfileId($pdo, $skills[0]->getProfileSkillSkillId());
+
+					// store the results of the database queries into a json storage object in the same format as the rest
+					// of the get by methods
+				}
+
+
+				$reply->data = $storage;
 			}
 		} elseif(empty($profileType) === false) {
 			$profile = Profile::getProfileByProfileType($pdo, $profileType);
 			if($profile !== null) {
-				$reply->data = $profile;
+				$reply->data = $storage;
 			}
-		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate === false))) {
+		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate) === false)) {
 			$profile = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
 			if($profile !== null) {
-				$reply->data = $profile;
+				$reply->data = $storage;
 			}
 		}
 	} elseif($method === "PUT") {
