@@ -65,27 +65,12 @@ try {
 			if($profile !== null) {
 				$reply->data = $profile;
 			}
-		} elseif(empty($profileEmail) === false) {
-			$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
-			if($profile !== null) {
-				$reply->data = $profile;
-			}
 		} elseif(empty($profileType) === false) {
 			$profile = Profile::getProfileByProfileType($pdo, $profileType);
 			if($profile !== null) {
 				$reply->data = $profile;
 			}
-		} elseif(empty($profileGithubToken) === false) {
-			$profile = Profile::getProfileByProfileGithubToken($pdo, $profileGithubToken);
-			if($profile !== null) {
-				$reply->data = $profile;
-			}
-		} elseif(empty($brokeProfileRate) === false) {
-			$profile = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
-			if($profile !== null) {
-				$reply->data = $profile;
-			}
-		} elseif(empty($loadedProfileRate) === false) {
+		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate === false))) {
 			$profile = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
 			if($profile !== null) {
 				$reply->data = $profile;
