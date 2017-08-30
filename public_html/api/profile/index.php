@@ -8,7 +8,8 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 use Edu\Cnm\DeepDiveTutor\ {
 	Profile,
 	JsonObjectStorage,
-	ProfileSkill
+	ProfileSkill,
+	Skill
 };
 
 /**
@@ -63,36 +64,51 @@ try {
 				$reply->data = $storage;
 			}
 		} elseif(empty($profileName) === false) {
-			$profile = Profile::getProfileByProfileName($pdo, $profileName);
-			if($profile !== null) {
+			var_dump($profileName);
+			$profiles = Profile::getProfileByProfileName($pdo, $profileName);
+			// var_dump($profiles);
+			if($profiles !== null) {
 
 
 				// create a json object storage
 				$storage = new JsonObjectStorage();
 
 				// loop through each profile and grab the profile by either student or tutor
-				foreach($profile as $profiles) {
+				foreach($profiles as $profile) {
 
 					// grab the tutor profiles and attach profile skill
-					$skills = ProfileSkill::getProfileSkillsByProfileSkillSkillId($pdo, $profiles->getProfileSkillSkillId());
-					$profile = Profile::getProfileByProfileId($pdo, $skills[0]->getProfileSkillSkillId());
+					$profileSkills = ProfileSkill::getProfileSkillsByProfileSkillSkillId($pdo,
+						$profile->getProfileId());
+					$skills = [];
+					foreach($profileSkills as $profileSkill) {
+						$skill = Skill::getSkillNameBySkillId($pdo, $profileSkill->getProfileSkill);
+						array_push($skills, $skill);
+					}
+					if($profileType === 1) {
+						// store the results of the database queries into a json storage object in the same format as the rest
+						// of the get by methods
+						$storage->attach(
+							$profile, [
+								$skills
+							]
+						);
+					} elseif($profileType === 0) {
 
-					// store the results of the database queries into a json storage object in the same format as the rest
-					// of the get by methods
+					}
 				}
-
-
 				$reply->data = $storage;
 			}
+
+
 		} elseif(empty($profileType) === false) {
 			$profile = Profile::getProfileByProfileType($pdo, $profileType);
 			if($profile !== null) {
-				$reply->data = $storage;
+				// $reply->data = $storage;
 			}
 		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate) === false)) {
 			$profile = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
 			if($profile !== null) {
-				$reply->data = $storage;
+			//	$reply->data = $storage;
 			}
 		}
 	} elseif($method === "PUT") {
@@ -217,3 +233,4 @@ if($reply->data === null) {
 
 // encode and return reply to front end caller
 echo json_encode($reply);
+
