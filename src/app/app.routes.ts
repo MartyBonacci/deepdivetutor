@@ -1,5 +1,5 @@
 import {RouterModule, Routes} from "@angular/router";
-import {HomeComponent} from "./components/home-component";
+import {HomeComponent} from "./components/home.component";
 import {PoliticianComponent} from "./components/user.component";
 import {SessionService} from "./services/session.service";
 
