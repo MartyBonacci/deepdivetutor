@@ -182,10 +182,10 @@ try {
 			throw(new \InvalidArgumentException("You are not allowed to delete this review", 403));
 		}
 
-		// enforce the user is signed in and only trying to edit their own review
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $review->getReviewTutorProfileId()) {
-			throw(new \InvalidArgumentException("You are not allowed to delete this review", 403));
-		}
+//		// enforce the user is signed in and only trying to edit their own review
+//		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $review->getReviewTutorProfileId()) {
+//			throw(new \InvalidArgumentException("You are not allowed to delete this review", 403));
+//		}
 
 		// delete review
 		$review->delete($pdo);
