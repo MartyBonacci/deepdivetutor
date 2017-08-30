@@ -50,7 +50,7 @@ try {
 			}
 		}
 		//Get All SkillNames and update reply
-		else if(empty($skillName) === false) {
+		else {
 			$skills = Skill::getAllSkillNames($pdo)->toArray();
 			if($skills !== null) {
 				$reply->data = $skills;
