@@ -131,12 +131,12 @@ EOF;
 		 **/
 		if($numSent !== count($recipients)) {
 			// the $failedRecipients parameter passed in the send() method now contains contains an array of the Emails that failed
-			throw(new RuntimeException("unable to send email"));
+			throw(new RuntimeException("unable to send email",400));
 		}
 		// update reply
 		$reply->message = "Thank you for creating a Deep Dive Tutor profile.";
 	} else {
-		throw (new InvalidArgumentException("invalid http request"));
+		throw (new InvalidArgumentException("invalid http request",418));
 	}
 } catch(\Exception $exception) {
 	$reply->status = $exception->getCode();

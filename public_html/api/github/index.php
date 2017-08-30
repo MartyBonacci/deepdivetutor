@@ -101,16 +101,10 @@ try {
 		// get profile by email to see if it exists, if it does not then create a new one
 		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 
-		var_dump($profile);
 		if(($profile) === null) {
-
-			var_dump($profileGithubToken);
-			var_dump($profileName, $profileEmail, $profileType,$profileGithubToken,$profileRate, $profileLastEditDateTime);
 
 			// create a new profile
 			$user = new Profile(null,$profileName, $profileEmail, $profileType,$profileGithubToken, "Please update your profile content!", $profileRate, null, null, null, null, null);
-
-			var_dump($user);
 
 			$user->insert($pdo);
 			$reply->message = "Welcome to Deep Dive Tutor!";
