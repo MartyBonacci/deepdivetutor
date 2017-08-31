@@ -64,56 +64,53 @@ try {
 				$reply->data = $storage;
 			}
 		} elseif(empty($profileName) === false) {
-			var_dump($profileName);
+
 			$profiles = Profile::getProfileByProfileName($pdo, $profileName);
 			// var_dump($profiles);
 			if($profiles !== null) {
-
-
 				// create a json object storage
 				$storage = new JsonObjectStorage();
-
 				// loop through each profile and grab the profile by either student or tutor
 				foreach($profiles as $profile) {
 
 					// grab the tutor profiles and attach profile skill
-					$profileSkills = ProfileSkill::getProfileSkillsByProfileSkillSkillId($pdo,
-						$profile->getProfileId());
-					$skills = [];
-					foreach($profileSkills as $profileSkill) {
-						$skill = Skill::getSkillNameBySkillId($pdo, $profileSkill->getProfileSkill);
-						array_push($skills, $skill);
-					}
-					if($profileType === 1) {
+					if($profile->getProfileType() === 1) {
 						// store the results of the database queries into a json storage object in the same format as the rest
 						// of the get by methods
+						$profileSkills = ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo,
+							$profile->getProfileId());
+						$skills = [];
+						foreach($profileSkills as $profileSkill) {
+							$skill = Skill::getSkillNameBySkillId($pdo, $profileSkill->getProfileSkillSkillId());
+							$skills[] = $skill;
+						}
+
 						$storage->attach(
-							$profile, [
-								$skills
-							]
+							$profile, $skills
+
 						);
 					} elseif($profileType === 0) {
-
+						$storage->attach($profile);
 					}
 				}
 				$reply->data = $storage;
 			}
 
 
-		} elseif(empty($profileType) === false) {
-			$profile = Profile::getProfileByProfileType($pdo, $profileType);
-			if($profile !== null) {
-				// $reply->data = $storage;
-			}
-		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate) === false)) {
-			$profile = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
-			if($profile !== null) {
-			//	$reply->data = $storage;
-			}
+	} elseif(empty($profileType) === false) {
+		$profile = Profile::getProfileByProfileType($pdo, $profileType);
+		if($profile !== null) {
+			// $reply->data = $storage;
 		}
-	} elseif($method === "PUT") {
+	} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate) === false)) {
+		$profile = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
+		if($profile !== null) {
+			//	$reply->data = $storage;
+		}
+	}
+} elseif($method === "PUT"){
 
-		// enforce the user is signed in and only trying to edit their own profile
+	// enforce the user is signed in and only trying to edit their own profile
 		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $id) {
 			throw(new \InvalidArgumentException("you are not allowed to access this profile", 403));
 		}
@@ -199,9 +196,9 @@ try {
 		$profile->update($pdo);
 		$reply->message = "profile password successfully updated";
 
-	} elseif($method === "DELETE") {
-		// verify the XSRF token
-		verifyXsrf();
+	} elseif($method === "DELETE"){
+	// verify the XSRF token
+verifyXsrf();
 
 		$profile = Profile::getProfileByProfileId($pdo, $id);
 		if($profile === null) {
@@ -217,8 +214,8 @@ try {
 		$profile->delete($pdo);
 		$reply->message = "Profile deleted";
 	} else {
-		throw(new InvalidArgumentException("Invalid HTTP request", 400));
-	}
+	throw(new InvalidArgumentException("Invalid HTTP request", 400));
+}
 
 	// catch any exceptions that were thrown and update the status and message state variable fields
 } catch(\Exception | \TypeError $exception) {
