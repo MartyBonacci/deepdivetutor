@@ -36,8 +36,8 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$skillId = filter_input(INPUT_GET, "skillId", FILTER_VALIDATE_INT);
-	$profileId = filter_input(INPUT_GET,"profileId", FILTER_VALIDATE_INT);
+	//$skillId = filter_input(INPUT_GET, "skillId", FILTER_VALIDATE_INT);
+	//$profileId = filter_input(INPUT_GET,"profileId", FILTER_VALIDATE_INT);
 
 	if($method === "GET") {
 //set xsrf cookie
@@ -49,8 +49,7 @@ try {
 			if($skill !== null) {
 				$reply->data = $skill;
 			}
-		}
-		//Get All SkillNames and update reply
+		} //Get All SkillNames and update reply
 		else {
 			$skills = Skill::getAllSkillNames($pdo)->toArray();
 			if($skills !== null) {
@@ -61,70 +60,38 @@ try {
 
 	// POST new profileSkill
 	if($method === "POST") {
-		//decode the json and turn it into a php object
-		$requestContent = file_get_contents("php://input");
-		$requestObject = json_decode($requestContent);
 
-		//profile id is a required field
-		if(empty($requestObject->profileId) === true) {
-			throw(new \InvalidArgumentException ("No profile id present", 405));
-		}
 
 		//skill id is a required field
-		if(empty($requestObject->skillId) === true) {
+		if(empty($id) === true) {
 			throw(new \InvalidArgumentException ("No skill id present", 405));
 		}
 
 		// enforce the user is signed in and only trying to edit their own profile
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $profileId) {
+		if(empty($_SESSION["profile"]) === true) {
 			throw(new \InvalidArgumentException("you are not allowed to access this profile", 403));
 		}
 
-		$count = 0;
-		while($skillId[$count]!== null) {
-			//check if profile skill already exists and if it does not exist, make it
-			$profileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($pdo, $profileId, $skillId[$count]);
-			if($profileSkill === null) {
-				$profileSkill = new ProfileSkill($profileId, $skillId[$count]);
-				$profileSkill->insert($pdo);
-			}
-		}
+		$profileSkill = new ProfileSkill($_SESSION["profile"]->getProfileId(), $id);
+		$profileSkill->insert($pdo);
+		$reply->message = "Profile Skill added ok";
 	}
-
-
 
 
 	if($method === "DELETE") {
 
-		//decode the json and turn it into a php object
-		$requestContent = file_get_contents("php://input");
-		$requestObject = json_decode($requestContent);
-
-		//profile id is a required field
-		if(empty($requestObject->profileId) === true) {
-			throw(new \InvalidArgumentException ("No profile id present", 405));
-		}
-
-		//skill id is a required field
-		if(empty($requestObject->skillId) === true) {
-			throw(new \InvalidArgumentException ("No skill id present", 405));
-		}
-
 		// enforce the user is signed in and only trying to edit their own profile
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $profileId) {
+		if(empty($_SESSION["profile"]) === true ) {
 			throw(new \InvalidArgumentException("you are not allowed to access this profile", 403));
 		}
 
-		$count = 0;
-		while($skillId[$count]!== null) {
-			//check if profile skill exists and if it does, delete it
-			$profileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($pdo, $profileId, $skillId[$count]);
-			if($profileSkill !== null) {
-				$profileSkill = new ProfileSkill($profileId, $skillId);
-				$profileSkill->delete($pdo);
-				$reply->message = "Profile Skill deleted Ok";
-			}
+		$profileSkill = ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($pdo,$_SESSION["profile"]->getProfileId(), $id);
+		if ($profileSkill === null){
+			throw(new \InvalidArgumentException("can not delete non-existent profile skill", 418));
 		}
+		$profileSkill->delete($pdo);
+		$reply->message = "Profile Skill deleted ok";
+
 	}
 
 } catch(\Exception | \TypeError $exception) {
