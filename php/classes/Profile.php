@@ -335,9 +335,9 @@ class Profile implements \JsonSerializable {
 		// allow for float
 		$newProfileRate = filter_var($newProfileRate, FILTER_SANITIZE_NUMBER_FLOAT);
 
-		// verify profileRate is positive
-		if($newProfileRate <= 0) {
-			throw(new \RangeException("profile rate must be greater than 0"));
+		// verify profileRate is positive and less than 1000
+		if($newProfileRate < 0 || $newProfileRate >= 1000) {
+			throw(new \RangeException("profile rate must be from 0 to 999.99"));
 		}
 
 		// convert and store profile rate

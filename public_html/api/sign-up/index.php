@@ -41,7 +41,7 @@ try {
 			throw(new \InvalidArgumentException ("No profile email present", 405));
 		}
 		//profile type is a required field
-		if(empty($requestObject->profileType) === true) {
+		if($requestObject->profileType !== 1 && $requestObject->profileType !== 0) {
 			throw(new \InvalidArgumentException ("No profile type present", 405));
 		}
 		//profile bio is a required field
@@ -49,7 +49,7 @@ try {
 			throw(new \InvalidArgumentException ("No profile bio present", 405));
 		}
 		//profile rate is a required field
-		if(empty($requestObject->profileRate) === true) {
+		if($requestObject->profileRate <0 || $requestObject->profileRate >= 1000) {
 			throw(new \InvalidArgumentException ("No profile rate present", 405));
 		}
 		//verify that profile password is present

@@ -36,6 +36,7 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+
 	//$skillId = filter_input(INPUT_GET, "skillId", FILTER_VALIDATE_INT);
 	//$profileId = filter_input(INPUT_GET,"profileId", FILTER_VALIDATE_INT);
 
@@ -60,25 +61,39 @@ try {
 
 	// POST new profileSkill
 	if($method === "POST") {
+//		$id = filter_input(INPUT_POST, "id", FILTER_VALIDATE_INT);
+		//enforce that the user has an XSRF token
+		verifyXsrf();
 
+		$requestContent = file_get_contents("php://input");
+		// Retrieves the JSON package that the front end sent, and stores it in $requestContent. Here we are using file_get_contents("php://input") to get the request from the front end. file_get_contents() is a PHP function that reads a file into a string. The argument for the function, here, is "php://input". This is a read only stream that allows raw data to be read from the front end request which is, in this case, a JSON package.
+		$requestObject = json_decode($requestContent);
+		// This Line Then decodes the JSON package and stores that result in $requestObject
 
 		//skill id is a required field
-		if(empty($id) === true) {
+		if(empty($requestObject->id) === true) {
 			throw(new \InvalidArgumentException ("No skill id present", 405));
 		}
 
+		if(ProfileSkill::getProfileSkillProfileIdAndProfileSkillSkillId($pdo,$_SESSION["profile"]->getProfileId(), $requestObject->id)!==null){
+			throw(new \InvalidArgumentException("The profile skill already exists."));
+		}
+
+		if (Skill::getSkillNameBySkillId($pdo,$requestObject->id)===null){
+			throw(new \InvalidArgumentException("The skill does not exist."));
+		}
 		// enforce the user is signed in and only trying to edit their own profile
 		if(empty($_SESSION["profile"]) === true) {
 			throw(new \InvalidArgumentException("you are not allowed to access this profile", 403));
 		}
-
-		$profileSkill = new ProfileSkill($_SESSION["profile"]->getProfileId(), $id);
+		$profileSkill = new ProfileSkill($_SESSION["profile"]->getProfileId(), $requestObject->id);
 		$profileSkill->insert($pdo);
 		$reply->message = "Profile Skill added ok";
 	}
 
-
 	if($method === "DELETE") {
+//enforce that the user has an XSRF token
+		verifyXsrf();
 
 		// enforce the user is signed in and only trying to edit their own profile
 		if(empty($_SESSION["profile"]) === true ) {
