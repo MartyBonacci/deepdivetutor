@@ -60,9 +60,7 @@ try {
 		if(empty($id) === false) {
 			$profile = Profile::getProfileByProfileId($pdo, $id);
 
-			if($profile !== null) {
-				$reply->data = $storage;
-			} elseif($profileType === true) {
+			if($profile !== null && $profileType == false) {
 				$profiles = Profile::getProfileByProfileType($pdo, $profileType);
 				if($profiles !== null) {
 					// create a json object storage
@@ -77,7 +75,7 @@ try {
 					$reply->data = $storage;
 				}
 
-			} elseif(empty($profileName) === false && ($profileType === true)) {
+			} elseif(empty($profileName) === false && ($profileType == true)) {
 
 				$profiles = Profile::getProfileByProfileName($pdo, $profileName);
 				if($profiles !== null) {
@@ -97,9 +95,20 @@ try {
 				}
 			}
 		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate) === false)) {
-			$profile = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
-			if($profile !== null) {
-				//	$reply->data = $storage;
+			$profiles = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
+			if($profiles !== null && $profileType == true) {
+				$storage = new JsonObjectStorage();
+				// loop through each profile and grab the profile by tutor
+				foreach($profiles as $profile) {
+					// grab the tutor profiles and attach profile skill
+					// store the results of the database queries into a json storage object in the same format as the rest
+					// of the get by methods
+					$storage->attach(
+						$profile,
+						Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $profile->getProfileId())
+					);
+				}
+				$reply->data = $storage;
 			}
 		}
 	} elseif($method === "PUT") {
