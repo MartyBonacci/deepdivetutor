@@ -105,7 +105,7 @@ try {
 					// of the get by methods
 					$storage->attach(
 						$profile,
-						Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $profile->getProfileId())
+						ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profile->getProfileId())
 					);
 				}
 				$reply->data = $storage;
