@@ -60,8 +60,9 @@ try {
 		if(empty($id) === false) {
 			$profile = Profile::getProfileByProfileId($pdo, $id);
 
+			// gets profile by profile id for student
 			if($profile !== null && $profileType == false) {
-				$profiles = Profile::getProfileByProfileType($pdo, $profileType);
+				$profiles = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
 				if($profiles !== null) {
 					// create a json object storage
 					$storage = new JsonObjectStorage();
@@ -77,7 +78,8 @@ try {
 
 			} elseif($profile !== null && $profileType == true) {
 
-				$profiles = Profile::getProfileByProfileType($pdo, $profileType);
+				// gets profile by profile id for tutor
+				$profiles = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
 				if($profiles !== null) {
 					// create a json object storage
 					$storage = new JsonObjectStorage();
@@ -88,13 +90,14 @@ try {
 						// of the get by methods
 						$storage->attach(
 							$profile,
-							ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profile->getProfileId())
+							ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profiles->getProfileId())
 						);
 					}
 					$reply->data = $storage;
 				}
 			} elseif(empty($profileName) === false && ($profileType == true)) {
 
+				// gets profile by profile name for tutor
 				$profiles = Profile::getProfileByProfileName($pdo, $profileName);
 				if($profiles !== null) {
 					// create a json object storage
@@ -113,6 +116,8 @@ try {
 				}
 			}
 		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate) === false)) {
+
+			// gets profile by profile rate for tutor
 		$profiles = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
 		if($profiles !== null && $profileType == true) {
 			$storage = new JsonObjectStorage();
@@ -129,7 +134,45 @@ try {
 			$reply->data = $storage;
 		}
 	}
-} elseif($method === "PUT") {
+		$profile = Profile::getProfileByProfileId($pdo, $id);
+
+		// get profile by profile type student
+	if($profile !== null && $profileType == false) {
+			$profiles = Profile::getProfileByProfileType($pdo, $profileType);
+			if($profiles !== null) {
+				// create a json object storage
+				$storage = new JsonObjectStorage();
+				// loop through each profile and grab each student
+				foreach($profiles as $profile) {
+					// grab the student profiles and store them in json object
+					$storage->attach(
+						$profile
+					);
+				}
+				$reply->data = $storage;
+			}
+
+		} elseif($profile !== null && $profileType == true) {
+
+			// get profile by profile type tutor
+			$profiles = Profile::getProfileByProfileType($pdo, $profileType);
+			if($profiles !== null) {
+				// create a json object storage
+				$storage = new JsonObjectStorage();
+				// loop through each profile and grab the profile by tutor
+				foreach($profiles as $profile) {
+					// grab the tutor profiles and attach profile skill
+					// store the results of the database queries into a json storage object in the same format as the rest
+					// of the get by methods
+					$storage->attach(
+						$profile,
+						ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profile->getProfileId())
+					);
+				}
+				$reply->data = $storage;
+			}
+		}
+	} elseif($method === "PUT") {
 
 	// enforce the user is signed in and only trying to edit their own profile
 		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $id) {
