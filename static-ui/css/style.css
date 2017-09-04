@@ -1,0 +1,17 @@
+#reviewProfilePic{
+
+}
+.reviewPic {
+	height:100px;
+	background: url("../images/DDC_helmet_black.png") no-repeat cover center;
+}
+.media-object {
+	height:100px;
+	padding-right: 2rem;
+	border-right: black solid 2px;
+}
+.media-text {
+	padding: 0;
+	border-top: dimgray solid 1px;
+	display: inline-block;
+}
