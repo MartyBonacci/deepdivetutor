@@ -36,8 +36,9 @@
 		<title>Home | Static UI</title>
 	</head>
 	<body>
-		<h1 class="page-header">Welcome to Deep Dive Tutor!</h1>
-
+		<div class="page-header">
+			<h1>Welcome to Deep Dive Tutor!</h1>
+		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-5">
@@ -45,13 +46,16 @@
 					<p>Striker brace UEFA European Championship chip one-two African Cup of Nations three-five-two four-four-two yellow card upper 90 hat trick ball forward. Hat trick center-half referee goalie one-two soccer World Cup upper 90 midfielder forward striker UEFA European Championship red card four-four-two goal. Four-four-two halftime center-half goal hat trick goalie African Cup of Nations referee one-two yellow card forward UEFA European Championship pitch. Midfielder one-two pitch chip goalie halftime soccer forward upper 90 number 10 UEFA European Championship referee defender center-half ball World Cup goal.Defender number 10 World Cup pitch ball yellow card soccer four-four-two striker center-half hat trick upper 90 one-two halftime goalie three-five-two UEFA European Championship. Three-five-two goalie hat trick upper 90 World Cup one-two chip halftime midfielder center-half striker forward pitch defender yellow card UEFA European Championship.
 					</p>
 				</div><!-- /.col-md-5 -->
+				<div class="col-md-2">
+					<img src="../images/deepdivehelmet.png" alt="bootcamp logo"/>
+				</div>
 				<div class="col-md-5">
 					<div class="well well-lg">
 						<h4>Login</h4>
 						<form>
 							<div class="form-group">
-								<label for="email">Email</label>
-								<input type="email" class="form-control" id="email" placeholder="Email">
+								<label for="email-login">Email</label>
+								<input type="email" class="form-control" id="email-login" placeholder="Email">
 							</div>
 							<div class="form-group">
 								<label for="password">Password</label>
@@ -61,7 +65,24 @@
 						</form>
 						<h4>Sign Up</h4>
 						<form>
-
+							<div class="form-group">
+								<label for="name">Name</label>
+								<input type="text" class="form-control" id="name" placeholder="Name">
+							</div>
+							<div class="form-group">
+								<label for="email-signup">Email</label>
+								<input type="email" class="form-control" id="email-signup" placeholder="Email">
+							</div>
+							<div class="form-group">
+								<label for="password-new">Create Password</label>
+								<input type="password" class="form-control" id="password-new" placeholder="Create Password">
+							</div>
+							<div class="form-group">
+								<label for="password-new-conf">Re-Enter Password</label>
+								<input type="password" class="form-control" id="password-new-conf"
+										 placeholder="Re-Enter Password">
+							</div>
+							<button type="submit" class="btn btn-success">Sign Up</button>
 						</form>
 					</div><!-- /. well well-lg -->
 				</div><!-- /.col-md-5 -->
