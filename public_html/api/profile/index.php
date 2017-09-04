@@ -75,6 +75,24 @@ try {
 					$reply->data = $storage;
 				}
 
+			} elseif($profile !== null && $profileType == true) {
+
+				$profiles = Profile::getProfileByProfileType($pdo, $profileType);
+				if($profiles !== null) {
+					// create a json object storage
+					$storage = new JsonObjectStorage();
+					// loop through each profile and grab the profile by tutor
+					foreach($profiles as $profile) {
+						// grab the tutor profiles and attach profile skill
+						// store the results of the database queries into a json storage object in the same format as the rest
+						// of the get by methods
+						$storage->attach(
+							$profile,
+							ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profile->getProfileId())
+						);
+					}
+					$reply->data = $storage;
+				}
 			} elseif(empty($profileName) === false && ($profileType == true)) {
 
 				$profiles = Profile::getProfileByProfileName($pdo, $profileName);
@@ -95,25 +113,25 @@ try {
 				}
 			}
 		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate) === false)) {
-			$profiles = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
-			if($profiles !== null && $profileType == true) {
-				$storage = new JsonObjectStorage();
-				// loop through each profile and grab the profile by tutor
-				foreach($profiles as $profile) {
-					// grab the tutor profiles and attach profile skill
-					// store the results of the database queries into a json storage object in the same format as the rest
-					// of the get by methods
-					$storage->attach(
-						$profile,
-						ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profile->getProfileId())
-					);
-				}
-				$reply->data = $storage;
+		$profiles = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
+		if($profiles !== null && $profileType == true) {
+			$storage = new JsonObjectStorage();
+			// loop through each profile and grab the profile by tutor
+			foreach($profiles as $profile) {
+				// grab the tutor profiles and attach profile skill
+				// store the results of the database queries into a json storage object in the same format as the rest
+				// of the get by methods
+				$storage->attach(
+					$profile,
+					ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profile->getProfileId())
+				);
 			}
+			$reply->data = $storage;
 		}
-	} elseif($method === "PUT") {
+	}
+} elseif($method === "PUT") {
 
-		// enforce the user is signed in and only trying to edit their own profile
+	// enforce the user is signed in and only trying to edit their own profile
 		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $id) {
 			throw(new \InvalidArgumentException("you are not allowed to access this profile", 403));
 		}
@@ -199,9 +217,9 @@ try {
 		$profile->update($pdo);
 		$reply->message = "profile password successfully updated";
 
-	} elseif($method === "DELETE") {
-		// verify the XSRF token
-		verifyXsrf();
+	} elseif($method === "DELETE"){
+	// verify the XSRF token
+verifyXsrf();
 
 		$profile = Profile::getProfileByProfileId($pdo, $id);
 		if($profile === null) {
@@ -217,8 +235,8 @@ try {
 		$profile->delete($pdo);
 		$reply->message = "Profile deleted";
 	} else {
-		throw(new InvalidArgumentException("Invalid HTTP request", 400));
-	}
+	throw(new InvalidArgumentException("Invalid HTTP request", 400));
+}
 
 	// catch any exceptions that were thrown and update the status and message state variable fields
 } catch(\Exception | \TypeError $exception) {
