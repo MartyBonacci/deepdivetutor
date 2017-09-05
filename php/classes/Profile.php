@@ -675,11 +675,11 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 
 		// create query template
 		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, 
-profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileName = :profileName";
+profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileName LIKE :profileName";
 		$statement = $pdo->prepare($query);
 
 		// bind the profile name to the placeholder in the template
-		// $profileName = "%profileName%";
+		$profileName = "%profileName%";
 		$parameters = ["profileName" => $profileName];
 		$statement->execute($parameters);
 
