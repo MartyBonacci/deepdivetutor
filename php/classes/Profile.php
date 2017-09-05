@@ -259,7 +259,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \TypeError if $newProfileGithubToken is not a string
 	 */
 	public function setProfileGithubToken(?string $newProfileGithubToken): void {
-		if ($newProfileGithubToken === null) {
+		if($newProfileGithubToken === null) {
 			$this->profileGithubToken = null;
 			return;
 		}
@@ -686,7 +686,7 @@ profileLastEditDateTime, profileActivationToken FROM profile WHERE profileName L
 		// build an array of profile names
 		$profiles = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-var_dump("dude1");
+		var_dump("dude1");
 		while(($row = $statement->fetch()) !== false) {
 			var_dump("dude2");
 			try {
