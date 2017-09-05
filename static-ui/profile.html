@@ -158,12 +158,22 @@
 							<div class="form-group">
 								<label for="profile-type-s">Profile Type</label>
 							</div>
+							<div>
 							<input type="radio" id="profile-type-s"
-									 name="gender" value="tutor" checked><!-- pre check the user's profile type -->
+									 name="student" value="student" checked><!-- pre check the user's profile type -->
 							<label for="profile-type-s">Student</label>
 							<input type="radio" id="profile-type-t"
-									 name="gender" value="tutor">
+									 name="tutor" value="tutor">
 							<label for="profile-type-t">Tutor</label>
+							</div>
+							<div>
+							<input type="radio" id="skill"
+									 name="PHP" value="PHP" checked><!-- pre check and display if the user's profile type is tutor-->
+							<label for="skill">Student</label>
+							<input type="radio" id="skill"
+									 name="JavaScript" value="JavaScript">
+							<label for="skill">Tutor</label>
+							</div>
 						</form>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
