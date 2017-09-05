@@ -95,7 +95,7 @@ try {
 					}
 					$reply->data = $storage;
 				}
-			} elseif(empty($profileName) === false && ($profileType == true)) {
+			} elseif(empty($profileName) === false && ($profileType == 1)) {
 
 				// gets profile by profile name for tutor
 				$profiles = Profile::getProfileByProfileName($pdo, $profileName);
@@ -118,46 +118,8 @@ try {
 		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate) === false)) {
 
 			// gets profile by profile rate for tutor
-		$profiles = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
-		if($profiles !== null && $profileType == true) {
-			$storage = new JsonObjectStorage();
-			// loop through each profile and grab the profile by tutor
-			foreach($profiles as $profile) {
-				// grab the tutor profiles and attach profile skill
-				// store the results of the database queries into a json storage object in the same format as the rest
-				// of the get by methods
-				$storage->attach(
-					$profile,
-					ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profile->getProfileId())
-				);
-			}
-			$reply->data = $storage;
-		}
-	}
-		$profile = Profile::getProfileByProfileId($pdo, $id);
-
-		// get profile by profile type student
-	if($profile !== null && $profileType == false) {
-			$profiles = Profile::getProfileByProfileType($pdo, $profileType);
-			if($profiles !== null) {
-				// create a json object storage
-				$storage = new JsonObjectStorage();
-				// loop through each profile and grab each student
-				foreach($profiles as $profile) {
-					// grab the student profiles and store them in json object
-					$storage->attach(
-						$profile
-					);
-				}
-				$reply->data = $storage;
-			}
-
-		} elseif($profile !== null && $profileType == true) {
-
-			// get profile by profile type tutor
-			$profiles = Profile::getProfileByProfileType($pdo, $profileType);
-			if($profiles !== null) {
-				// create a json object storage
+			$profiles = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
+			if($profiles !== null && $profileType == true) {
 				$storage = new JsonObjectStorage();
 				// loop through each profile and grab the profile by tutor
 				foreach($profiles as $profile) {
@@ -171,121 +133,155 @@ try {
 				}
 				$reply->data = $storage;
 			}
-		}
-	} elseif($method === "PUT") {
+		} elseif(empty($profileType) == false) {
+			$profiles = Profile::getProfileByProfileType($pdo, $profileType);
+			if($profileType === false) {
+				// create a json object storage
+				$storage = new JsonObjectStorage();
+				// loop through each profile and grab each student
+				foreach($profiles as $profile) {
+					// grab the student profiles and store them in json object
+					$storage->attach(
+						$profile
+					);
+				}
+				$reply->data = $storage;
+			} else {
+				if($profileType === true) {
+					// create a json object storage
+					$storage = new JsonObjectStorage();
+					// loop through each profile and grab the profile by tutor
+					foreach($profiles as $profile) {
+						// grab the tutor profiles and attach profile skill
+						// store the results of the database queries into a json storage object in the same format as the rest
+						// of the get by methods
+						$storage->attach(
+							$profile,
+							ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profile->getProfileId())->toArray()
+						);
+					}
+					$reply->data = $storage;
+				}
+			}
+		} else {
+				throw(new InvalidArgumentException("No profiles found", 403));
+			}
+		} elseif($method === "PUT") {
 
-	// enforce the user is signed in and only trying to edit their own profile
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $id) {
-			throw(new \InvalidArgumentException("you are not allowed to access this profile", 403));
-		}
+			// enforce the user is signed in and only trying to edit their own profile
+			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $id) {
+				throw(new \InvalidArgumentException("you are not allowed to access this profile", 403));
+			}
 
-		// decode the response from the frontend
-		$requestContent = file_get_contents("php://input");
-		$requestObject = json_decode($requestContent);
+			// decode the response from the frontend
+			$requestContent = file_get_contents("php://input");
+			$requestObject = json_decode($requestContent);
 
-		// retrieve the profile to be updated
-		$profile = Profile::getProfileByProfileId($pdo, $id);
-		if($profile === null) {
-			throw(new RuntimeException("profile does not exist", 404));
-		}
+			// retrieve the profile to be updated
+			$profile = Profile::getProfileByProfileId($pdo, $id);
+			if($profile === null) {
+				throw(new RuntimeException("profile does not exist", 404));
+			}
 
-		if(empty($requestObject->newPassword) === true) {
+			if(empty($requestObject->newPassword) === true) {
 
-			// enforce that the XSRF token is present in the header
+				// enforce that the XSRF token is present in the header
+				verifyXsrf();
+
+				// profile name
+				if(empty($requestObject->profileName) === true) {
+					throw(new \InvalidArgumentException("No profile name", 405));
+				}
+
+				// profile email is a required field
+				if(empty($requestObject->profileEmail) === true) {
+					throw(new \InvalidArgumentException("No profile email present", 405));
+				}
+
+				// profile type is a required field
+				if(empty($requestObject->profileType) === true) {
+					throw(new \InvalidArgumentException("No profile type selected", 405));
+				}
+
+				// profile bio is required
+				if(empty($requestObject->profileBio) === true) {
+					throw(new \InvalidArgumentException("No profile bio is filled out", 405));
+				}
+
+				if(empty($profileImage) === true) {
+					throw(new \InvalidArgumentException("profile image is empty", 405));
+				}
+
+				$profile->setProfileName($requestObject->profileName);
+				$profile->setProfileEmail($requestObject->profileEmail);
+				$profile->setProfileType($requestObject->profileType);
+				$profile->setProfileBio($requestObject->profileBio);
+				$profile->setProfileImage($requestObject->profileImage);
+
+				// update reply
+				$reply->message = "Profile information updated successfully";
+			}
+
+			/**
+			 * update the password if requested
+			 */
+			// enforce that the current password and new password are present
+			if(empty($requestObject->profilePassword) === false && empty($requestObject->profileConfirmPassword) === false
+				&& empty($requestObject->Confirm) === false) {
+
+				// make sure of new password and enforce the password exists
+				if($requestObject->newProfilePassword !== $requestObject->profileConfirmPassword) {
+					throw(new RuntimeException("New passwords do not match", 401));
+				}
+
+				// hash the previous password
+				$currentPasswordHash = hash_pbkdf2("sha512", $requestObject->currentProfilePassword,
+					$profile->getProfileSalt(), 262144);
+
+				// make sure the hash given by the end user matches what is in the database
+				if($currentPasswordHash !== $profile->getProfileHash()) {
+					throw(new \RuntimeException("Old password is incorrect", 401));
+				}
+
+				// salt and hash the new password and update the profile object
+				$newPasswordSalt = bin2hex(random_bytes(16));
+				$newPasswordHash = hash_pbkdf2("sha512", $requestObject->newProfilePassword, $newPasswordSalt, 262144);
+				$profile->setProfileHash($newPasswordHash);
+				$profile->setProfileSalt($newPasswordSalt);
+			}
+
+			// perform the actual update to the database and update the message
+			$profile->update($pdo);
+			$reply->message = "profile password successfully updated";
+
+		} elseif($method === "DELETE") {
+			// verify the XSRF token
 			verifyXsrf();
 
-			// profile name
-			if(empty($requestObject->profileName) === true) {
-				throw(new \InvalidArgumentException("No profile name", 405));
+			$profile = Profile::getProfileByProfileId($pdo, $id);
+			if($profile === null) {
+				throw(new RuntimeException("Profile does not exist"));
 			}
 
-			// profile email is a required field
-			if(empty($requestObject->profileEmail) === true) {
-				throw(new \InvalidArgumentException("No profile email present", 405));
+			// enforce the user is signed in and trying to edit their own profile
+			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $profile->getProfileId()) {
+				throw(new \InvalidArgumentException("You are not allowed to access this profile", 403));
 			}
 
-			// profile type is a required field
-			if(empty($requestObject->profileType) === true) {
-				throw(new \InvalidArgumentException("No profile type selected", 405));
-			}
-
-			// profile bio is required
-			if(empty($requestObject->profileBio) === true) {
-				throw(new \InvalidArgumentException("No profile bio is filled out", 405));
-			}
-
-			if(empty($profileImage) === true) {
-				throw(new \InvalidArgumentException("profile image is empty", 405));
-			}
-
-			$profile->setProfileName($requestObject->profileName);
-			$profile->setProfileEmail($requestObject->profileEmail);
-			$profile->setProfileType($requestObject->profileType);
-			$profile->setProfileBio($requestObject->profileBio);
-			$profile->setProfileImage($requestObject->profileImage);
-
-			// update reply
-			$reply->message = "Profile information updated successfully";
+			// delete the profile from the database
+			$profile->delete($pdo);
+			$reply->message = "Profile deleted";
+		} else {
+			throw(new InvalidArgumentException("Invalid HTTP request", 400));
 		}
 
-		/**
-		 * update the password if requested
-		 */
-		// enforce that the current password and new password are present
-		if(empty($requestObject->profilePassword) === false && empty($requestObject->profileConfirmPassword) === false
-			&& empty($requestObject->Confirm) === false) {
-
-			// make sure of new password and enforce the password exists
-			if($requestObject->newProfilePassword !== $requestObject->profileConfirmPassword) {
-				throw(new RuntimeException("New passwords do not match", 401));
-			}
-
-			// hash the previous password
-			$currentPasswordHash = hash_pbkdf2("sha512", $requestObject->currentProfilePassword,
-				$profile->getProfileSalt(), 262144);
-
-			// make sure the hash given by the end user matches what is in the database
-			if($currentPasswordHash !== $profile->getProfileHash()) {
-				throw(new \RuntimeException("Old password is incorrect", 401));
-			}
-
-			// salt and hash the new password and update the profile object
-			$newPasswordSalt = bin2hex(random_bytes(16));
-			$newPasswordHash = hash_pbkdf2("sha512", $requestObject->newProfilePassword, $newPasswordSalt, 262144);
-			$profile->setProfileHash($newPasswordHash);
-			$profile->setProfileSalt($newPasswordSalt);
-		}
-
-		// perform the actual update to the database and update the message
-		$profile->update($pdo);
-		$reply->message = "profile password successfully updated";
-
-	} elseif($method === "DELETE"){
-	// verify the XSRF token
-verifyXsrf();
-
-		$profile = Profile::getProfileByProfileId($pdo, $id);
-		if($profile === null) {
-			throw(new RuntimeException("Profile does not exist"));
-		}
-
-		// enforce the user is signed in and trying to edit their own profile
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $profile->getProfileId()) {
-			throw(new \InvalidArgumentException("You are not allowed to access this profile", 403));
-		}
-
-		// delete the profile from the database
-		$profile->delete($pdo);
-		$reply->message = "Profile deleted";
-	} else {
-	throw(new InvalidArgumentException("Invalid HTTP request", 400));
-}
-
-	// catch any exceptions that were thrown and update the status and message state variable fields
-} catch(\Exception | \TypeError $exception) {
-	$reply->status = $exception->getCode();
-	$reply->message = $exception->getMessage();
-}
+		// catch any exceptions that were thrown and update the status and message state variable fields
+	}
+catch
+	(\Exception | \TypeError $exception) {
+		$reply->status = $exception->getCode();
+		$reply->message = $exception->getMessage();
+	}
 
 header("Content-type: application/json");
 if($reply->data === null) {
