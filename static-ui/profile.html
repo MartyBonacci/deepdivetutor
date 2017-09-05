@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- needed for Internet Explorer's rendering engine  -->
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+				integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+				integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+		<!-- Font Awesome -->
+		<link type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css"
+				rel="stylesheet">
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+				  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+				  crossorigin="anonymous"></script>
+
+		<!-- jQuery Form, Additional Methods, Validate -->
+		<script type="text/javascript"
+				  src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+		<script type="text/javascript"
+				  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+		<script type="text/javascript"
+				  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+		<!-- Your JavaScript Form Validator -->
+		<script src="js/jquery-validate.js"></script>
+
+		<!-- custom CSS stylesheet -->
+		<link rel="stylesheet" href="css/style.css" type="text/css"/>
+
+		<meta name="author" content="Marty Bonacci">
+		<meta name="description" content="Deep Dive Tutor Profile Page">
+		<title>Deep Dive Tutor Profile Page</title>
+		<link rel="icon" type="image/png" href="/images/deepdivehelmet.png"/>
+	</head>
+
+	<body class="sfooter container-fluid">
+		<div class="sfooter-content">
+			<!-- your page content here-->
+
+			<header>
+				<nav class="navbar navbar-default navbar-fixed-top">
+					<div class="container-fluid col-md-10 col-md-offset-1">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+									  data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="#" >Deep Dive Tutor</a>
+						</div>
+
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav">
+								<li><a href="#" data-toggle="modal" data-target="#myModal">Edit Your Profile</a></li>
+								<!-- <li><a href="#">bla 2</a></li> -->
+								<!-- <li><a href="#">bla 3</a></li> -->
+							</ul>
+
+						</div><!-- /.navbar-collapse -->
+					</div>
+				</nav>
+			</header>
+			<!-- begin grid layout -->
+			<!-- <div class="container"> -->
+
+			<div class="row" style="margin-top: 50px;">
+				<div class="container-fluid col-md-10 col-md-offset-1">
+					<div class="col-md-4">
+						<img src="../images/deepdivehelmet.png" class="img-responsive center-block img-rounded">
+					</div>
+
+					<div class="col-md-4">
+						<h3>Profile Type</h3>
+						<h3>Name</h3>
+						<p>Email</p><!-- only display if user is viewing their own profile profile -->
+						<p>Bio Skate ipsum dolor sit amet, airwalk Kevin Harris boardslide 540 method air. Manual bruised heel dude cess slide airwalk. Crail slide mini ramp front foot impossible goofy footed hang-up Z-Roller. 900 casper slide Blind hard flip deck air. Risers slap maxwell skater finger flip full pipe. Vert hang ten tic-tac downhill 720. Hurricane sketchy drop in coffin pogo. Mini ramp transition airwalk pop shove-it snake. Birdie tuna-flip late coper hanger. Half-flip invert ollie hole egg plant Mike Vallely feeble. Flypaper baseplate switch crooked grind alley oop. Stalefish face plant ledge coping Japan air.</p>
+						<p>Rate</p><!-- only display if profile type is tutor -->
+					</div>
+
+					<div class="col-md-4">
+						<h4>Your customers also see themselves, as unique individuals.</h4>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+
+		<!-- </div> -->
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="image">Profile Picture</label>
+								<input type="file" class="form-control" id="image" placeholder="Profile Picture">
+							</div>
+							<div class="form-group">
+								<label for="name">Name</label>
+								<input type="text" class="form-control" id="name" placeholder="Populate with name of user">
+							</div>
+							<div class="form-group">
+								<label for="email-signup">Email</label>
+								<input type="email" class="form-control" id="email-signup" placeholder="Populate with email of user">
+							</div>
+							<div class="form-group">
+								<label for="bio">Bio</label>
+								<textarea class="form-control" id="bio"
+											 placeholder="Populate with user's existing bio 500 Characters Max"></textarea>
+							</div>
+							<!-- don't show rate option for students -->
+							<div class="form-group">
+								<label for="rate">Rate</label>
+								<input type="number" class="form-control" id="rate"
+											 placeholder="Populate with the user's hourly rate">
+							</div>
+							<div class="form-group">
+								<label for="profile-type-s">Profile Type</label>
+							</div>
+							<input type="radio" id="profile-type-s"
+									 name="gender" value="tutor" checked><!-- pre check the user's profile type -->
+							<label for="profile-type-s">Student</label>
+							<input type="radio" id="profile-type-t"
+									 name="gender" value="tutor">
+							<label for="profile-type-t">Tutor</label>
+						</form>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-success">Submit Changes</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer>
+			<div class="container-fluid col-md-10 col-md-offset-1">
+				<!-- footer here-->
+				<p>Copyright 2017 Deep Dive Tutor --- Add Social Links? --- format footer</p>
+			</div>
+		</footer>
+	</body>
+</html>
+
