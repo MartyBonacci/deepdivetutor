@@ -675,7 +675,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 
 		// create query template
 		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, 
-profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileName LIKE :profileName";
+profileLastEditDateTime, profileActivationToken FROM profile WHERE profileName LIKE :profileName";
 		$statement = $pdo->prepare($query);
 
 		// bind the profile name to the placeholder in the template
@@ -686,11 +686,12 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		// build an array of profile names
 		$profiles = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-
+var_dump("dude1");
 		while(($row = $statement->fetch()) !== false) {
+			var_dump("dude2");
 			try {
 				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"],
-					$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
+					$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"]);
 				$profiles[$profiles->key()] = $profile;
 				$profiles->next();
 			} catch(\Exception $exception) {
