@@ -551,7 +551,6 @@ class Profile implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		// var_dump($this);
 		$formattedDate = $this->profileLastEditDateTime->format("Y-m-d H:i:s.u");
 		$parameters = ["profileName" => $this->profileName, "profileEmail" => $this->profileEmail, "profileType" =>
 			$this->profileType, "profileGithubToken" => $this->profileGithubToken, "profileBio" => $this->profileBio, "profileRate" => $this->profileRate, "profileImage" => $this->profileImage, "profileLastEditDateTime" => $formattedDate, "profileActivationToken" =>
@@ -675,23 +674,21 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 
 		// create query template
 		$query = "SELECT profileId, profileName, profileEmail, profileType, profileGithubToken, profileBio, profileRate, profileImage, 
-profileLastEditDateTime, profileActivationToken FROM profile WHERE profileName LIKE :profileName";
+profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM profile WHERE profileName LIKE :profileName";
 		$statement = $pdo->prepare($query);
 
 		// bind the profile name to the placeholder in the template
-		$profileName = "%profileName%";
+		$profileName = "%".$profileName."%";
 		$parameters = ["profileName" => $profileName];
 		$statement->execute($parameters);
 
 		// build an array of profile names
 		$profiles = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		var_dump("dude1");
 		while(($row = $statement->fetch()) !== false) {
-			var_dump("dude2");
 			try {
 				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profileType"],
-					$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"]);
+					$row["profileGithubToken"], $row["profileBio"], $row["profileRate"], $row["profileImage"], $row["profileLastEditDateTime"], $row["profileActivationToken"], $row["profileHash"], $row["profileSalt"]);
 				$profiles[$profiles->key()] = $profile;
 				$profiles->next();
 			} catch(\Exception $exception) {

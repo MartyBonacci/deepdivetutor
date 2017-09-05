@@ -59,7 +59,6 @@ try {
 
 		// gets a profile by content
 		if(empty($id) === false) {
-			var_dump($profileName,$profileType);
 			$profile = Profile::getProfileByProfileId($pdo, $id);
 
 			// gets profile by profile id for student
@@ -79,7 +78,6 @@ try {
 				}
 
 			} elseif($profile !== null && $profileType == true) {
-				var_dump($profileName,$profileType);
 				// gets profile by profile id for tutor
 				$profiles = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
 				if($profiles !== null) {
@@ -99,7 +97,6 @@ try {
 				}
 			}
 		} elseif(empty($profileName) === false && ($profileType == 1)) {
-			var_dump($profileName,$profileType);
 			// gets profile by profile name for tutor
 			$profiles = Profile::getProfileByProfileName($pdo, $profileName);
 			if($profiles !== null) {
@@ -119,7 +116,6 @@ try {
 			}
 
 		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate) === false)) {
-			var_dump($profileName,$profileType);
 			// gets profile by profile rate for tutor
 			$profiles = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
 			if($profiles !== null && $profileType == true) {
@@ -137,7 +133,6 @@ try {
 				$reply->data = $storage;
 			}
 		} elseif(empty($profileType) == false) {
-			var_dump($profileName,$profileType);
 			$profiles = Profile::getProfileByProfileType($pdo, $profileType);
 			if($profileType === false) {
 				// create a json object storage
