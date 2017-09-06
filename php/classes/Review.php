@@ -17,12 +17,12 @@ class Review implements \JsonSerializable {
 	 **/
 	private $reviewId;
 	/**
-	 * id of the student that saved this index.php; this is a foreign key
+	 * id of the student that saved this review; this is a foreign key
 	 * @var int $reviewStudentProfileId
 	 **/
 	private $reviewStudentProfileId;
 	/**
-	 * id of the tutor that saved this index.php; this is a foreign key
+	 * id of the tutor that saved this review; this is a foreign key
 	 * @var int $reviewTutorProfileId
 	 **/
 	private $reviewTutorProfileId;
@@ -32,12 +32,12 @@ class Review implements \JsonSerializable {
 	 **/
 	private $reviewRating;
 	/**
-	 * actual text of index.php
+	 * actual text of review
 	 * @var string $reviewText
 	 **/
 	private $reviewText;
 	/**
-	 * date and time index.php was submitted in a PHP DateTime object
+	 * date and time review was submitted in a PHP DateTime object
 	 * @var \DateTime $reviewDateTime
 	 **/
 	private $reviewDateTime;
@@ -45,12 +45,12 @@ class Review implements \JsonSerializable {
 	/**
 	 * constructor
 	 *
-	 * @param int|null $newReviewId of this index.php or null if a new index.php
-	 * @param int $newReviewStudentProfileId id of the student that saved this index.php
-	 * @param int $newReviewTutorProfileId id of the tutor that saved this index.php
+	 * @param int|null $newReviewId of this review or null if a new review
+	 * @param int $newReviewStudentProfileId id of the student that saved this review
+	 * @param int $newReviewTutorProfileId id of the tutor that saved this review
 	 * @param int $newReviewRating int containing rating number
-	 * @param string $newReviewText string containing actual index.php text
-	 * @param \DateTime $newReviewDateTime DateTime of when index.php was made
+	 * @param string $newReviewText string containing actual review text
+	 * @param \DateTime $newReviewDateTime DateTime of when review was made
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers, negative floats)
 	 * @throws \TypeError if data types violate type hints
@@ -84,24 +84,24 @@ class Review implements \JsonSerializable {
 	}
 
 	/**
-	 * mutator method for index.php id
-	 * @param int|null $newReviewId new value of index.php id
+	 * mutator method for review id
+	 * @param int|null $newReviewId new value of review id
 	 * @throw \RangException if $newReviewId is not positive
 	 * @throws \TypeError if $newProfileId is not an integer
 	 **/
 	public function setReviewId(?int $newReviewId) : void {
-		// index.php id is null immediately return it
+		// review id is null immediately return it
 		if($newReviewId === null) {
 			$this->reviewId = null;
 			return;
 		}
 
-		// make sure index.php id is positive
+		// make sure review id is positive
 		if($newReviewId <= 0) {
-			throw(new \RangeException("index.php id is not positive"));
+			throw(new \RangeException("review id is not positive"));
 		}
 
-		// convert and store the index.php id
+		// convert and store the review id
 		$this->reviewId = $newReviewId;
 	}
 
@@ -202,8 +202,8 @@ class Review implements \JsonSerializable {
 	}
 
 	/**
-	 * accessor method for index.php text
-	 * @return string value of index.php text
+	 * accessor method for review text
+	 * @return string value of review text
 	 **/
 
 	public function getReviewText() : string {
@@ -211,32 +211,32 @@ class Review implements \JsonSerializable {
 	}
 
 	/**
-	 * mutator method for index.php text
-	 * @param string $newReviewText text for this index.php
+	 * mutator method for review text
+	 * @param string $newReviewText text for this review
 	 * @throws \InvalidArgumentException if $newReviewText is not a string or is insecure
 	 * @throws \RangeException if $newReviewText is > 500 characters
 	 * @throws \TypeError if $newReviewText is not a string
 	 **/
 
 	public function setReviewText(string $newReviewText) : void {
-		// verify index.php text is secure
+		// verify review text is secure
 		$newReviewText = trim($newReviewText);
 		$newReviewText = filter_var($newReviewText, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		// verify text is not empty
 		if(empty($newReviewText) === true) {
-			throw(new \InvalidArgumentException("index.php text is either empty or insecure"));
+			throw(new \InvalidArgumentException("review text is either empty or insecure"));
 		}
 		// verify reviewText will fit in the database
 		if(strlen($newReviewText) > 500) {
-			throw(new \RangeException("index.php text is too long"));
+			throw(new \RangeException("review text is too long"));
 		}
-		// store index.php text
+		// store review text
 		$this->reviewText = $newReviewText;
 	}
 
 	/**
-	 * accessor method for index.php date time
-	 * @return \DateTime value of  index.php date time
+	 * accessor method for review date time
+	 * @return \DateTime value of  review date time
 	 **/
 
 	public function getReviewDateTime() : \DateTime {
@@ -244,7 +244,7 @@ class Review implements \JsonSerializable {
 	}
 
 	/**
-	 * mutator method for index.php date time
+	 * mutator method for review date time
 	 * @param \DateTime|string|null $newReviewDateTime as a DateTime object or string (or null to load current time
 	 * @throws \InvalidArgumentException if $newReviewDateTime is not a valid object or string
 	 * @throws \RangeException if $newReviewDateTime is a date that does not exist
@@ -256,7 +256,7 @@ class Review implements \JsonSerializable {
 			$this->ReviewDateTime = new \DateTime();
 			return;
 		}
-		// store the index.php date using the ValidateDate trait
+		// store the review date using the ValidateDate trait
 		try {
 			$newReviewDateTime = self::validateDateTime($newReviewDateTime);
 		} catch(\InvalidArgumentException | \RangeException $exception) {
@@ -268,7 +268,7 @@ class Review implements \JsonSerializable {
 	}
 
 	/**
-	 * inserts this index.php into mySQL
+	 * inserts this review into mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
@@ -276,13 +276,13 @@ class Review implements \JsonSerializable {
 	 **/
 
 	public function insert(\PDO $pdo) : void {
-		//enforce the reviewId is null (i.e., don't insert a index.php that already exists)
+		//enforce the reviewId is null (i.e., don't insert a review that already exists)
 		if($this->reviewId !== null) {
-			throw(new \PDOException("not a new index.php"));
+			throw(new \PDOException("not a new review"));
 		}
 
 		// create query template
-		$query = "INSERT INTO index.php(reviewStudentProfileId, reviewTutorProfileId, reviewRating, 
+		$query = "INSERT INTO review(reviewStudentProfileId, reviewTutorProfileId, reviewRating, 
 		reviewText, reviewDateTime) VALUES(:reviewStudentProfileId,:reviewTutorProfileId, 
 		:reviewRating, :reviewText, :reviewDateTime)";
 		$statement = $pdo->prepare($query);
@@ -299,7 +299,7 @@ class Review implements \JsonSerializable {
 	}
 
 	/**
-	 *deletes this index.php from mySQL
+	 *deletes this review from mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws |\PDOException when mySQL related errors occur
@@ -307,13 +307,13 @@ class Review implements \JsonSerializable {
 	 **/
 
 	public function delete(\PDO $pdo) : void {
-		// enforce the reviewId is not null (i.e., don't delete a index.php that hasn't been inserted)
+		// enforce the reviewId is not null (i.e., don't delete a review that hasn't been inserted)
 		if($this->reviewId === null) {
-			throw(new \PDOException("unable to delete a index.php that does not exist"));
+			throw(new \PDOException("unable to delete a review that does not exist"));
 		}
 
 		// create query template
-		$query = "DELETE FROM index.php WHERE reviewId = :reviewId";
+		$query = "DELETE FROM review WHERE reviewId = :reviewId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holder in the template
@@ -322,7 +322,7 @@ class Review implements \JsonSerializable {
 	}
 
 	/**
-	 * updates this index.php in mySQL
+	 * updates this review in mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
@@ -330,13 +330,13 @@ class Review implements \JsonSerializable {
 	 **/
 
 	public function update(\PDO $pdo) : void {
-		// enforce the reviewId is not null (i.e., don't update a index.php that hasn't been inserted)
+		// enforce the reviewId is not null (i.e., don't update a review that hasn't been inserted)
 		if($this->reviewId === null) {
-			throw(new \PDOException("unable to update a index.php that does not exist"));
+			throw(new \PDOException("unable to update a review that does not exist"));
 		}
 
 		// create query template
-		$query = "UPDATE index.php SET reviewStudentProfileId = :reviewStudentProfileId, reviewTutorProfileId =:reviewTutorProfileId,
+		$query = "UPDATE review SET reviewStudentProfileId = :reviewStudentProfileId, reviewTutorProfileId =:reviewTutorProfileId,
 		reviewRating = :reviewRating, reviewText = :reviewText, reviewDateTime = :reviewDateTime";
 		$statement = $pdo->prepare($query);
 
@@ -349,10 +349,10 @@ class Review implements \JsonSerializable {
 	}
 
 	/**
-	 * gets the index.php by reviewId
+	 * gets the review by reviewId
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param int $reviewId index.php id to search for
+	 * @param int $reviewId review id to search for
 	 * @return Review | null Review found or null if not found
 	 * @throws \PDOException when mySQl related errors occur
 	 * @throws \TypeError when variables are not the correct data type
@@ -361,19 +361,19 @@ class Review implements \JsonSerializable {
 	public static function getReviewByReviewId(\PDO $pdo, int $reviewId) : ?Review {
 		// sanitize the reviewId before searching
 		if($reviewId <= 0) {
-			throw(new \PDOException("index.php id is not positive"));
+			throw(new \PDOException("review id is not positive"));
 		}
 
 		//create query template
 		$query = "SELECT reviewId, reviewStudentProfileId, reviewTutorProfileId, reviewRating, reviewText,
-		reviewDateTime FROM index.php WHERE reviewId = :reviewId";
+		reviewDateTime FROM review WHERE reviewId = :reviewId";
 		$statement = $pdo->prepare($query);
 
-		// bind the index.php id to the place holder in the template
+		// bind the review id to the place holder in the template
 		$parameters = ["reviewId" => $reviewId];
 		$statement->execute($parameters);
 
-		// grab index.php from mySQL
+		// grab review from mySQL
 		try {
 			$review = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -390,7 +390,7 @@ class Review implements \JsonSerializable {
 	}
 
 	/**
-	 * gets the index.php by reviewStudentProfileId
+	 * gets the review by reviewStudentProfileId
 	 *
 	 * @param \PDO $pdo Pdo connection object
 	 * @param int $reviewStudentProfileId profile id to search by
@@ -400,15 +400,15 @@ class Review implements \JsonSerializable {
 	 **/
 
 	public static function getReviewByReviewStudentProfileId(\PDO $pdo, int $reviewStudentProfileId) : \SPLFixedArray {
-		// sanitize the index.php student profile id before searching
+		// sanitize the review student profile id before searching
 		if($reviewStudentProfileId <= 0) {
-			throw(new \RangeException("index.php student profile id must be positive"));
+			throw(new \RangeException("review student profile id must be positive"));
 		}
 		// create query template
 		$query = "SELECT reviewId, reviewStudentProfileId, reviewTutorProfileId, reviewRating, reviewText, 
-		reviewDateTime FROM index.php WHERE reviewStudentProfileId = :reviewStudentProfileId";
+		reviewDateTime FROM review WHERE reviewStudentProfileId = :reviewStudentProfileId";
 		$statement = $pdo->prepare($query);
-		// bind the index.php student profile id to the place holder in the template
+		// bind the review student profile id to the place holder in the template
 		$parameters = ["reviewStudentProfileId" => $reviewStudentProfileId];
 		$statement->execute($parameters);
 		// build an array of reviews
@@ -430,7 +430,7 @@ class Review implements \JsonSerializable {
 
 
 	/**
-	 * gets the index.php by index.php tutor profile id
+	 * gets the review by review tutor profile id
 	 *
 	 * @param \PDO $pdo Pdo connection object
 	 * @param int $reviewTutorProfileId profile id to search by
@@ -440,15 +440,15 @@ class Review implements \JsonSerializable {
 	 **/
 
 	public static function getReviewByReviewTutorProfileId(\PDO $pdo, int $reviewTutorProfileId) : \SPLFixedArray {
-		// sanitize the index.php student profile id before searching
+		// sanitize the review student profile id before searching
 		if($reviewTutorProfileId <= 0) {
-			throw(new \RangeException("index.php tutor profile id must be positive"));
+			throw(new \RangeException("review tutor profile id must be positive"));
 		}
 		// create query template
 		$query = "SELECT reviewId, reviewStudentProfileId, reviewTutorProfileId, reviewRating, reviewText, 
-		reviewDateTime FROM index.php WHERE reviewTutorProfileId = :reviewTutorProfileId";
+		reviewDateTime FROM review WHERE reviewTutorProfileId = :reviewTutorProfileId";
 		$statement = $pdo->prepare($query);
-		// bind the index.php tutor profile id to the place holder in the template
+		// bind the review tutor profile id to the place holder in the template
 		$parameters = ["reviewTutorProfileId" => $reviewTutorProfileId];
 		$statement->execute($parameters);
 		// build an array of reviews
