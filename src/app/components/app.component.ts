@@ -2,8 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {SessionService} from "../services/session.service";
 
 @Component({
-	selector: "angular4-webpack-devserver",
-	templateUrl: "./templates/angular4-webpack-devserver.html"
+	selector: "deep-dive-tutor",
+	templateUrl: "./templates/deep-dive-tutor.html"
 })
 
 export class AppComponent implements OnInit {
