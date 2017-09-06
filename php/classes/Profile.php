@@ -699,7 +699,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		return ($profiles);
 	}
 
-	/** test
+	/**
 	 * gets profile by email
 	 *
 	 * @param \PDO $pdo PDO connection object
