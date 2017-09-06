@@ -96,6 +96,23 @@ try {
 					$reply->data = $storage;
 				}
 			}
+		} elseif(empty($profileType) === 1) {
+			$profiles = Profile::getProfileByProfileType($pdo, $profileType);
+			if($profileType === true) {
+				// create a json object storage
+				$storage = new JsonObjectStorage();
+				// loop through each profile and grab the profile by tutor
+				foreach($profiles as $profile) {
+					// grab the tutor profiles and attach profile skill
+					// store the results of the database queries into a json storage object in the same format as the rest
+					// of the get by methods
+					$storage->attach(
+						$profile,
+						ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profile->getProfileId())->toArray()
+					);
+				}
+				$reply->data = $storage;
+			}
 		} elseif(empty($profileName) === false && ($profileType == 1)) {
 			// gets profile by profile name for tutor
 			$profiles = Profile::getProfileByProfileName($pdo, $profileName);
@@ -131,36 +148,6 @@ try {
 					);
 				}
 				$reply->data = $storage;
-			}
-		} elseif(empty($profileType) == false) {
-			$profiles = Profile::getProfileByProfileType($pdo, $profileType);
-			if($profileType === false) {
-				// create a json object storage
-				$storage = new JsonObjectStorage();
-				// loop through each profile and grab each student
-				foreach($profiles as $profile) {
-					// grab the student profiles and store them in json object
-					$storage->attach(
-						$profile
-					);
-				}
-				$reply->data = $storage;
-			} else {
-				if($profileType === true) {
-					// create a json object storage
-					$storage = new JsonObjectStorage();
-					// loop through each profile and grab the profile by tutor
-					foreach($profiles as $profile) {
-						// grab the tutor profiles and attach profile skill
-						// store the results of the database queries into a json storage object in the same format as the rest
-						// of the get by methods
-						$storage->attach(
-							$profile,
-							ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profile->getProfileId())->toArray()
-						);
-					}
-					$reply->data = $storage;
-				}
 			}
 		} else {
 			throw(new InvalidArgumentException("No profiles found", 403));
