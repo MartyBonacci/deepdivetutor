@@ -19,5 +19,7 @@ export class SkillService extends BaseService {
 	getSkillNameBySkillId(skillNameSkillId:number): Observable<Skill[]>{
 		return (this.http.get(this.skillUrl + skillNameSkillId).map(this.extractData).catch(this.handleError));
 	}
-
+	createProfileSkill(profileSkill:ProfileSkill): Observable<ProfileSkill[]>{
+		return (this.http.post(this.skillUrl,profileSkill).map(this.extractData).catch(this.handleError));
+	}
 }
