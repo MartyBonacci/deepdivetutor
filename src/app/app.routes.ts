@@ -1,13 +1,13 @@
 import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./components/home.component";
-import {UserComponent} from "./components/user.component";
+import {ProfileComponent} from "./components/profile.component";
 import {SessionService} from "./services/session.service";
 
 
-export const allAppComponents = [HomeComponent, UserComponent];
+export const allAppComponents = [HomeComponent, ProfileComponent];
 
 export const routes: Routes = [
-	{path: "user", component: UserComponent},
+	{path: "profile", component: ProfileComponent},
 	{path: "", component: HomeComponent}
 ];
 
