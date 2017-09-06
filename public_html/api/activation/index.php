@@ -81,14 +81,14 @@ try {
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
-	$reply->trace = $exception->getTraceAsString();
+//	$reply->trace = $exception->getTraceAsString();
 
 	//header("Content-type: application/json");
 	echo json_encode($reply);
 } catch(TypeError $typeError) {
 	$reply->status = $typeError->getCode();
 	$reply->message = $typeError->getMessage();
-	$reply->trace = $typeError->getTraceAsString();
+	//$reply->trace = $typeError->getTraceAsString();
 }
 
 
