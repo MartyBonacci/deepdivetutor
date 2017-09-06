@@ -44,7 +44,7 @@ try {
 	$brokeProfileRate = filter_input(INPUT_GET, "profileBrokeRate", FILTER_SANITIZE_NUMBER_FLOAT);
 	$loadedProfileRate = filter_input(INPUT_GET, "profileLoadedRate", FILTER_SANITIZE_NUMBER_FLOAT);
 	$profileActivationToken = filter_input(INPUT_GET, "profileActivationToken", FILTER_SANITIZE_STRING);
-	$profileType = filter_input(INPUT_GET, "profileType", FILTER_VALIDATE_BOOLEAN);
+	$profileType = filter_input(INPUT_GET, "profileType", FILTER_VALIDATE_INT);
 
 
 	// make sure the id is valid for methods that require it
@@ -62,7 +62,7 @@ try {
 			$profile = Profile::getProfileByProfileId($pdo, $id);
 
 			// gets profile by profile id for student
-			if($profile !== null && $profileType == false) {
+			if($profile !== null && $profileType === 0) {
 				$profiles = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
 				if($profiles !== null) {
 					// create a json object storage
@@ -77,7 +77,7 @@ try {
 					$reply->data = $storage;
 				}
 
-			} elseif($profile !== null && $profileType == true) {
+			} elseif($profile !== null && $profileType === 1) {
 				// gets profile by profile id for tutor
 				$profiles = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
 				if($profiles !== null) {
@@ -96,9 +96,9 @@ try {
 					$reply->data = $storage;
 				}
 			}
-		} elseif(empty($profileType) === 1) {
+		} elseif(empty($profileType) === false) {
 			$profiles = Profile::getProfileByProfileType($pdo, $profileType);
-			if($profileType === true) {
+			if($profileType === 1) {
 				// create a json object storage
 				$storage = new JsonObjectStorage();
 				// loop through each profile and grab the profile by tutor
@@ -113,7 +113,7 @@ try {
 				}
 				$reply->data = $storage;
 			}
-		} elseif(empty($profileName) === false && ($profileType == 1)) {
+		} elseif(empty($profileName) === false && ($profileType === 1)) {
 			// gets profile by profile name for tutor
 			$profiles = Profile::getProfileByProfileName($pdo, $profileName);
 			if($profiles !== null) {
@@ -135,7 +135,7 @@ try {
 		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate) === false)) {
 			// gets profile by profile rate for tutor
 			$profiles = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
-			if($profiles !== null && $profileType == true) {
+			if($profiles !== null && $profileType === 1) {
 				$storage = new JsonObjectStorage();
 				// loop through each profile and grab the profile by tutor
 				foreach($profiles as $profile) {
