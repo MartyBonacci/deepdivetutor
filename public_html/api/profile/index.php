@@ -41,8 +41,8 @@ try {
 	$profileName = filter_input(INPUT_GET, "profileName", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileGithubToken = filter_input(INPUT_GET, "profileGithubToken", FILTER_SANITIZE_STRING);
-	$brokeProfileRate = filter_input(INPUT_GET, "profileBrokeRate", FILTER_SANITIZE_NUMBER_FLOAT);
-	$loadedProfileRate = filter_input(INPUT_GET, "profileLoadedRate", FILTER_SANITIZE_NUMBER_FLOAT);
+	$brokeProfileRate = filter_input(INPUT_GET, "profileBrokeRate", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+	$loadedProfileRate = filter_input(INPUT_GET, "profileLoadedRate", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 	$profileActivationToken = filter_input(INPUT_GET, "profileActivationToken", FILTER_SANITIZE_STRING);
 	$profileType = filter_input(INPUT_GET, "profileType", FILTER_VALIDATE_INT);
 
@@ -117,7 +117,6 @@ try {
 
 		} elseif(empty($brokeProfileRate) === false && (empty($loadedProfileRate) === false)) {
 			// gets profile by profile rate for tutor
-			var_dump($brokeProfileRate, $loadedProfileRate);
 			$profiles = Profile::getProfileByProfileRate($pdo, $brokeProfileRate, $loadedProfileRate);
 			if($profiles !== null) {
 				$storage = new JsonObjectStorage();
