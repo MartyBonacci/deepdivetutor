@@ -20,6 +20,6 @@ export class SkillService extends BaseService {
 		return (this.http.get(this.skillUrl + skillNameSkillId).map(this.extractData).catch(this.handleError));
 	}
 	createProfileSkill(profileSkill:ProfileSkill): Observable<ProfileSkill[]>{
-		return (this.http.post(this.skillUrl,profileSkill).map(this.extractData).catch(this.handleError));
+		return (this.http.post(this.skillUrl,profileSkill).map(this.extractMessage).catch(this.handleError));
 	}
 }
