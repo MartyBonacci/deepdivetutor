@@ -19,19 +19,19 @@ export class ReviewService extends BaseService {
 	}
 
 	getReviewByReviewStudentProfileId(reviewStudentProfileId: number) : Observable<Review> {
-		return(this.http.get(this.reviewUrl + reviewStudentProfileId)
+		return(this.http.get(this.reviewUrl + "?reviewStudentProfileId=" + reviewStudentProfileId)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
 
 	getReviewByReviewTutorProfileId(reviewTutorProfileId: number) : Observable<Review> {
-		return(this.http.get(this.reviewUrl + reviewTutorProfileId)
+		return(this.http.get(this.reviewUrl + "?reviewStudentProfileId=" + reviewTutorProfileId)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
 
 	getReviewByReviewText(reviewText: string) : Observable<Review> {
-		return(this.http.get(this.reviewUrl + reviewText)
+		return(this.http.get(this.reviewUrl + "?reviewText=" + reviewText)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}

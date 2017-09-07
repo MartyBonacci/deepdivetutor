@@ -14,12 +14,18 @@ export class SkillService extends BaseService {
 	private skillUrl = "api/Skill";
 
 	getAllSkillNames(): Observable<Skill[]> {
-		return (this.http.get(this.skillUrl).map(this.extractData).catch(this.handleError));
+		return (this.http.get(this.skillUrl)
+			.map(this.extractData)
+			.catch(this.handleError));
 	}
 	getSkillNameBySkillId(skillNameSkillId:number): Observable<Skill[]>{
-		return (this.http.get(this.skillUrl + skillNameSkillId).map(this.extractData).catch(this.handleError));
+		return (this.http.get(this.skillUrl + "?skillNameSkillId=" + skillNameSkillId)
+			.map(this.extractData)
+			.catch(this.handleError));
 	}
 	createProfileSkill(profileSkill:ProfileSkill): Observable<ProfileSkill[]>{
-		return (this.http.post(this.skillUrl,profileSkill).map(this.extractMessage).catch(this.handleError));
+		return (this.http.post(this.skillUrl,profileSkill)
+			.map(this.extractMessage)
+			.catch(this.handleError));
 	}
 }
