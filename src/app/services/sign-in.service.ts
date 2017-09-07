@@ -4,16 +4,20 @@ import {Observable} from "rxjs/Observable";
 import {Profile} from "../classes/profile";
 import {BaseService} from "./base.service";
 import {Status} from "../classes/status";
-import
+import {SignIn} from "../classes/sign-in"
+
 @Injectable()
-export class SignInSevice extends BaseService{
-	constructor(protected http:Http){
-		 super(http);
-}
-private signInUrl="api/sign-in/";
+
+export class SignInSevice extends BaseService {
+	constructor(protected http: Http) {
+		super(http);
+	}
+
+	private signInUrl = "api/sign-in/";
 	public isSignedIn = false;
 
-	createSignIn(signIn:SignIn) : Observable<Status>{
-		return(this.http.post(this.signInUrl, signIn).map(this.extractMessage).catch(this.handleError));
+	createSignIn(signIn: SignIn): Observable<Status> {
+		return (this.http.post(this.signInUrl, signIn).map(this.extractMessage).catch(this.handleError));
+	}
 }
-}
+
