@@ -4,12 +4,14 @@ import {ProfileComponent} from "./components/profile.component";
 import {BrowseComponent} from "./components/browse.component";
 import {NavbarComponent} from "./components/navbar.component";
 import {SessionService} from "./services/session.service";
+import {FooterComponent} from "./components/footer.component";
 
 export const allAppComponents = [
 	HomeComponent,
 	ProfileComponent,
 	BrowseComponent,
-	NavbarComponent
+	NavbarComponent,
+	FooterComponent
 ];
 
 export const routes: Routes = [
