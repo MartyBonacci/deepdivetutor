@@ -4,7 +4,7 @@ import{Observable} from "rxjs";
 
 @Component({
 	selector: "app-footer",
-	templateUrl:"./templates/footer.php"
+	templateUrl:"./templates/footer.html"
 })
 
 export class FooterComponent{}
