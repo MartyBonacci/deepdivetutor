@@ -4,7 +4,11 @@ import {ProfileComponent} from "./components/profile.component";
 import {BrowseComponent} from "./components/browse.component"
 import {SessionService} from "./services/session.service";
 
-export const allAppComponents = [HomeComponent, ProfileComponent, BrowseComponent];
+export const allAppComponents = [
+	HomeComponent,
+	ProfileComponent,
+	BrowseComponent
+];
 
 export const routes: Routes = [
 	{path: "", component: HomeComponent},
