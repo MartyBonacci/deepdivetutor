@@ -14,8 +14,6 @@ import {setTimeout} from "timers";
 //declare $ for good old jquery
 declare let $: any;
 
-// set the template url and the selector for the ng powered html tag
-
 @Component({
 	templateUrl: "./templates/sign-up.php",
 	selector: "sign-up"
