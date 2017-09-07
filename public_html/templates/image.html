@@ -1,0 +1,11 @@
+<h1>Image Template</h1>
+<form class="form-horizontal" name="imageUpload" (submit)="uploadImage();">
+	<div class="form-group">
+		<label for="profile" class="modal-labels">Upload Profile Pic</label>
+		<input type="file" name="profile" id="profile" ng2FileSelect [uploader]="uploader" />
+	</div>
+	<button type="submit" class="btn btn-info btn-lg"><i class="fa fa-file-image-o" aria-hidden="true"></i>Upload Image
+	</button>
+</form>
+
+<p>Cloudinary Public Id: {{ cloudinaryPublicId }}</p>
