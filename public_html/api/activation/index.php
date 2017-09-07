@@ -76,7 +76,7 @@ try {
 	else {
 		throw (new\Exception("Invalid HTTP method", 405));
 	}
-
+	header("Location: ../../");
 	// update reply with exception information
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
