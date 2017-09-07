@@ -31,7 +31,7 @@ export class SignUpComponent {
 	}
 
 	createSignUp(): void {
-		this.signUpService.createProfile(this.signUp)
+		this.signUpService.createSignUp(this.signUp)
 
 			.subscribe(status => {
 				console.log(this.signUp);
