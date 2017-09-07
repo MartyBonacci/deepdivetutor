@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {FileUploader} from "ng4-file-upload";
-import {Cookie} from "ngx-cookies";
+import {FileUploader} from "ng2-file-upload";
+import {Cookies} from "ng2-cookies";
 import {Observable} from "rxjs";
 import "rxjs/add/observable/from";
 
@@ -12,7 +12,7 @@ export class ImageComponent implements OnInit {
 	public uploader: FileUploader = new FileUploader({
 		itemAlias: "profile",
 		url: "./api/image/",
-		headers: [{name: "X-XSRF-TOKEN", value: Cookie.get("XSRF-TOKEN")}],
+		headers: [{name: "X-XSRF-TOKEN", value: Cookies.get("XSRF-TOKEN")}],
 		additionalParameters: {}
 	});
 
