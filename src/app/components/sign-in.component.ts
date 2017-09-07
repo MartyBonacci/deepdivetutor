@@ -18,11 +18,11 @@ export class SignInComponent {
 	signin: SignIn = new SignIn(null, null);
 	status: Status = null;
 
-	constructor(private SignInService: SignInService, private router: Router){
+	constructor(private signInService: SignInService, private router: Router){
 	}
 
 	signIn(): void {
-		this.SignInService.createSignIn(this.signin).subscribe(status=>{
+		this.signInService.createSignIn(this.signin).subscribe(status=>{
 			this.status=status;
 			if(status.status === 200){
 
