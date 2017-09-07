@@ -7,7 +7,7 @@ import {SignIn} from "../classes/sign-in"
 
 @Injectable()
 
-export class SignInSevice extends BaseService {
+export class SignInService extends BaseService {
 	constructor(protected http: Http) {
 		super(http);
 	}
