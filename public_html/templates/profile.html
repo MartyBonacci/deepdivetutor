@@ -1,1 +1,121 @@
-<h1>Profile Template</h1>
+
+<body class="sfooter container-fluid">
+	<div class="sfooter-content">
+		<!-- your page content here-->
+
+		<header>
+			<navbar></navbar>
+		</header>
+		<!-- begin grid layout -->
+		<!-- <div class="container"> -->
+
+		<div class="row" style="margin-top: 50px;">
+			<div class="container-fluid col-md-10 col-md-offset-1">
+				<div class="col-md-4">
+					<img src="../../images/deepdivehelmet.png" class="img-responsive center-block img-rounded">
+				</div>
+
+				<div class="col-md-4">
+					<h3>Profile Type</h3>
+					<h3>Name</h3>
+					<p>Email</p><!-- only display if user is viewing their own profile profile -->
+					<p>Bio Skate ipsum dolor sit amet, airwalk Kevin Harris boardslide 540 method air. Manual bruised heel
+						dude cess slide airwalk. Crail slide mini ramp front foot impossible goofy footed hang-up Z-Roller.
+						900 casper slide Blind hard flip deck air. Risers slap maxwell skater finger flip full pipe. Vert hang
+						ten tic-tac downhill 720. Hurricane sketchy drop in coffin pogo. Mini ramp transition airwalk pop
+						shove-it snake. Birdie tuna-flip late coper hanger. Half-flip invert ollie hole egg plant Mike Vallely
+						feeble. Flypaper baseplate switch crooked grind alley oop. Stalefish face plant ledge coping Japan
+						air.</p>
+					<p>Rate</p><!-- only display if profile type is tutor -->
+				</div>
+
+				<div class="col-md-4">
+					<h4>Skills</h4> <!-- Only show skills if displaying a tutor's profile -->
+					<ul>
+						<li>Skill1</li>
+						<li>Skill2</li>
+						<li>Skill3</li>
+						<li>Skill4</li>
+						<li>Skill...</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+	<!-- </div> -->
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+						aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="image">Profile Picture</label>
+							<input type="file" class="form-control" id="image" placeholder="Profile Picture">
+						</div>
+						<div class="form-group">
+							<label for="name">Name</label>
+							<input type="text" class="form-control" id="name" placeholder="Populate with name of user">
+						</div>
+						<div class="form-group">
+							<label for="email-signup">Email</label>
+							<input type="email" class="form-control" id="email-signup"
+									 placeholder="Populate with email of user">
+						</div>
+						<div class="form-group">
+							<label for="bio">Bio</label>
+							<textarea class="form-control" id="bio"
+										 placeholder="Populate with user's existing bio 500 Characters Max"></textarea>
+						</div>
+						<!-- don't show rate option for students -->
+						<div class="form-group">
+							<label for="rate">Rate</label>
+							<input type="number" class="form-control" id="rate"
+									 placeholder="Populate with the user's hourly rate">
+						</div>
+						<div class="form-group">
+							<label for="profile-type-s">Profile Type</label>
+						</div>
+						<div>
+							<input type="radio" id="profile-type-s"
+									 name="student" value="student" checked><!-- pre check the user's profile type -->
+							<label for="profile-type-s">Student</label>
+							<input type="radio" id="profile-type-t"
+									 name="tutor" value="tutor">
+							<label for="profile-type-t">Tutor</label>
+						</div>
+						<div>
+							<input type="radio" id="skill"
+									 name="PHP" value="PHP" checked>
+							<!-- pre check and display if the user's profile type is tutor-->
+							<label for="skill">PHP</label>
+							<input type="radio" id="skill"
+									 name="JavaScript" value="JavaScript">
+							<label for="skill">JavaScript</label>
+						</div>
+					</form>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-success">Submit Changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="container-fluid col-md-10 col-md-offset-1">
+			<!-- footer here-->
+			<p>Copyright 2017 Deep Dive Tutor --- Add Social Links? --- format footer</p>
+		</div>
+	</footer>
+</body>
+
