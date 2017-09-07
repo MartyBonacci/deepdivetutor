@@ -21,3 +21,13 @@ export class SignInSevice extends BaseService {
 	}
 }
 
+export class SignOutService extends BaseService{
+	constructor(protected http:Http){
+		super (http);
+	}
+	private signOutUrl= "api/sign-out/"
+	getSignOut():Observable<Status>{
+		return(this.http.get(this.signOutUrl).map(this.extractMessage)
+			.catch(this.handleError));
+	}
+}
