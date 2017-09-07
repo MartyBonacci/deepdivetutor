@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs/Observable";
-import {Profile} from "../classes/profile";
 import {BaseService} from "./base.service";
 import {Status} from "../classes/status";
 import {SignIn} from "../classes/sign-in"
