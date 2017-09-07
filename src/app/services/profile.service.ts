@@ -19,27 +19,22 @@ export class ProfileService extends BaseService {
 	}
 
 	getProfileByProfileName(profileName: string) : Observable<Profile> {
-		return(this.http.get(this.profileUrl + profileName)
+		return(this.http.get(this.profileUrl + "?profileName=" + profileName)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
 
-	getProfileByProfileRate(profileRate: number) : Observable<Profile> {
-		return(this.http.get(this.profileUrl + profileRate)
+	getProfileByProfileRate(brokeProfileRate: number, loadedProfileRate: number) : Observable<Profile> {
+		return(this.http.get(this.profileUrl + "?brokeProfileRate" + brokeProfileRate + "&loadedProfileRate=" + loadedProfileRate)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
 
 	getProfileByProfileType(profileType: number) : Observable<Profile> {
-		return(this.http.get(this.profileUrl + profileType)
+		return(this.http.get(this.profileUrl)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
 
-	createProfile(profile: Profile) : Observable<Profile> {
-		return(this.http.post(this.profileUrl, profile)
-			.map(this.extractMessage)
-			.catch(this.handleError));
-	}
 
 }
