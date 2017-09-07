@@ -14,7 +14,7 @@ export class SignUpService extends BaseService {
 
 	private signUpUrl = "api/sign-up/";
 
-	createProfile(profile: Profile) : Observable<Profile> {
+	createProfile(profile: SignUp) : Observable<Profile> {
 		return(this.http.post(this.signUpUrl, profile)
 			.map(this.extractMessage)
 			.catch(this.handleError));

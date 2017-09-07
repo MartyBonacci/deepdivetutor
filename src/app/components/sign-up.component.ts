@@ -35,7 +35,6 @@ export class SignUpComponent {
 
 			.subscribe(status => {
 				console.log(this.signUp);
-
 				console.log(this.status);
 				if(status.status === 200) {
 					alert(status.message);
