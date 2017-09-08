@@ -15,7 +15,7 @@ import {setTimeout} from "timers";
 declare let $: any;
 
 @Component({
-	templateUrl: "./templates/sign-up.php",
+	templateUrl: "./templates/sign-up",
 	selector: "sign-up"
 })
 export class SignUpComponent {
