@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {Skill} from "../classes/skill";
 import {ProfileSkill} from "../classes/profileSkill";
 import {BaseService} from "./base.service";
+import {Status} from "../classes/status";
 
 @Injectable()
 export class SkillService extends BaseService {
@@ -27,5 +28,11 @@ export class SkillService extends BaseService {
 		return (this.http.post(this.skillUrl,profileSkill)
 			.map(this.extractMessage)
 			.catch(this.handleError));
+	}
+	deleteProfileSkill(profileSkill:ProfileSkill): Observable<Status>{
+		return (this.http.delete(this.skillUrl + profileSkill)
+			.map(this.extractMessage)
+			.catch(this.handleError));
+	}
 	}
 }
