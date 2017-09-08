@@ -34,5 +34,4 @@ export class SkillService extends BaseService {
 			.map(this.extractMessage)
 			.catch(this.handleError));
 	}
-	}
 }
