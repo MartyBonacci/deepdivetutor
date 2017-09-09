@@ -15,25 +15,25 @@
 				<form #signUpForm="ngForm" id="signUpForm" name="signUpForm" (submit)="createSignUp();">
 					<div class="form-group">
 						<label for="profileName">Name</label>
-						<input type="text" class="form-control" id="profileName" placeholder="Name" required [(ngModel)]="signUp.profileName">
+						<input type="text" class="form-control" name="profileName" id="profileName" placeholder="Name" required [(ngModel)]="signUp.profileName">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profileEmail">Email</label>
-						<input type="email" class="form-control" id="profileEmail" placeholder="Email" required [(ngModel)]="signUp.profileEmail">
+						<input type="email" class="form-control" name="profileEmail" id="profileEmail" placeholder="Email" required [(ngModel)]="signUp.profileEmail">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profilePassword">Create Password</label>
-						<input type="password" class="form-control" id="profilePassword"
+						<input type="password" class="form-control" name="profilePassword" id="profilePassword"
 								 placeholder="Create Password" required [(ngModel)]="signUp.profilePassword">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profilePasswordConfirm">Re-Enter Password</label>
-						<input type="password" class="form-control" id="profilePasswordConfirm"
+						<input type="password" class="form-control" name="profilePasswordConfirm" id="profilePasswordConfirm"
 								 placeholder="Re-Enter Password" required [(ngModel)]="signUp.profilePasswordConfirm">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profileBio">Bio</label>
-						<textarea class="form-control" id="profileBio"
+						<textarea class="form-control" id="profileBio" name="profileBio"
 									 placeholder="500 Characters Max"></textarea>
 					</div><!-- /.form-group -->
 					<div class="form-group">
