@@ -2,16 +2,18 @@
 	<div class="col-md-5">
 		<div class="well well-lg">
 			<h4>Login</h4>
-			<form>
+			<form #signInForm="ngForm" id="signInForm" name="signInForm" (submit)="signIn();">
 				<div class="form-group">
-					<label for="email-login">Email</label>
-					<input type="email" class="form-control" id="email-login" placeholder="Email">
+					<label for="profileEmail">Email</label>
+					<input type="email" name="profileEmail" class="form-control" id="profileEmail" placeholder="Email"
+							 required [(ngModel)]="signin.profileEmail" #profileEmail="ngModel">
 				</div>
 				<div class="form-group">
-					<label for="password">Password</label>
-					<input type="password" class="form-control" id="password" placeholder="Password">
+					<label for="profilePassword">Password</label>
+					<input type="password" name="profilePassword" class="form-control" id="profilePassword"
+					placeholder="Password" required [(ngModel)]="signin.profilePassword" #profilePassword="ngModel">
 				</div>
-				<button type="submit" class="btn btn-primary">Login</button>
+				<button type="submit" id="submit" class="btn btn-primary" [disabled]="signInForm.invalid">Login</button>
 
 				<!-- Button trigger modal -->
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Sign Up
