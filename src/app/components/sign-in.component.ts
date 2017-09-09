@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import {Status} from "../classes/status";
-import {SignInService} from "../services/sign-in.service"
-import {SignIn} from "../classes/sign-in"
+import {SignInService} from "../services/sign-in.service";
+import {SignIn} from "../classes/sign-in";
 
 declare var $: any;
 

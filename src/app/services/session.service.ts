@@ -12,7 +12,7 @@ export class SessionService {
 	private sessionUrl = "api/session/";
 
 	setSession() : Observable<Response> {
-		return (this.http.head(this.sessionUrl)
+		return (this.http.get(this.sessionUrl)
 			.map((response : Response) => response));
 	}
 }

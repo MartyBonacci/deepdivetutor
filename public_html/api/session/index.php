@@ -7,7 +7,7 @@ try {
 	//verify the HTTP method being used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	// if the HTTP method is head check/start the  php session and set the XSRF token
-	if($method === "HEAD") {
+	if($method === "GET") {
 		//verify the session, start if not active
 		if(session_status() !== PHP_SESSION_ACTIVE) {
 			session_start();
