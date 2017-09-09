@@ -7,35 +7,35 @@
 					aria-hidden="true">&times;</span>
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Sign Up</h4>
-			</div>
+			</div><!-- /.modal-header -->
 			<div class="modal-body">
 				<form #signUpForm="ngForm" id="signUpForm" name="signUpForm" (submit)="createSignUp();">
 					<div class="form-group">
 						<label for="profileName">Name</label>
 						<input type="text" class="form-control" id="profileName" placeholder="Name" required [(ngModel)]="signUp.profileName">
-					</div>
+					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profileEmail">Email</label>
 						<input type="email" class="form-control" id="profileEmail" placeholder="Email" required [(ngModel)]="signUp.profileEmail">
-					</div>
+					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profilePassword">Create Password</label>
 						<input type="password" class="form-control" id="profilePassword"
 								 placeholder="Create Password" required [(ngModel)]="signUp.profilePassword">
-					</div>
+					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profilePasswordConfirm">Re-Enter Password</label>
 						<input type="password" class="form-control" id="profilePasswordConfirm"
 								 placeholder="Re-Enter Password" required [(ngModel)]="signUp.profilePasswordConfirm">
-					</div>
+					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profileBio">Bio</label>
 						<textarea class="form-control" id="profileBio"
 									 placeholder="500 Characters Max"></textarea>
-					</div>
+					</div><!-- /.form-group -->
 					<div class="form-group">
 						<p><strong>Profile Type</strong></p>
-					</div>
+					</div><!-- /.form-group -->
 					<input type="radio" id="profileTypeStudent"
 							 name="profileType" value="student" checked required [(ngModel)]="signUp.profileType">
 					<label for="profileTypeStudent">Student</label>
@@ -46,8 +46,8 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 					<button type="button" class="btn btn-success" [disabled]="signUpForm.invalid">Sign Up</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+				</div><!-- /.modal footer -->
+			</div><!-- /.modal-body -->
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal fade -->
