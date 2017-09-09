@@ -9,7 +9,7 @@
 				<h4 class="modal-title" id="myModalLabel">Sign Up</h4>
 			</div>
 			<div class="modal-body">
-				<form #signUpForm="ngForm" id="signUpForm" name="signUpForm" (submit)="signUp();">
+				<form #signUpForm="ngForm" id="signUpForm" name="signUpForm" (submit)="createSignUp();">
 					<div class="form-group">
 						<label for="profileName">Name</label>
 						<input type="text" class="form-control" id="profileName" placeholder="Name" required [(ngModel)]="signUp.profileName">
