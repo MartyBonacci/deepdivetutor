@@ -13,9 +13,10 @@
 					placeholder="Password" required [(ngModel)]="signin.profilePassword" #profilePassword="ngModel">
 				</div>
 				<button type="submit" id="submit" class="btn btn-primary" [disabled]="signInForm.invalid">Login</button>
-				<button type="button" id="github" class="btn btn-info" href="/api/github/index.php">Login w/ Github</button>
+
 				<!-- Button trigger modal -->
 
 			</form>
 			<signup></signup>
+			<button type="button" id="github" class="btn btn-info" href="/api/github/index.php">Login w/ Github</button>
 		</div><!-- /.col-md-5 -->
