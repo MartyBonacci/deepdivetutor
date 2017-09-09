@@ -40,10 +40,10 @@
 						<p><strong>Profile Type</strong></p>
 					</div><!-- /.form-group -->
 					<input type="radio" id="profileTypeStudent"
-							 name="profileType" value="student" checked required [(ngModel)]="signUp.profileType">
+							 name="profileType" value=0 checked required [(ngModel)]="signUp.profileType">
 					<label for="profileTypeStudent">Student</label>
 					<input type="radio" id="profileTypeTutor"
-							 name="profileType" value="tutor" required [(ngModel)]="signUp.profileType">
+							 name="profileType" value=1 required [(ngModel)]="signUp.profileType">
 					<label for="profileTypeTutor">Tutor</label>
 				</form>
 				<div class="modal-footer">
