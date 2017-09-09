@@ -7,6 +7,7 @@ import {SessionService} from "./services/session.service";
 import {FooterComponent} from "./components/footer.component";
 import {ReviewComponent} from "./components/review.component";
 import {SignInComponent} from "./components/sign-in.component";
+import {SignInService} from "./services/sign-in.service";
 
 
 export const allAppComponents = [
@@ -25,6 +26,6 @@ export const routes: Routes = [
 	{path: "", component: HomeComponent}
 ];
 
-export const appRoutingProviders: any[] = [SessionService];
+export const appRoutingProviders: any[] = [SessionService, SignInService];
 
 export const routing = RouterModule.forRoot(routes);
