@@ -16,7 +16,7 @@ declare let $: any;
 
 @Component({
 	templateUrl: "./templates/sign-up",
-	selector: "sign-up"
+	selector: "signup"
 })
 export class SignUpComponent {
 
