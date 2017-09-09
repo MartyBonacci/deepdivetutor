@@ -6,6 +6,8 @@ import {NavbarComponent} from "./components/navbar.component";
 import {SessionService} from "./services/session.service";
 import {FooterComponent} from "./components/footer.component";
 import {ReviewComponent} from "./components/review.component";
+import {SignInComponent} from "./components/sign-in.component";
+
 
 export const allAppComponents = [
 	HomeComponent,
@@ -13,7 +15,8 @@ export const allAppComponents = [
 	BrowseComponent,
 	NavbarComponent,
 	FooterComponent,
-	ReviewComponent
+	ReviewComponent,
+	SignInComponent
 ];
 
 export const routes: Routes = [
