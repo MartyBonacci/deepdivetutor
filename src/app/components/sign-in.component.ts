@@ -4,6 +4,8 @@ import {Status} from "../classes/status";
 import {SignInService} from "../services/sign-in.service"
 import {SignIn} from "../classes/sign-in"
 
+declare var $: any;
+
 @Component({
 	templateUrl: "./templates/signin.html",
 	selector:"signin"
