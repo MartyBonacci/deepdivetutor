@@ -39,7 +39,7 @@ export class SignUpComponent {
 					setTimeout(function() {
 						$("#signUp-modal").modal('hide');
 					}, 500);
-					this.router.navigate([""]);
+					this.router.navigate(["profile"]);
 				}
 			});
 	}

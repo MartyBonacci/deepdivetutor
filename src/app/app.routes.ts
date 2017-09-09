@@ -9,6 +9,8 @@ import {ReviewComponent} from "./components/review.component";
 import {SignInComponent} from "./components/sign-in.component";
 import {SignInService} from "./services/sign-in.service";
 import {CookieService} from "ng2-cookies";
+import {SignUpComponent} from "./components/sign-up.component";
+import {SignUpService} from "./services/sign-up.service";
 
 
 export const allAppComponents = [
@@ -18,7 +20,8 @@ export const allAppComponents = [
 	NavbarComponent,
 	FooterComponent,
 	ReviewComponent,
-	SignInComponent
+	SignInComponent,
+	SignUpComponent
 ];
 
 export const routes: Routes = [
@@ -27,6 +30,6 @@ export const routes: Routes = [
 	{path: "", component: HomeComponent}
 ];
 
-export const appRoutingProviders: any[] = [CookieService, SessionService, SignInService];
+export const appRoutingProviders: any[] = [CookieService, SessionService, SignInService, SignUpService];
 
 export const routing = RouterModule.forRoot(routes);
