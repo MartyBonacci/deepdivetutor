@@ -4,4 +4,7 @@ import { enableProdMode } from "@angular/core";
 
 // only use when app is going live; affects debugging
 // enableProdMode();
-platformBrowserDynamic().bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
+	let app = ref.instance;
+	app.run();
+});
