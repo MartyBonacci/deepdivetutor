@@ -1,7 +1,10 @@
-import {Component} from "@angular/core";
+import {Component,OnInit} from "@angular/core";
+import {ActivatedRoute, Params} from "@angular/router";
+import{Observable} from "rxjs";
 
 @Component({
-	templateUrl: "./templates/review.html"
+	selector: "review-content",
+	templateUrl:"./templates/review.html"
 })
 
-export class ReviewComponent {}
+export class ReviewComponent{}

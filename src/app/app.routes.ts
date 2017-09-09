@@ -5,13 +5,15 @@ import {BrowseComponent} from "./components/browse.component";
 import {NavbarComponent} from "./components/navbar.component";
 import {SessionService} from "./services/session.service";
 import {FooterComponent} from "./components/footer.component";
+import {ReviewComponent} from "./components/review.component";
 
 export const allAppComponents = [
 	HomeComponent,
 	ProfileComponent,
 	BrowseComponent,
 	NavbarComponent,
-	FooterComponent
+	FooterComponent,
+	ReviewComponent
 ];
 
 export const routes: Routes = [

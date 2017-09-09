@@ -15,3 +15,37 @@
 .jumbotron {
 	background-color: rgba(0, 41, 94, 1);
 }
+.m-1{
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.media-object {
+	height:100px;
+	border-right: black solid 2px;
+}
+.media-text {
+	padding: 0;
+	width: 95%;
+	border-top: dimgray solid 1px;
+	display: inline-block;
+}
+.bg-gray{
+	background-color: #A8A9AD;
+}
+.hl {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #ccc;
+	margin: 1em 0;
+	padding: 0;
+}
+.ms-2 {
+	margin-left: 2rem;
+	margin-right: 2rem;
+}
+.img-sm{
+	width: 6rem;
+	height: auto;
+}
