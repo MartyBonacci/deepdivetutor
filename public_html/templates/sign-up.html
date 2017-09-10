@@ -15,40 +15,55 @@
 				<form #signUpForm="ngForm" id="signUpForm" name="signUpForm" (submit)="createSignUp();">
 					<div class="form-group">
 						<label for="profileName">First &amp; Last Name</label>
-						<input type="text" class="form-control" name="profileName" id="profileName" placeholder="Name" required [(ngModel)]="signUp.profileName" #profileName="ngModel">
+						<input type="text" class="form-control" name="profileName" id="profileName" placeholder="Name"
+								 required [(ngModel)]="signUp.profileName" #profileName="ngModel">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profileEmail">Email</label>
-						<input type="email" class="form-control" name="profileEmail" id="profileEmail" placeholder="Email" required [(ngModel)]="signUp.profileEmail" #profileEmail="ngModel">
+						<input type="email" class="form-control" name="profileEmail" id="profileEmail" placeholder="Email"
+								 required [(ngModel)]="signUp.profileEmail" #profileEmail="ngModel">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profilePassword">Create Password</label>
 						<input type="password" class="form-control" name="profilePassword" id="profilePassword"
-								 placeholder="Create Password" required [(ngModel)]="signUp.profilePassword" #profilePassword="ngModel">
+								 placeholder="Create Password" required [(ngModel)]="signUp.profilePassword"
+								 #profilePassword="ngModel">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profilePasswordConfirm">Re-Enter Password</label>
 						<input type="password" class="form-control" name="profilePasswordConfirm" id="profilePasswordConfirm"
-								 placeholder="Re-Enter Password" required [(ngModel)]="signUp.profilePasswordConfirm" #profilePasswordConfirm="ngModel">
+								 placeholder="Re-Enter Password" required [(ngModel)]="signUp.profilePasswordConfirm"
+								 #profilePasswordConfirm="ngModel">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profileBio">Bio</label>
 						<textarea class="form-control" id="profileBio" name="profileBio"
-									 placeholder="500 Characters Max" required [(ngModel)]="signUp.profileBio" #profileBio="ngModel"></textarea>
+									 placeholder="500 Characters Max" required [(ngModel)]="signUp.profileBio"
+									 #profileBio="ngModel"></textarea>
 					</div><!-- /.form-group -->
 					<div class="form-group">
-						<p><strong>Profile Type</strong></p>
-					</div><!-- /.form-group -->
-					<input type="radio" id="profileTypeStudent"
-							 name="profileType" value=0 checked required [(ngModel)]="signUp.profileType" #profileType="ngModel">
-					<label for="profileTypeStudent">Student</label>
-					<input type="radio" id="profileTypeTutor"
-							 name="profileType" value=1 required [(ngModel)]="signUp.profileType" #profileType="ngModel">
-					<label for="profileTypeTutor">Tutor</label>
+						<label for="profileType">Profile Type</label>
+						<input type="number" class="form-control" name="profileType" id="profileType"
+								 placeholder="0 = student, 1 = tutor because we cant make button work" required
+								 [(ngModel)]="signUp.profileType" #profileType="ngModel">
+					</div>
+
+					<!--<div class="form-group">-->
+						<!--<p><strong>Profile Type</strong></p>-->
+
+						<!--<input type="radio" id="profileTypeStudent"-->
+								 <!--name="profileType" checked>-->
+						<!--<label for="profileTypeStudent">Student</label>-->
+						<!--<input type="radio" id="profileTypeTutor"-->
+								 <!--name="profileType" value=1 [(ngModel)]="signUp.profileType" #profileType="ngModel">-->
+						<!--<label for="profileTypeTutor">Tutor</label>-->
+					<!--</div>&lt;!&ndash; /.form-group &ndash;&gt;-->
+					<button type="submit" id="submit" class="btn btn-success" [disabled]="signUpForm.invalid">Sign Up
+					</button>
 				</form>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-					<button type="submit" id="submit" class="btn btn-success" [disabled]="signUpForm.invalid">Sign Up</button>
+
 				</div><!-- /.modal footer -->
 			</div><!-- /.modal-body -->
 		</div><!-- /.modal-content -->

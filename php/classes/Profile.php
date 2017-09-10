@@ -46,7 +46,7 @@ class Profile implements \JsonSerializable {
 	private $profileBio;
 	/**
 	 * Rate for this profile
-	 * @var float $profileRate
+	 * @var float|null $profileRate
 	 */
 	private $profileRate;
 	/**
@@ -84,7 +84,7 @@ class Profile implements \JsonSerializable {
 	 * @param int $newProfileType type of profile
 	 * @param string|null $newProfileGithubToken GitHub token for this profile
 	 * @param string $newProfileBio bio for this profile
-	 * @param float $newProfileRate rate for this profile
+	 * @param float|null $newProfileRate rate for this profile
 	 * @param string $newProfileImage image for this profile
 	 * @param \DateTime $newProfileLastEditDateTime last edit date for this profile
 	 * @param string|null $newProfileActivationToken activation token for this profile
@@ -96,7 +96,8 @@ class Profile implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 * @documentation https://php.net/manual/en/language.oop5.decon.php
 	 */
-	public function __construct(?int $newProfileId, string $newProfileName, string $newProfileEmail, int $newProfileType, ?string $newProfileGithubToken, string $newProfileBio, float $newProfileRate, ?string $newProfileImage, $newProfileLastEditDateTime = null, ?string $newProfileActivationToken, string $newProfileHash, string $newProfileSalt) {
+	public function __construct(?int $newProfileId, string $newProfileName, string $newProfileEmail, int
+	$newProfileType, ?string $newProfileGithubToken, string $newProfileBio, ?float $newProfileRate, ?string $newProfileImage, $newProfileLastEditDateTime = null, ?string $newProfileActivationToken, string $newProfileHash, string $newProfileSalt) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileName($newProfileName);
@@ -327,11 +328,15 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile rate
 	 *
-	 * @param float $newProfileRate new value of profile rate
+	 * @param float|null $newProfileRate new value of profile rate
 	 * @throws \RangeException if $newProfileRate is > 999.99
 	 * @throws \TypeError if $newProfileRate is not a float
 	 */
-	public function setProfileRate(float $newProfileRate): void {
+	public function setProfileRate(?float $newProfileRate): void {
+		if($newProfileRate === null) {
+			$this->profileRate = null;
+			return;
+		}
 		// allow for float
 		$newProfileRate = filter_var($newProfileRate, FILTER_SANITIZE_NUMBER_FLOAT);
 

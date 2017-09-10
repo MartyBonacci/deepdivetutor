@@ -22,7 +22,7 @@ export class SignUpComponent {
 
 	//
 	@ViewChild("signUpForm") signUpForm: any;
-	signUp: SignUp = new SignUp(null, null, null, null, null, null, null);
+	signUp: SignUp = new SignUp(null, null, null, null, null, null);
 	status: Status = null;
 
 	constructor(private signUpService: SignUpService, private router: Router) {
@@ -37,7 +37,7 @@ export class SignUpComponent {
 				if(status.status === 200) {
 					alert(status.message);
 					setTimeout(function() {
-						$("#signUp-modal").modal('hide');
+						$("#myModal").modal('hide');
 					}, 500);
 					this.router.navigate(["profile"]);
 				}
