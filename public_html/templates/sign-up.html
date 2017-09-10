@@ -58,7 +58,8 @@
 								 <!--name="profileType" value=1 [(ngModel)]="signUp.profileType" #profileType="ngModel">-->
 						<!--<label for="profileTypeTutor">Tutor</label>-->
 					<!--</div>&lt;!&ndash; /.form-group &ndash;&gt;-->
-					<button type="submit" id="submit" class="btn btn-success" [disabled]="signUpForm.invalid">Sign Up
+					<button type="submit" id="submit" class="btn btn-success" data-toggle="modal" data-target="#myModal"
+							  [disabled]="signUpForm.invalid">Sign Up
 					</button>
 				</form>
 				<div class="modal-footer">
