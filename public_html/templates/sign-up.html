@@ -14,36 +14,36 @@
 			<div class="modal-body">
 				<form #signUpForm="ngForm" id="signUpForm" name="signUpForm" (submit)="createSignUp();">
 					<div class="form-group">
-						<label for="profileName">Name</label>
-						<input type="text" class="form-control" name="profileName" id="profileName" placeholder="Name" required [(ngModel)]="signUp.profileName">
+						<label for="profileName">First &amp; Last Name</label>
+						<input type="text" class="form-control" name="profileName" id="profileName" placeholder="Name" required [(ngModel)]="signUp.profileName" #profileName="ngModel">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profileEmail">Email</label>
-						<input type="email" class="form-control" name="profileEmail" id="profileEmail" placeholder="Email" required [(ngModel)]="signUp.profileEmail">
+						<input type="email" class="form-control" name="profileEmail" id="profileEmail" placeholder="Email" required [(ngModel)]="signUp.profileEmail" #profileEmail="ngModel">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profilePassword">Create Password</label>
 						<input type="password" class="form-control" name="profilePassword" id="profilePassword"
-								 placeholder="Create Password" required [(ngModel)]="signUp.profilePassword">
+								 placeholder="Create Password" required [(ngModel)]="signUp.profilePassword" #profilePassword="ngModel">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profilePasswordConfirm">Re-Enter Password</label>
 						<input type="password" class="form-control" name="profilePasswordConfirm" id="profilePasswordConfirm"
-								 placeholder="Re-Enter Password" required [(ngModel)]="signUp.profilePasswordConfirm">
+								 placeholder="Re-Enter Password" required [(ngModel)]="signUp.profilePasswordConfirm" #profilePasswordConfirm="ngModel">
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<label for="profileBio">Bio</label>
 						<textarea class="form-control" id="profileBio" name="profileBio"
-									 placeholder="500 Characters Max"></textarea>
+									 placeholder="500 Characters Max" required [(ngModel)]="signUp.profileBio" #profileBio="ngModel"></textarea>
 					</div><!-- /.form-group -->
 					<div class="form-group">
 						<p><strong>Profile Type</strong></p>
 					</div><!-- /.form-group -->
 					<input type="radio" id="profileTypeStudent"
-							 name="profileType" value=0 checked required [(ngModel)]="signUp.profileType">
+							 name="profileType" value=0 checked required [(ngModel)]="signUp.profileType" #profileType="ngModel">
 					<label for="profileTypeStudent">Student</label>
 					<input type="radio" id="profileTypeTutor"
-							 name="profileType" value=1 required [(ngModel)]="signUp.profileType">
+							 name="profileType" value=1 required [(ngModel)]="signUp.profileType" #profileType="ngModel">
 					<label for="profileTypeTutor">Tutor</label>
 				</form>
 				<div class="modal-footer">
