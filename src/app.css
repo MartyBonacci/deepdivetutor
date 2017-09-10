@@ -1,13 +1,13 @@
-.text-white{
+.text-white {
 	color: white;
 }
-.p-1{
+.p-1 {
 	padding: 1rem;
 }
-.rounded{
+.rounded {
 	border-radius: 7px;
 }
-.rounded-top{
+.rounded-top {
 	border-top-left-radius:7px;
 	border-top-right-radius:7px;
 }
@@ -15,7 +15,7 @@
 .jumbotron {
 	background-color: rgba(0, 41, 94, 1);
 }
-.m-1{
+.m-1 {
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 }
@@ -29,7 +29,7 @@
 	border-top: dimgray solid 1px;
 	display: inline-block;
 }
-.bg-gray{
+.bg-gray {
 	background-color: #A8A9AD;
 }
 .hl {
@@ -44,14 +44,14 @@
 	margin-left: 2rem;
 	margin-right: 2rem;
 }
-.img-sm{
+.img-sm {
 	width: 6rem;
 	height: auto;
 }
-.bg-black{
+.bg-black {
 	background-color:#000000;
 }
-.btn-psh{
+.btn-psh {
 	position: absolute;
 	margin-top: -3.4rem;
 	margin-left:6.5rem;
