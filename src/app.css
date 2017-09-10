@@ -51,3 +51,8 @@
 .bg-black{
 	background-color:#000000;
 }
+.btn-psh{
+	position: absolute;
+	margin-top: -3.4rem;
+	margin-left:6.5rem;
+}

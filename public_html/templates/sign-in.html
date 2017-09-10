@@ -1,6 +1,7 @@
 
 		<div class="well well-lg">
 			<h4>Login</h4>
+			<!--Form Starts-->
 			<form #signInForm="ngForm" id="signInForm" name="signInForm" (submit)="signIn();">
 				<div class="form-group">
 					<label for="profileEmail">Email</label>
@@ -13,12 +14,12 @@
 					placeholder="Password" required [(ngModel)]="signin.profilePassword" #profilePassword="ngModel">
 				</div>
 				<button type="submit" id="submit" class="btn btn-primary" [disabled]="signInForm.invalid">Login</button>
-
-				<!-- Button trigger modal -->
-
 			</form>
+			<!--Form Ends-->
+			<div class="btn-psh">
 			<signup></signup>
 			<button type="button" id="github" class="btn btn-info" href="/api/github/index.php">Login w/ Github</button>
+			</div>
 		</div><!-- /.col-md-5 -->
 
 
