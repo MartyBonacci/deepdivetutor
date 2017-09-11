@@ -41,23 +41,19 @@
 									 placeholder="500 Characters Max" required [(ngModel)]="signUp.profileBio"
 									 #profileBio="ngModel"></textarea>
 					</div><!-- /.form-group -->
+
+					<!-- Profile Type Radio Button -->
 					<div class="form-group">
-						<label for="profileType">Profile Type</label>
-						<input type="number" class="form-control" name="profileType" id="profileType"
-								 placeholder="0 = student, 1 = tutor because we cant make button work" required
-								 [(ngModel)]="signUp.profileType" #profileType="ngModel">
-					</div>
+						<p><strong>Profile Type</strong></p>
+						<input type="radio" id="profileTypeStudent"
+								 name="profileType" checked [(ngModel)]="signUp.profileType" #profileType="ngModel"
+								 [value]=0>
+						<label for="profileTypeStudent">Student</label>
+						<input type="radio" id="profileTypeTutor"
+								 name="profileType" [(ngModel)]="signUp.profileType" #profileType="ngModel" [value]=1>
+						<label for="profileTypeTutor">Tutor</label>
+					</div><!-- /.form-group -->
 
-					<!--<div class="form-group">-->
-						<!--<p><strong>Profile Type</strong></p>-->
-
-						<!--<input type="radio" id="profileTypeStudent"-->
-								 <!--name="profileType" checked>-->
-						<!--<label for="profileTypeStudent">Student</label>-->
-						<!--<input type="radio" id="profileTypeTutor"-->
-								 <!--name="profileType" value=1 [(ngModel)]="signUp.profileType" #profileType="ngModel">-->
-						<!--<label for="profileTypeTutor">Tutor</label>-->
-					<!--</div>&lt;!&ndash; /.form-group &ndash;&gt;-->
 					<button type="submit" id="submit" class="btn btn-success" data-toggle="modal" data-target="#myModal"
 							  [disabled]="signUpForm.invalid">Sign Up
 					</button>
