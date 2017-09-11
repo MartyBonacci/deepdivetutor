@@ -25,13 +25,13 @@ export class ProfileService extends BaseService {
 	}
 
 	getProfileByProfileRate(brokeProfileRate: number, loadedProfileRate: number) : Observable<Profile[]> {
-		return(this.http.get(this.profileUrl + "?brokeProfileRate" + brokeProfileRate + "&loadedProfileRate=" + loadedProfileRate)
+		return(this.http.get(this.profileUrl + "?brokeProfileRate=" + brokeProfileRate + "&loadedProfileRate=" + loadedProfileRate)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
 
 	getProfileByProfileType(profileType: number) : Observable<Profile[]> {
-		return(this.http.get(this.profileUrl)
+		return(this.http.get(this.profileUrl + "?profileType=" + profileType)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}

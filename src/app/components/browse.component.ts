@@ -13,17 +13,21 @@ import {Profile} from "../classes/profile";
 
 export class BrowseComponent implements OnInit {
 	tutorProfiles: Profile[]= [];
-	tutorProfile: Profile= new Profile(null,null,null,null,null,null,null,null,null,null,null,null);
+	profile: Profile = new Profile(null,null,null,null,null,null,null,null,null,null,null,null);
 	status: Status = null;
 
-	constructor( private profilesService: ProfileService, private router:Router){}
+	constructor( private profileService: ProfileService, private router:Router){}
 
 	ngOnInit() : void {
 		this.reloadProfiles();
 	}
 
 	reloadProfiles(): void {
-			this.profilesService.getProfileByProfileType(1)
+			this.profileService.getProfileByProfileType(1)
 				.subscribe(tutorProfiles=>this.tutorProfiles = tutorProfiles);
 		}
+
+	switchTutorProfile(tutorProfile: Profile): void{
+		this.router.navigate(["/profile/", tutorProfile.profileId]);
+	}
 }
