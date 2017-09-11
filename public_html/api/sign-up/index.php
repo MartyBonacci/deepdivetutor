@@ -49,10 +49,7 @@ try {
 		if(empty($requestObject->profileBio) === true) {
 			throw(new \InvalidArgumentException ("No profile bio present", 405));
 		}
-		//profile rate is a required field
-		if($requestObject->profileRate <0 || $requestObject->profileRate >= 1000) {
-			throw(new \InvalidArgumentException ("No profile rate present", 405));
-		}
+
 		//verify that profile password is present
 		if(empty($requestObject->profilePassword) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
@@ -69,7 +66,7 @@ try {
 		$hash = hash_pbkdf2("sha512", $requestObject->profilePassword, $salt, 262144);
 		$profileActivationToken = bin2hex(random_bytes(16));
 		//create the profile object and prepare to insert into the database
-		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail,$requestObject->profileType, null,$requestObject->profileBio,$requestObject->profileRate,null,null,$profileActivationToken,  $hash, $salt);
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail,$requestObject->profileType, null,$requestObject->profileBio, null,null,null,$profileActivationToken,  $hash, $salt);
 		//insert the profile into the database
 		$profile->insert($pdo);
 		//compose the email message to send with the activation token
