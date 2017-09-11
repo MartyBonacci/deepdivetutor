@@ -30,12 +30,12 @@ export class SignUpComponent {
 
 	createSignUp(): void {
 		this.signUpService.createSignUp(this.signUp)
-
 			.subscribe(status => {
-				console.log(this.signUp);
+				this.status = status;
 				console.log(this.status);
 				if(status.status === 200) {
-					alert(status.message);
+					alert("Please check your email and follow the link to confirm your account");
+					this.signUpForm.reset();
 					setTimeout(function() {
 						$("#myModal").modal('hide');
 					}, 500);
