@@ -56,6 +56,9 @@
 	margin-top: -3.4rem;
 	margin-left:6.5rem;
 }
+.text-black{
+color: #000000;
+}
 /***
 * Flexbox Sticky Footer
 * http://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
