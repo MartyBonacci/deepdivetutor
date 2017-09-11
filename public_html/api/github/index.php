@@ -78,8 +78,8 @@ try {
 
 		$profileName = "";
 		$profileEmail = "";
-		$profileType = 1;
-		$profileRate = 1;
+		$profileType = 0;
+		$profileRate = 0;
 
 		$profileGithubToken = "";
 		$profileLastEditDateTime = Date("Y-m-d H:i:s.u");
@@ -90,6 +90,7 @@ try {
 		$profileGithubToken = $info['access_token'];
 		$response = $client->fetch('https://api.github.com/user', [], 'GET', ['User-Agent' => 'Jack Auto Deleter v NaN']);
 		$profileName = $response["result"]["login"];
+		$profileImage = $response["result"]["avatar_url"];
 		$response = $client->fetch('https://api.github.com/user/emails', [], 'GET', ['User-Agent' => 'Jack Auto Deleter v NaN']);
 		foreach($response['result'] as $result) {
 			if($result['primary'] === true) {
@@ -104,7 +105,7 @@ try {
 		if(($profile) === null) {
 
 			// create a new profile
-			$user = new Profile(null,$profileName, $profileEmail, $profileType,$profileGithubToken, "Please update your profile content!", $profileRate, null, null, null, null, null);
+			$user = new Profile(null,$profileName, $profileEmail, $profileType,$profileGithubToken, "Please update your profile content!", $profileRate, $profileImage, null, null, null, null);
 
 			$user->insert($pdo);
 			$reply->message = "Welcome to Deep Dive Tutor!";
