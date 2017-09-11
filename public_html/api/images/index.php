@@ -63,7 +63,7 @@ try {
 
 		// after sending the image to Cloudinary, create a new image
 		$profile = Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId());
-		$profile->setProfileImage($cloudinaryResult["public_id"]);
+		$profile->setProfileImage($cloudinaryResult["secure_url"]);
 		$profile->update($pdo);
 
 		$reply->message = "Image uploaded Ok";
