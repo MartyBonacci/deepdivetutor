@@ -363,7 +363,7 @@ class Profile implements \JsonSerializable {
 	 *
 	 * @param string $newProfileImage new value of profile image
 	 * @throws \InvalidArgumentException if $newProfileImage is not a string or insecure
-	 * @throws \RangeException if $newProfileImage is > 32 characters
+	 * @throws \RangeException if $newProfileImage is < 64 characters
 	 * @throws \TypeError if $newProfileImage is not a string
 	 */
 	public function setProfileImage(?string $newProfileImage): void {
@@ -380,8 +380,8 @@ class Profile implements \JsonSerializable {
 			throw(new \InvalidArgumentException("profile image is either empty or insecure"));
 		}
 		// make sure profile image will fit in the database
-		if(strlen($newProfileImage) !== 32) {
-			throw(new \RangeException("profile image must be 32 characters"));
+		if(strlen($newProfileImage) > 64) {
+			throw(new \RangeException("profile image must be 64 characters or less"));
 		}
 
 		// store the profile image
