@@ -12,25 +12,25 @@ export class ReviewService extends BaseService {
 
 	private reviewUrl = "api/review/";
 
-	getReviewByReviewId(reviewId: number) : Observable<Review> {
+	getReviewByReviewId(reviewId: number) : Observable<Review[]> {
 		return(this.http.get(this.reviewUrl + reviewId)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
 
-	getReviewByReviewStudentProfileId(reviewStudentProfileId: number) : Observable<Review> {
+	getReviewByReviewStudentProfileId(reviewStudentProfileId: number) : Observable<Review[]> {
 		return(this.http.get(this.reviewUrl + "?reviewStudentProfileId=" + reviewStudentProfileId)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
 
-	getReviewByReviewTutorProfileId(reviewTutorProfileId: number) : Observable<Review> {
+	getReviewByReviewTutorProfileId(reviewTutorProfileId: number) : Observable<Review[]> {
 		return(this.http.get(this.reviewUrl + "?reviewStudentProfileId=" + reviewTutorProfileId)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
 
-	getReviewByReviewText(reviewText: string) : Observable<Review> {
+	getReviewByReviewText(reviewText: string) : Observable<Review[]> {
 		return(this.http.get(this.reviewUrl + "?reviewText=" + reviewText)
 			.map(this.extractData)
 			.catch(this.handleError));
