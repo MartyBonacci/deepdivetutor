@@ -88,9 +88,9 @@ try {
 		parse_str($response['result'], $info);
 		$client->setAccessToken($info['access_token']);
 		$profileGithubToken = $info['access_token'];
-		$response = $client->fetch('https://api.github.com/user', [], 'GET', ['User-Agent' => 'Jack Auto Deleter']);
+		$response = $client->fetch('https://api.github.com/user', [], 'GET', ['User-Agent' => 'Jack Auto Deleter v NaN']);
 		$profileName = $response["result"]["login"];
-		$response = $client->fetch('https://api.github.com/user/emails', [], 'GET', ['User-Agent' => 'Jack Auto Deleter']);
+		$response = $client->fetch('https://api.github.com/user/emails', [], 'GET', ['User-Agent' => 'Jack Auto Deleter v NaN']);
 		foreach($response['result'] as $result) {
 			if($result['primary'] === true) {
 				$profileEmail = $result['email'];
@@ -123,5 +123,5 @@ try {
 } catch(\TypeError $typeError) {
 	$reply->status = $typeError->getCode();
 	$reply->message = $typeError->getMessage();
-	$reply->trace = $exception->getTraceAsString();
+	$reply->trace = $typeError->getTraceAsString();
 }

@@ -97,7 +97,7 @@ class Profile implements \JsonSerializable {
 	 * @documentation https://php.net/manual/en/language.oop5.decon.php
 	 */
 	public function __construct(?int $newProfileId, string $newProfileName, string $newProfileEmail, int
-	$newProfileType, ?string $newProfileGithubToken, string $newProfileBio, ?float $newProfileRate, ?string $newProfileImage, $newProfileLastEditDateTime = null, ?string $newProfileActivationToken, string $newProfileHash, string $newProfileSalt) {
+	$newProfileType, ?string $newProfileGithubToken, string $newProfileBio, ?float $newProfileRate, ?string $newProfileImage, $newProfileLastEditDateTime = null, ?string $newProfileActivationToken, ?string $newProfileHash, ?string $newProfileSalt) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileName($newProfileName);
@@ -274,8 +274,8 @@ class Profile implements \JsonSerializable {
 		}
 
 		// verify github token will fit in the database
-		if(strlen($newProfileGithubToken) !== 64) {
-			throw(new \RangeException("github token must be 64 characters"));
+		if(strlen($newProfileGithubToken) >= 64) {
+			throw(new \RangeException("github token must be 64 characters or less"));
 		}
 
 		// store github token
@@ -477,7 +477,14 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileHash is not exactly 128 characters
 	 * @throws \TypeError if $newProfileHash is not a string
 	 */
-	public function setProfileHash(string $newProfileHash): void {
+	public function setProfileHash(?string $newProfileHash): void {
+
+		// if activation token is null immediately return it
+		if($newProfileHash === null) {
+			$this->ProfileHash = null;
+			return;
+		}
+
 		// make sure hash is properly formatted
 		$newProfileHash = trim($newProfileHash);
 		$newProfileHash = strtolower($newProfileHash);
@@ -516,7 +523,14 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileSalt is not exactly 64 characters
 	 * @throws \TypeError if $newProfileSalt is not a string
 	 */
-	public function setProfileSalt(string $newProfileSalt): void {
+	public function setProfileSalt(?string $newProfileSalt): void {
+
+		// if activation token is null immediately return it
+		if($newProfileSalt === null) {
+			$this->ProfileSalt = null;
+			return;
+		}
+
 		// make sure profile salt is the right format
 		$newProfileSalt = trim($newProfileSalt);
 		$newProfileSalt = strtolower($newProfileSalt);
