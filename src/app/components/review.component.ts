@@ -7,7 +7,8 @@ import {Status} from "../classes/status";
 
 @Component({
 	selector: "review-content",
-	templateUrl:"./templates/review.html"
+	templateUrl:"./templates/review.html",
+	providers: [ReviewService]
 })
 
 	export class ReviewComponent implements OnInit{

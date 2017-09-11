@@ -2,8 +2,8 @@
 
 	<h3 class="text-right">Reviews</h3>
 	<div class="hl"></div>
-	<div class="well well-large" contenteditable="true"> <span class="text-muted">Leave a Review</span></div>
-			<div class="media container-fluid bg-gray p-1 rounded">
+	<div class="well well-large"  contenteditable="true"> <span class="text-muted">Leave a Review</span></div>
+			<div class="media container-fluid bg-gray p-1 rounded  m-1" *ngFor="let review of reviews">
 				<div class="media-left">
 					<a href="#">
 						<img class="media-object" src="../images/DDC_helmet_black.png" alt="profile">
@@ -12,16 +12,8 @@
 				<div class="media-body">
 					<div class="media-heading">
 					<i class="fa fa-star fa-2x" aria-hidden="true"></i>
-						<span class="h3">Rating:</span>
+						<span class="h3">Rating:{{reviewRating}}</span>
 					</div>
-					<span class="media-text">Lucas ipsum dolor sit amet wol qrygg hutt utapau ablajeck nilgaard jerec kubaz
-						utapaun antilles. Sly lars
-						teevan bardan r5-d4 lytton darth hobbie. Bail raioballo nass nomi ubb mon bothan senesca droid. Rex
-						moff
-						jin'ha c-3p0 dunwell coruscant jin'ha colton boltrunians. Skirata choka grodin wuher rugor r2-d2
-						priapulin. Darth borsk lars tchuukthai baba. Fel nosaurian metalorn givin. Cade hissa yuuzhan raynar.
-						Olié piell windu rom. Skakoan rom rahn altyr. Galen gado dat miraluka. X2 marek bollux nadd jacen
-						poggle
-						jamillia joruus.</span>
+					<span class="media-text">{{reviewText}}</span>
 				</div>
 			</div>
