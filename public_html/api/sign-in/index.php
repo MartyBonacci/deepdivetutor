@@ -71,6 +71,7 @@ try {
 		// grab the profile from database and put into a session
 		$profile = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
 		$_SESSION["profile"] = $profile;
+		setcookie("profileId", $profile->getProfileId(), 0,"/");
 		$reply->message = "Sign in was successful";
 	} else {
 		throw(new \InvalidArgumentException("Invalid HTTP method request"));

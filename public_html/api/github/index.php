@@ -115,6 +115,7 @@ try {
 		//grab profile from database and put into a session
 		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 		$_SESSION["profile"] = $profile;
+		setcookie("profileId", $profile->getProfileId(), 0,"/");
 		header("Location: ../../");
 	}
 } catch(\Exception $exception) {
