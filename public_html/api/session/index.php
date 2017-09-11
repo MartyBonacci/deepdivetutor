@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
+require_once dirname(__DIR__ ) .  "../../php/lib/xsrf.php";
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;

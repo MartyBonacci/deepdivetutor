@@ -30,7 +30,7 @@ export class ReviewService extends BaseService {
 			.catch(this.handleError));
 	}
 
-	getReviewByReviewText(reviewText: string) : Observable<Review> {
+	getReviewByReviewText(reviewText: string) : Observable<Review[]> {
 		return(this.http.get(this.reviewUrl + "?reviewText=" + reviewText)
 			.map(this.extractData)
 			.catch(this.handleError));
