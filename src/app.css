@@ -84,3 +84,6 @@ body { width: 100%;}
 .modal-footer {
 	text-align: inherit;
 }
+.mb-4{
+	margin-bottom: 4rem;
+}
