@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-sm-12">
 		<form class="input-group" #reviewForm="ngForm" name="reviewForm" id="reviewForm"
-				(ngSubmit)="createReviewComment();" novalidate>
+				(ngSubmit)="createReview();" novalidate>
 			<input type="text" name="reviewComment" id="reviewComment" class="well well-large form-control" maxlength="500"
 					 [(ngModel)]="review.reviewText" #reviewComment="ngModel" placeholder="Leave a Review"/>
 			<span class="input-group-btn">
