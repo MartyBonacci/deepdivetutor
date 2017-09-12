@@ -945,6 +945,7 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		// format the date so that the front end can consume it right up
 		$fields["profileLastEditDateTime"] = round(floatval($this->profileLastEditDateTime->format("U.u")) * 1000);
 		unset($fields["profileHash"]);
+		unset($fields["profileGithubToken"]);
 		unset($fields["profileSalt"]);
 		return ($fields);
 	}

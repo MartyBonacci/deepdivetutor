@@ -11,7 +11,7 @@
 <div class="container mb-4" *ngFor="let tutorProfile of tutorProfiles">
 	<div class="row">
 		<div class="col-md-5">
-			<img class="img-responsive center-block" src="../images/fakeprofileimage.png" alt="fake profile image">
+			<img class="img-responsive center-block" [src]="tutorProfile.profileImage" alt="fake profile image">
 		</div>
 		<div class="col-md-5">
 			<br>

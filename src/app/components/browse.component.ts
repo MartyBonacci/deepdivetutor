@@ -13,7 +13,7 @@ import {Profile} from "../classes/profile";
 
 export class BrowseComponent implements OnInit {
 	tutorProfiles: Profile[] = [];
-	profile: Profile = new Profile(null, null, null, null, null, null, null, null, null, null, null, null);
+	profile: Profile = new Profile(null, null, null, null, null, null, null, null, null);
 	status: Status = null;
 
 	constructor(private profileService: ProfileService, private router: Router) {
