@@ -3,6 +3,7 @@ import {Http} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {BaseService} from "./base.service";
 import {Review} from "../classes/review";
+import {Status} from "../classes/status";
 
 @Injectable()
 export class ReviewService extends BaseService {
@@ -36,7 +37,7 @@ export class ReviewService extends BaseService {
 			.catch(this.handleError));
 	}
 
-	createReview(profile: Review) : Observable<Review> {
+	createReview(profile: Review) : Observable<Status> {
 		return(this.http.post(this.reviewUrl, profile)
 			.map(this.extractMessage)
 			.catch(this.handleError));
