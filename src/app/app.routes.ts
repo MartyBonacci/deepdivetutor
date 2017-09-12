@@ -11,6 +11,7 @@ import {SignInService} from "./services/sign-in.service";
 import {CookieService} from "ng2-cookies";
 import {SignUpComponent} from "./components/sign-up.component";
 import {SignUpService} from "./services/sign-up.service";
+import {APP_BASE_HREF} from "@angular/common";
 
 
 export const allAppComponents = [
@@ -30,6 +31,6 @@ export const routes: Routes = [
 	{path: "", component: HomeComponent}
 ];
 
-export const appRoutingProviders: any[] = [CookieService, SessionService, SignInService, SignUpService];
+export const appRoutingProviders: any[] = [{provide: APP_BASE_HREF, useValue: window["_base_href"]},CookieService, SessionService, SignInService, SignUpService];
 
 export const routing = RouterModule.forRoot(routes);
