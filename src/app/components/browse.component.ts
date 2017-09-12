@@ -12,22 +12,23 @@ import {Profile} from "../classes/profile";
 })
 
 export class BrowseComponent implements OnInit {
-	tutorProfiles: Profile[]= [];
-	profile: Profile = new Profile(null,null,null,null,null,null,null,null,null,null,null,null);
+	tutorProfiles: Profile[] = [];
+	profile: Profile = new Profile(null, null, null, null, null, null, null, null, null, null, null, null);
 	status: Status = null;
 
-	constructor( private profileService: ProfileService, private router:Router){}
+	constructor(private profileService: ProfileService, private router: Router) {
+	}
 
-	ngOnInit() : void {
+	ngOnInit(): void {
 		this.reloadProfiles();
 	}
 
 	reloadProfiles(): void {
-			this.profileService.getProfileByProfileType(1)
-				.subscribe(tutorProfiles=>this.tutorProfiles = tutorProfiles);
-		}
+		this.profileService.getProfileByProfileType(1)
+			.subscribe(tutorProfiles => this.tutorProfiles = tutorProfiles);
+	}
 
-	switchTutorProfile(tutorProfile: Profile): void{
+	switchTutorProfile(tutorProfile: Profile): void {
 		this.router.navigate(["/profile/", tutorProfile.profileId]);
 	}
 }

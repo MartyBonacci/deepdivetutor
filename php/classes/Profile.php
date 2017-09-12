@@ -352,9 +352,9 @@ class Profile implements \JsonSerializable {
 	/**
 	 * accessor method for profile image
 	 *
-	 * @return string value for profile image
+	 * @return string|null value for profile image
 	 */
-	public function getProfileImage(): string {
+	public function getProfileImage(): ?string {
 		return ($this->profileImage);
 	}
 
@@ -944,6 +944,8 @@ profileLastEditDateTime, profileActivationToken, profileHash, profileSalt FROM p
 		$fields = get_object_vars($this);
 		// format the date so that the front end can consume it right up
 		$fields["profileLastEditDateTime"] = round(floatval($this->profileLastEditDateTime->format("U.u")) * 1000);
+		unset($fields["profileHash"]);
+		unset($fields["profileSalt"]);
 		return ($fields);
 	}
 }

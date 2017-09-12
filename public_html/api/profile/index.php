@@ -100,6 +100,10 @@ try {
 				foreach($profiles as $profile) {
 					if($profile->getProfileType() === 1) {
 
+						// set empty images to default image
+						if(empty($profile->getProfileImage()) === true) {
+							$profile->setProfileImage("/images/fakeprofileimage.png");
+						}
 
 						// grab the tutor profiles and attach profile skill
 						// store the results of the database queries into a json storage object in the same format as the rest
@@ -123,6 +127,11 @@ try {
 				// loop through each profile and grab the profile by tutor
 				foreach($profiles as $profile) {
 					if($profile->getProfileType() === 1) {
+						// set empty images to default image
+						if(empty($profile->getProfileImage()) === true) {
+							$profile->setProfileImage("/images/fakeprofileimage.png");
+						}
+
 						// grab the tutor profiles and attach profile skill
 						// store the results of the database queries into a json storage object in the same format as the rest
 						// of the get by methods
@@ -140,6 +149,11 @@ try {
 			$profiles = Profile::getProfileByProfileType($pdo, 1);
 			$storage = new JsonObjectStorage();
 			foreach($profiles as $profile) {
+				// set empty images to default image
+				if(empty($profile->getProfileImage()) === true) {
+					$profile->setProfileImage("/images/fakeprofileimage.png");
+				}
+
 				// grab the tutor profiles and attach profile skill
 				$storage->attach(
 					$profile,
