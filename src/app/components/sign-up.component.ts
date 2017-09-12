@@ -34,12 +34,14 @@ export class SignUpComponent {
 				this.status = status;
 				console.log(this.status);
 				if(status.status === 200) {
-					alert("Please check your email and follow the link to confirm your account");
+					alert("Please check your email and follow the link to confirm your account.");
 					this.signUpForm.reset();
 					setTimeout(function() {
 						$("#myModal").modal('hide');
 					}, 500);
-					this.router.navigate(["home"]);
+					this.router.navigate([""]);
+				} else {
+					alert("Error, there was a problem with one of your entries. Please try again.");
 				}
 			});
 	}

@@ -23,10 +23,10 @@ export class SignInComponent {
 		this.signInService.createSignIn(this.signin).subscribe(status=>{
 			this.status=status;
 			if(status.status === 200){
-
+				alert("Login Successful! Welcome to Deep Dive Tutor!")
 				this.router.navigate(["profile"]);
 			} else {
-				console.log("failed login");
+				alert("Email or password is incorrect.");
 			}
 		});
 	}
