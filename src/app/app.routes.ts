@@ -28,6 +28,7 @@ export const allAppComponents = [
 export const routes: Routes = [
 	{path: "browse", component: BrowseComponent},
 	{path: "profile", component: ProfileComponent},
+	{path: "profile/:id" , component: ProfileComponent},
 	{path: "", component: HomeComponent}
 ];
 

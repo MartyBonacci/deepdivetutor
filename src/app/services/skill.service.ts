@@ -14,6 +14,7 @@ export class SkillService extends BaseService {
 
 	private skillUrl = "api/Skill";
 
+
 	getAllSkillNames(): Observable<Skill[]> {
 		return (this.http.get(this.skillUrl)
 			.map(this.extractData)

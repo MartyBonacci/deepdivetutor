@@ -14,17 +14,12 @@
 <!---End Profile Image-->
 
 <!--Profile Description-->
-			<div class="col-md-8">
-				<h2>Profile Type</h2>
+			<div class="col-md-8" *ngFor="let profile of profiles">
+				<h2>{{profile.profileType}}</h2>
 				<div class="hl"></div>
-				<h3>Name</h3>
-				<h4>Email</h4><!-- only display if user is viewing their own profile profile -->
-				<p class="text-justify">If you dress up like a pin-up doll for me I'm too lazy to keep typing in my birthday suit the fact that
-					you are even considering schooling me. On my fetish list crossfit when I picked this username I didn't
-					realize I couldn't change it if you have to look it up don't bother size 2, or so I've been told
-					skydiving keep up with me complete lack of shame I live in constant amazement of nature and the universe.
-					The fact that you are even considering schooling me I grow a creepy mustache every February when I get
-					drunk I enjoy clubbing I am oddly aroused by.
+				<h3>{{profile.profileName}}</h3>
+				<h4>{{profile.profileEmail}}</h4><!-- only display if user is viewing their own profile profile -->
+				<p class="text-justify">{{profile.profileBio}}
 				</p>
 				<h4>Rate</h4><!-- only display if profile type is tutor -->
 				<div class="row">

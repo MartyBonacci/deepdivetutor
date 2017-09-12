@@ -24,7 +24,7 @@ export class AppModule {
 		this.sessionService.setSession()
 			.subscribe(response => {
 				this.cookieJar = this.cookieService.getAll();
-				console.log(this.cookieJar);
+				console.log(this.cookieJar['profileId']);
 			});
 	}
 }
