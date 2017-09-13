@@ -12,7 +12,7 @@ export class SkillService extends BaseService {
 		super(http);
 	}
 
-	private skillUrl = "api/Skill";
+	private skillUrl = "api/Skill/";
 
 
 	getAllSkillNames(): Observable<Skill[]> {

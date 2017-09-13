@@ -4,6 +4,7 @@
       "phpdocumentor/phpdocumentor": "@stable",
       "phpunit/dbunit": "@stable",
       "phpunit/phpunit": "@stable",
+      "cloudinary/cloudinary_php": "dev-master",
       "swiftmailer/swiftmailer": "@stable",
       "google/recaptcha": "~1.1"
     },

@@ -12,11 +12,14 @@ import {CookieService} from "ng2-cookies";
 import {SignUpComponent} from "./components/sign-up.component";
 import {SignUpService} from "./services/sign-up.service";
 import {APP_BASE_HREF} from "@angular/common";
+import {ProfileService} from "./services/profile.service";
+import {ProfileEditComponent} from "./components/profile-edit.component";
 
 
 export const allAppComponents = [
 	HomeComponent,
 	ProfileComponent,
+	ProfileEditComponent,
 	BrowseComponent,
 	NavbarComponent,
 	FooterComponent,
@@ -32,6 +35,6 @@ export const routes: Routes = [
 	{path: "", component: HomeComponent}
 ];
 
-export const appRoutingProviders: any[] = [{provide: APP_BASE_HREF, useValue: window["_base_href"]},CookieService, SessionService, SignInService, SignUpService];
+export const appRoutingProviders: any[] = [{provide: APP_BASE_HREF, useValue: window["_base_href"]},CookieService, SessionService, SignInService, SignUpService, ProfileService];
 
 export const routing = RouterModule.forRoot(routes);

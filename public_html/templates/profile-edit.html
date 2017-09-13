@@ -1,0 +1,87 @@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Edit Profile
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+					aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+			</div><!-- /.modal-header -->
+			<div class="modal-body">
+				<form #profileEditForm="ngForm" id="profileEditForm" name="profileEditForm" (submit)="createProfileEdit();">
+
+					<div class="form-group">
+						<label for="profileName">First &amp; Last Name</label>
+						<input type="text" class="form-control" name="profileName" id="profileName" placeholder="Name"
+								 required [(ngModel)]="profileEdit.profileName" #profileName="ngModel">
+					</div><!-- /.form-group -->
+					<div class="form-group">
+						<label for="profileEmail">Email</label>
+						<input type="email" class="form-control" name="profileEmail" id="profileEmail" placeholder="Email"
+								 required [(ngModel)]="profileEdit.profileEmail" #profileEmail="ngModel">
+					</div><!-- /.form-group -->
+
+					<div class="form-group">
+						<label for="postImage" class="modal-labels">Upload an image</label>
+						<input type="file" id="postImage" ng2FileSelect [uploader]="uploader"/>
+					</div><!-- /.form-group -->
+
+					<div class="form-group">
+						<label for="profileBio">Bio</label>
+						<textarea class="form-control" id="profileBio" name="profileBio"
+									 placeholder="500 Characters Max" required [(ngModel)]="profileEdit.profileBio"
+									 #profileBio="ngModel"></textarea>
+					</div><!-- /.form-group -->
+
+					<div class="form-group">
+						<label for="profileRate">Hourly Rate</label>
+						<input type="number" class="form-control" name="profileRate" id="profileRate" placeholder="0"
+								 required [(ngModel)]="profileEdit.profileRate" #profileRate="ngModel">
+
+						<!-- Profile Type Radio Button -->
+						<div class="form-group">
+							<p><strong>Profile Type</strong></p>
+							<input type="radio" id="profileTypeStudent"
+									 name="profileType" checked [(ngModel)]="profileEdit.profileType" #profileType="ngModel"
+									 [value]=0>
+							<label for="profileTypeStudent">Student</label>
+							<input type="radio" id="profileTypeTutor"
+									 name="profileType" [(ngModel)]="profileEdit.profileType" #profileType="ngModel" [value]=1>
+							<label for="profileTypeTutor">Tutor</label>
+						</div><!-- /.form-group -->
+
+
+						<div class="form-group">
+							<p><strong>Skills You Can Tutor</strong></p>
+							<input *ngFor="let skill of skills"
+								type="radio" name="skill"
+								[id]=" skill.skillName + 'Skill'" class="input-hidden" [value]="skill.skillName" />
+							<label [for]=" skill.skillName + 'Skill'">
+								<img class="img-sm"
+									[src]="'../images/badge/' + skill.skilId + '.png'"
+									[alt]="skill.skillName"/>
+							</label>
+						</div>
+
+
+
+
+						<button type="submit" id="submit" class="btn btn-success" [disabled]="profileEditForm.invalid">Update
+							Profile
+						</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+				</form>
+				<div class="modal-footer">
+				</div><!-- /.modal footer -->
+			</div><!-- /.modal-body -->
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal fade -->
+
+
+
+

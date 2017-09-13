@@ -78,4 +78,3 @@ try {
 header("Content-Type: application/json");
 // encode and return reply to front end caller
 echo json_encode($reply);
-

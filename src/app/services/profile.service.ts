@@ -14,7 +14,7 @@ export class ProfileService extends BaseService {
 	private profileUrl = "api/profile/";
 
 
-	getProfileByProfileId(profileId: number): Observable<Profile[]> {
+	getProfileByProfileId(profileId: number): Observable<Profile> {
 		return (this.http.get(this.profileUrl + profileId)
 			.map(this.extractData)
 			.catch(this.handleError));

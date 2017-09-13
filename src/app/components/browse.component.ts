@@ -8,7 +8,6 @@ import {Profile} from "../classes/profile";
 
 @Component({
 	templateUrl: "./templates/browse.html",
-	providers: [ProfileService]
 })
 
 export class BrowseComponent implements OnInit {
