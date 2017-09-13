@@ -87,3 +87,27 @@ body { width: 100%;}
 .mb-4{
 	margin-bottom: 4rem;
 }
+
+.input-hidden {
+	position: absolute;
+	left: -9999px;
+}
+
+input[type=radio]:checked + label>img {
+	border: 1px solid rgba(0, 41, 94, 1) ;
+	box-shadow: 0 0 3px 3px rgba(0, 41, 94, 1) ;
+}
+
+
+/* Stuff after this is only to make things more pretty */
+input[type=radio] + label>img {
+	/*    border: 1px dashed #444;*/
+	width: 75px;
+	transition: 500ms all;
+}
+
+input[type=radio]:checked + label>img {
+	transform:
+		rotateZ(-10deg);
+rotateX(10deg);
+}
