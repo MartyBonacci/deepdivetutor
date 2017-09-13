@@ -7,6 +7,7 @@ import {ProfileService} from "../services/profile.service";
 import {Profile} from "../classes/profile";
 import {CookieService} from "ng2-cookies";
 import {Skill} from "../classes/skill";
+import {ImageComponent} from "./image.component";
 
 //declare $ for good old jquery
 declare let $: any;
@@ -17,6 +18,7 @@ declare let $: any;
 })
 
 export class ProfileEditComponent implements OnInit {
+	@ViewChild(ImageComponent) imageComponent : ImageComponent;
 	profile: Profile= new Profile(null,null,null,null,null,null,null,null,null);
 	status: Status = null;
 	cookieJar : any = {};
@@ -39,4 +41,8 @@ export class ProfileEditComponent implements OnInit {
 			.subscribe (skills=>this.skills=skills);
 	}
 
+	createProfileEdit(): void {
+		// TODO: add more schtuff
+		this.imageComponent.uploadImage();
+	}
 }
