@@ -25,10 +25,8 @@
 								 required [(ngModel)]="profileEdit.profileEmail" #profileEmail="ngModel">
 					</div><!-- /.form-group -->
 
-					<div class="form-group">
-						<label for="postImage" class="modal-labels">Upload an image</label>
-						<input type="file" id="postImage" ng2FileSelect [uploader]="uploader"/>
-					</div><!-- /.form-group -->
+					<image-upload></image-upload>
+					<!-- /.form-group -->
 
 					<div class="form-group">
 						<label for="profileBio">Bio</label>
@@ -41,39 +39,36 @@
 						<label for="profileRate">Hourly Rate</label>
 						<input type="number" class="form-control" name="profileRate" id="profileRate" placeholder="0"
 								 required [(ngModel)]="profileEdit.profileRate" #profileRate="ngModel">
+					</div>
 
-						<!-- Profile Type Radio Button -->
-						<div class="form-group">
-							<p><strong>Profile Type</strong></p>
-							<input type="radio" id="profileTypeStudent"
-									 name="profileType" checked [(ngModel)]="profileEdit.profileType" #profileType="ngModel"
-									 [value]=0>
-							<label for="profileTypeStudent">Student</label>
-							<input type="radio" id="profileTypeTutor"
-									 name="profileType" [(ngModel)]="profileEdit.profileType" #profileType="ngModel" [value]=1>
-							<label for="profileTypeTutor">Tutor</label>
-						</div><!-- /.form-group -->
+					<!-- Profile Type Radio Button -->
+					<div class="form-group">
+						<p><strong>Profile Type</strong></p>
+						<input type="radio" id="profileTypeStudent"
+								 name="profileType" checked [(ngModel)]="profileEdit.profileType" #profileType="ngModel"
+								 [value]=0>
+						<label for="profileTypeStudent">Student</label>
+						<input type="radio" id="profileTypeTutor"
+								 name="profileType" [(ngModel)]="profileEdit.profileType" #profileType="ngModel" [value]=1>
+						<label for="profileTypeTutor">Tutor</label>
+					</div><!-- /.form-group -->
 
+					<div class="form-group">
+						<p><strong>Skills You Can Tutor</strong></p>
+						<input *ngFor="let skill of skills"
+								 type="radio" name="skill"
+								 [id]=" skill.skillName + 'Skill'" class="input-hidden" [value]="skill.skillName"/>
+						<label [for]=" skill.skillName + 'Skill'">
+							<img class="img-sm"
+								  [src]="'../images/badge/' + skill.skilId + '.png'"
+								  [alt]="skill.skillName"/>
+						</label>
+					</div>
 
-						<div class="form-group">
-							<p><strong>Skills You Can Tutor</strong></p>
-							<input *ngFor="let skill of skills"
-								type="radio" name="skill"
-								[id]=" skill.skillName + 'Skill'" class="input-hidden" [value]="skill.skillName" />
-							<label [for]=" skill.skillName + 'Skill'">
-								<img class="img-sm"
-									[src]="'../images/badge/' + skill.skilId + '.png'"
-									[alt]="skill.skillName"/>
-							</label>
-						</div>
-
-
-
-
-						<button type="submit" id="submit" class="btn btn-success" [disabled]="profileEditForm.invalid">Update
-							Profile
-						</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+					<button type="submit" id="submit" class="btn btn-success" [disabled]="profileEditForm.invalid">Update
+						Profile
+					</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 				</form>
 				<div class="modal-footer">
 				</div><!-- /.modal footer -->

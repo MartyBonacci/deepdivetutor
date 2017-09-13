@@ -14,10 +14,12 @@ import {SignUpService} from "./services/sign-up.service";
 import {APP_BASE_HREF} from "@angular/common";
 import {ProfileService} from "./services/profile.service";
 import {ProfileEditComponent} from "./components/profile-edit.component";
+import {ImageComponent} from "./components/image.component";
 
 
 export const allAppComponents = [
 	HomeComponent,
+	ImageComponent,
 	ProfileComponent,
 	ProfileEditComponent,
 	BrowseComponent,

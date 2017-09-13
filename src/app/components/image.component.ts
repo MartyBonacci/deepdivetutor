@@ -5,12 +5,13 @@ import {Observable} from "rxjs";
 import "rxjs/add/observable/from";
 
 @Component({
-	templateUrl: "./templates/image.html"
+	templateUrl: "./templates/image.html",
+	selector: "image-upload"
 })
 
 export class ImageComponent implements OnInit {
 	public uploader: FileUploader = new FileUploader({
-		itemAlias: "profile",
+		itemAlias: "profileImage",
 		url: "./api/image/",
 		headers: [{name: "X-XSRF-TOKEN", value: Cookie.get("XSRF-TOKEN")}],
 		additionalParameter: {}

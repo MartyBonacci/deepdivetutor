@@ -6,8 +6,9 @@ import {AppComponent} from "./components/app.component";
 import {allAppComponents, appRoutingProviders, routing} from "./app.routes";
 import {SessionService} from "./services/session.service";
 import {CookieService} from "ng2-cookies";
+import {FileSelectDirective} from "ng2-file-upload";
 
-const moduleDeclarations = [AppComponent];
+const moduleDeclarations = [AppComponent, FileSelectDirective];
 
 @NgModule({
 	imports: [BrowserModule, FormsModule, HttpModule, routing],
