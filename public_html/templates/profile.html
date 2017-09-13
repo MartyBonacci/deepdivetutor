@@ -16,7 +16,7 @@
 <!--<profile-edit></profile-edit>-->
 <!--Profile Description-->
 			<div class="col-md-8" *ngFor="let profile of profiles">
-				<h2>{{profile.profileType}}</h2>
+				<h2 *ngIf="profile.profileType===0 ">Student</h2>
 				<div class="hl"></div>
 				<h3>{{profile.profileName}}</h3>
 				<button href="#" id="email-button" name="email-button" class="btn btn-primary">Email This Tutor</button>
