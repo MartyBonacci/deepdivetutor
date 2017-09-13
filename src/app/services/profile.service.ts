@@ -39,6 +39,11 @@ export class ProfileService extends BaseService {
 			.catch(this.handleError));
 	}
 
+	getProfile(profileId: number): Observable<Profile> {
+		return (this.http.get(this.profileUrl + profileId)
+			.map(this.extractData)
+			.catch(this.handleError));
+	}
 
 
 	editProfile(profile: Profile): Observable<Status> {
