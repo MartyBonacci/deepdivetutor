@@ -62,11 +62,12 @@ try {
 		if($requestObject->profilePassword !== $requestObject->profilePasswordConfirm) {
 			throw(new \InvalidArgumentException("passwords do not match"));
 		}
+		$profileImage = "images/imageFiller.png";
 		$salt = bin2hex(random_bytes(32));
 		$hash = hash_pbkdf2("sha512", $requestObject->profilePassword, $salt, 262144);
 		$profileActivationToken = bin2hex(random_bytes(16));
 		//create the profile object and prepare to insert into the database
-		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail,$requestObject->profileType, null,$requestObject->profileBio, null,null,null,$profileActivationToken,  $hash, $salt);
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail,$requestObject->profileType, null,$requestObject->profileBio, null,$profileImage,null,$profileActivationToken,  $hash, $salt);
 		//insert the profile into the database
 		$profile->insert($pdo);
 		//compose the email message to send with the activation token
