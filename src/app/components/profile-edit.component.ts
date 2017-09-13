@@ -1,6 +1,6 @@
-import {Component, ViewChild,OnInit} from "@angular/core";
+import {Component, ViewChild, OnInit} from "@angular/core";
 import {Observable} from "rxjs/Observable"
-import {Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Status} from "../classes/status";
 import {SkillService} from "../services/skill.service";
 import {ProfileService} from "../services/profile.service";
@@ -18,31 +18,33 @@ declare let $: any;
 })
 
 export class ProfileEditComponent implements OnInit {
-	@ViewChild(ImageComponent) imageComponent : ImageComponent;
-	profile: Profile= new Profile(null,null,null,null,null,null,null,null,null);
+	@ViewChild(ImageComponent) imageComponent: ImageComponent;
+	profile: Profile = new Profile(null, null, null, null, null, null, null, null, null);
 	status: Status = null;
-	cookieJar : any = {};
+	cookieJar: any = {};
 	skills: Skill[] = [];
-	constructor(private profileService: ProfileService, private router: Router, private skillService: SkillService, private cookieService: CookieService) {
+
+	constructor(private profileService: ProfileService, private router: Router, private skillService: SkillService, private cookieService: CookieService,private route: ActivatedRoute) {
 	}
 
-	ngOnInit(): void {
-		this.reloadProfiles();
+	ngOnInit() : void {
+		this.route.params.forEach((params: Params) => {
+			let profileId = +params["profileId"];
+			this.cookieJar = this.cookieService.getAll();
+			this.profileService.getProfile(profileId)
+				.subscribe(profile => this.profile = profile);
+
+		})
 	}
 
-	reloadProfiles(): void {
-		this.cookieJar = this.cookieService.getAll();
-		this.profileService.getProfileByProfileId(this.cookieJar['profileId'])
-			.subscribe (profile=>this.profile=profile);
-	}
-
-	getAllSkillNames(): void{
+	getAllSkillNames(): void {
 		this.skillService.getAllSkillNames()
-			.subscribe (skills=>this.skills=skills);
+			.subscribe(skills => this.skills = skills);
 	}
 
 	createProfileEdit(): void {
-		// TODO: add more schtuff
-		this.imageComponent.uploadImage();
+		this.profileService.editProfile(this.profile)
+			.subscribe(status => this.status = status);
+
 	}
 }

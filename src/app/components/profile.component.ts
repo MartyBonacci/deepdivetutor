@@ -33,8 +33,8 @@ export class ProfileComponent implements OnInit {
 	reloadProfile(): void{
 		this.sessionService.setSession();
 		this.cookieJar = this.cookieService.getAll();
-		this.profileService.getProfileByProfileId(this.cookieJar['profileId'])
-		.subscribe (profiles=>this.profiles=profiles);
+		this.profileService.getProfile(this.cookieJar['profileId'])
+		.subscribe (profile=>this.profile=profile);
 	}
 	switchProfile(profile:Profile): void{
 		this.router.navigate(["/profile/", profile.profileId]);

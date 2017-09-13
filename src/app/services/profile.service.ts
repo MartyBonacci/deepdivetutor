@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {BaseService} from "./base.service";
 import {Profile} from "../classes/profile";
 import {Response} from "@angular/http";
+import {Status} from "../classes/status";
 
 @Injectable()
 export class ProfileService extends BaseService {
@@ -37,7 +38,19 @@ export class ProfileService extends BaseService {
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
-}
 
+	getProfile(profileId: number): Observable<Profile> {
+		return (this.http.get(this.profileUrl + profileId)
+			.map(this.extractData)
+			.catch(this.handleError));
+	}
+
+
+	editProfile(profile: Profile): Observable<Status> {
+		return (this.http.put(this.profileUrl + profile.profileId, profile)
+			.map(this.extractMessage)
+			.catch(this.handleError));
+	}
+}
 
 
