@@ -8,7 +8,7 @@
 </div>
 
 
-<div class="container mb-4" *ngFor="let profile of tutorProfiles">
+<div class="container mb-4" *ngFor="let tutorProfile of tutorProfiles">
 	<div class="row">
 		<div class="col-md-5">
 			<img class="img-responsive center-block" [src]="tutorProfile.profileImage" alt="fake profile image">
@@ -27,7 +27,7 @@
 				<li><img class="img-sm" src="images/badge/javascript.png"/></li>
 				<li><img class="img-sm" src="images/badge/MySQL.png"/></li>
 			</ul>
-			<a class="btn btn-warning" (click)="switchTutorProfile(profile);"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+			<a class="btn btn-warning" (click)="switchProfile(profile);"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 		</div>
 	</div>
 </div>
