@@ -31,7 +31,7 @@ export class ReviewComponent implements OnInit {
 	reloadReviews(): void {
 		this.sessionService.setSession();
 		this.cookieJar = this.cookieService.getAll();
-		this.reviewService.getReviewByReviewTutorProfileId(this.cookieJar['profileId'])
+		this.reviewService.getReviewByReviewTutorProfileId(255)
 			.subscribe(reviews => this.reviews = reviews);
 	}
 
