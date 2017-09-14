@@ -66,11 +66,13 @@ try {
 				if($profile->getProfileType() === 0) {
 					// create a json object storage
 					$storage = new JsonObjectStorage();
+					$profileSkills = ProfileSkill::getProfileSkillsByProfileSkillProfileId($pdo, $profile->getProfileId());
 					// loop through each profile and grab each student
 
 						// grab the student profiles and store them in json object
 						$storage->attach(
-							$profile
+							$profile,
+							$profileSkills
 						);
 
 					$reply->data = $storage;

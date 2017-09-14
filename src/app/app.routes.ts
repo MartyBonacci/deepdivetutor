@@ -15,6 +15,7 @@ import {APP_BASE_HREF} from "@angular/common";
 import {ProfileService} from "./services/profile.service";
 import {ProfileEditComponent} from "./components/profile-edit.component";
 import {ImageComponent} from "./components/image.component";
+import {RTProfileComponent} from "./components/rtprofile.component";
 
 
 export const allAppComponents = [
@@ -25,15 +26,16 @@ export const allAppComponents = [
 	BrowseComponent,
 	NavbarComponent,
 	FooterComponent,
+	RTProfileComponent,
 	ReviewComponent,
 	SignInComponent,
-	SignUpComponent
+	SignUpComponent,
 ];
 
 export const routes: Routes = [
 	{path: "browse", component: BrowseComponent},
 	{path: "profile", component: ProfileComponent},
-	{path: "profile/:id" , component: ProfileComponent},
+	{path: "profile/:id" , component: RTProfileComponent},
 	{path: "", component: HomeComponent}
 ];
 

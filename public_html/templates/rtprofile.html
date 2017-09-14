@@ -8,17 +8,17 @@
 <div class="row" style="margin-top: 50px;">
 	<div class="container">
 		<div class="col-md-4 p-1">
-			<img class="img-responsive center-block" src="../images/fakeprofileimage.png" alt="fake profile image">
+			<img class="img-responsive center-block" [src]="profile[0].profileImage" alt="fake profile image">
 		</div>
 		<!---End Profile Image-->
 		<!--<profile-edit></profile-edit>-->
 		<!--Profile Description-->
-		<div class="col-md-8" *ngFor="let profile of profiles">
-			<h2>{{profile.profileType}}</h2>
+		<div class="col-md-8">
+			<h2>Tutor</h2>
 			<div class="hl"></div>
-			<h3>{{profile.profileName}}</h3>
-			<h4>{{profile.profileEmail}}</h4><!-- only display if user is viewing their own profile profile -->
-			<p class="text-justify">{{profile.profileBio}}
+			<h3>{{profile[0].profileName}}</h3>
+			<h4>{{profile[0].profileEmail}}</h4><!-- only display if user is viewing their own profile profile -->
+			<p class="text-justify">{{profile[0].profileBio}}
 			</p>
 			<h4>Rate</h4><!-- only display if profile type is tutor -->
 			<div class="row">
@@ -27,19 +27,19 @@
 						<h4>Skills</h4> <!-- Only show skills if displaying a tutor's profile -->
 						<ul class="list-inline">
 							<li></li>
-							<li><img class="img-sm" src="images/badge/angular.png"/></li>
-							<li><img class="img-sm" src="images/badge/html5.png"/></li>
-							<li><img class="img-sm" src="images/badge/bootstrap.png"/></li>
-							<li><img class="img-sm" src="images/badge/javascript.png"/></li>
-							<li><img class="img-sm" src="images/badge/MySQL.png"/></li>
-							<li><img class="img-sm" src="images/badge/php.png" /></li>
-							<li><img class="img-sm" src="images/badge/css.png"/></li>
-							<li><img class="img-sm" src="images/badge/jQuery.png"/></li>
-							<li><img class="img-sm" src="images/badge/ajax.png"/></li>
-							<li><img class="img-sm" src="images/badge/softskills.png"/></li>
-							<li><img class="img-sm" src="images/badge/.net.png"/></li>
-							<li><img class="img-sm" src="images/badge/java.png"/></li>
-							<li><img class="img-sm" src="images/badge/OOP.jpg"/></li>
+							<li *ngIf="profile[0].profile"><img class="img-sm" src="images/badge/1.png"/></li>
+							<li><img class="img-sm" src="images/badge/2.png"/></li>
+							<li><img class="img-sm" src="images/badge/3.png"/></li>
+							<li><img class="img-sm" src="images/badge/4.png"/></li>
+							<li><img class="img-sm" src="images/badge/5.png"/></li>
+							<li><img class="img-sm" src="images/badge/6.png" /></li>
+							<li><img class="img-sm" src="images/badge/7.png"/></li>
+							<li><img class="img-sm" src="images/badge/8.png"/></li>
+							<li><img class="img-sm" src="images/badge/9.png"/></li>
+							<li><img class="img-sm" src="images/badge/10.png"/></li>
+							<li><img class="img-sm" src="images/badge/11.png"/></li>
+							<li><img class="img-sm" src="images/badge/12.png"/></li>
+							<li><img class="img-sm" src="images/badge/13.jpg"/></li>
 						</ul>
 						<div>
 						</div>
