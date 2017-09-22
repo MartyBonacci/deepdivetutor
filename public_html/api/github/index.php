@@ -65,7 +65,7 @@ try {
 	$oauth = json_decode($config["github"]);
 
 // now $oauth->github->clientId and $oauth->github->clientKey exist
-	$REDIRECT_URI = 'https://bootcamp-coders.cnm.edu/~mbonacci/deepdivetutor/public_html/api/github/';
+	$REDIRECT_URI = 'https://deepdivetutor.com/public_html/api/github/';
 	$AUTHORIZATION_ENDPOINT = 'https://github.com/login/oauth/authorize';
 	$TOKEN_ENDPOINT = 'https://github.com/login/oauth/access_token';
 	$client = new \OAuth2\Client($oauth->clientId, $oauth->clientKey);
