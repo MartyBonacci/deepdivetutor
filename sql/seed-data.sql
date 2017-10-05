@@ -13,4 +13,4 @@ INSERT INTO skill(skillId, skillName)VALUES (12, 'Android');
 INSERT INTO skill(skillId, skillName)VALUES (13, 'Organization');
 INSERT INTO skill(skillId, skillName)VALUES (14, 'Time Management');
 INSERT INTO skill(skillId, skillName)VALUES (15, 'CSS');
-INSERT INTO skill(skillId, skillName)VALUES (16, 'Soft Skills (unicorns and rainbows)');
+INSERT INTO skill(skillId, skillName)VALUES (16, 'Soft Skills');
